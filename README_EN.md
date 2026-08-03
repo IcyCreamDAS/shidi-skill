@@ -24,7 +24,7 @@
 ## Quick Start
 
 ```bash
-git clone https://github.com/<your-username>/shidi-skill.git
+git clone https://github.com/IcyCreamDAS/shidi-skill.git
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 

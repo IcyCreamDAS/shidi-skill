@@ -1,8 +1,8 @@
 # 师弟 · shidi — 科研愿望实现器
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/github/v/release/<你的用户名>/shidi-skill?label=version&color=blue)](https://github.com/<你的用户名>/shidi-skill/releases)
-[![GitHub stars](https://img.shields.io/github/stars/<你的用户名>/shidi-skill.svg)](https://github.com/<你的用户名>/shidi-skill/stargazers)
+[![Version](https://img.shields.io/github/v/release/IcyCreamDAS/shidi-skill?label=version&color=blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
 
@@ -28,7 +28,7 @@
     <td align="center" width="50%">
       <b>📄 最终报告</b>（`~/shidi-output/`）<br/>
       <sub>完整方案 / 调研报告，Markdown 或 Word</sub>
-      <pre><code>shidi_PEEK-Al2O3悬浮液涂层实验方案_v3_20260803.md
+      <pre><code>shidi_<主题>实验方案_v3_20260803.md
 ├── 一、任务背景与选定方案
 ├── 二、实验原理（文献锚定）
 ├── 三、操作步骤和细节（阶段 0-5）
@@ -97,7 +97,7 @@ flowchart TD
 ## 🚀 快速开始
 
 ```bash
-git clone https://github.com/<你的用户名>/shidi-skill.git
+git clone https://github.com/IcyCreamDAS/shidi-skill.git
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
