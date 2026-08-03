@@ -1,22 +1,37 @@
-# 师弟（shidi）— 科研脏活累活执行者
+<div align="center">
 
-> **师兄提供想法与驱动力，师弟负责把想法拆解、执行、交付。**
+# 🧑‍🔬 师弟 · shidi
 
-"师弟"是一个面向科研/工程工作的 Agent Skill：你说一句"师弟，帮我查查 XX 的文献"或"师弟，设计个 XX 实验"，它会把整条脏活流水线跑完——文献调研、实验方案设计、科研作图、精读论文、交叉验证——并以**文件形式**交付最终报告。
+**科研脏活累活执行者 — 师兄说想法，师弟跑断腿**
 
-核心理念：**师弟不替你做决定**。所有关键决策点（角度选择、参数确认、方向取舍）都返回给你确认。它是执行者，不是替代者。
+[![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
+[![Skills](https://img.shields.io/badge/skills-1-blueviolet)](skills/shidi/)
+[![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
+[![Language](https://img.shields.io/badge/language-中文%20%7C%20English-1f6feb)](README.md)
+[![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
 
-## ✨ 特性
+*"师兄提供想法与驱动力，师弟负责把想法拆解、执行、交付。"*
 
-| 特性 | 说明 |
+</div>
+
+---
+
+## 🎯 是什么
+
+**愿望实现器。** 你脑海中蹦出一个想法，但懒得亲手干那些脏活累活——文献调研、实验方案设计、科研作图、论文精读、数据整理——说一句"师弟，帮我……"，师弟把整条流水线跑完，**文件交付**，绝不口头糊弄。
+
+核心理念：**师弟不替你做决定。** 所有关键决策点（角度选择、参数确认、方向取舍）都返回给你确认。它是执行者，不是替代者。
+
+## ✨ 它能干什么
+
+| 🚀 能力 | 说明 |
 |:--|:--|
-| **分 → 总 → 分 流程** | 输入分支（文献调研/实验方案/作图）→ 公共文献调研流水线 → 输出分叉（报告/方案） |
-| **文献调研全自动** | 三参数一次问完 → 发散 3×3=9 角度（任意选择）→ 高质量期刊定向检索 + 兜底降级链 → 六维评分标注 |
-| **交叉验证门（灵魂）** | 必出"交叉验证任务书"（md），可交给**另一个 LLM** 独立验证 → 验证结果驱动回环迭代（含补充文献流程） |
-| **双交付物** | 最终报告（md/word）+ 交叉验证任务书，全部**文件落盘** |
-| **实验方案四块** | 实验原理（文献支撑）/ 操作步骤细节 / 注意事项 / 漏洞清单（不掩饰） |
-| **六维评分** | 主题匹配×35 + 方法×20 + 期刊×15 + 网络×10 + 应用×10 + 归档×10（封顶 + 一票否决 + 防虚高） |
-| **人设** | 低年级师弟口吻，称呼"师兄/师姐"，提供情绪价值但不油腻 |
+| 📚 **文献调研** | 三参数一次问完 → 发散 3×3=9 角度 → 高质量期刊定向检索 + 降级链兜底 → 六维评分 → 分级阅读 → 文件报告 |
+| 🧪 **实验方案设计** | LLM 自由发散方案角度 → 文献支撑 → 原理 / 步骤细节 / 注意事项 / **漏洞清单**（不掩饰） |
+| 📈 **科研作图** | CSV/TXT/Excel → 清洗 → 计算（numpy/scipy/sympy）→ 出版级渲染（FTIR 走 ftir-analysis，3D 走 pyvista） |
+| 🔬 **论文精读** | source-map 六步精读 → 16 节论文卡片 → 术语表 → 中英对照 |
+| 🔄 **交叉验证门（灵魂）** | 必出交叉验证任务书（md）→ 可交给**另一个 LLM** 独立验证 → 意见逐条回应 → 回环迭代到满意 |
+| 📋 **实验记录** | 实验 ID / 批次 ID 标准化，YAML frontmatter 归档 |
 
 ## 🧭 流程图
 
@@ -57,7 +72,9 @@ git clone https://github.com/<你的用户名>/shidi-skill.git
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
-或直接下载 `skills/shidi/` 目录放入 `~/.claude/skills/`：
+### 其他 Agent
+
+SKILL.md 采用标准 frontmatter 格式，兼容 Codex / OpenClaw / OpenCode 等支持 SKILL.md 规范的 agent：
 
 ```
 ~/.claude/skills/shidi/
@@ -73,38 +90,32 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
     └── figure-guidelines.md  # 科研图规范 + 统计红线
 ```
 
-### 其他 Agent
-
-SKILL.md 采用标准 frontmatter 格式，兼容 Codex / OpenClaw / OpenCode 等支持 SKILL.md 规范的 agent（将 `skills/shidi/` 放入对应 skills 目录）。
-
 ## 🚀 快速开始
 
-安装后直接说：
-
-```
+```text
 师弟，帮我查一下 XX 主题的文献，要 20 篇
 师弟，设计一个 XX 实验方案
 师弟，把这个数据画成图
 师弟，帮我把这篇论文精读一下
 ```
 
-也可以只说"师弟"开头，师弟会先和你确认任务类型再开工。
+只喊"师弟"也行——它会先跟你确认任务类型再开工。
 
 ## 🤖 人设
 
-- 称呼用户为**师兄**（默认；用户表明女性身份时称师姐）
-- 低年级师弟口吻：谦逊有分寸、自然亲近，如"师兄，这是我做的 XXXX，你看要不要 XXXX"
-- 被师兄指出问题时略带崇拜（"还是师兄眼尖"），但科研判断就事论事
+- 称呼你为**师兄**（默认；你表明女性身份时称师姐）
+- 低年级师弟口吻：谦逊有分寸、自然亲近——"师兄，这是我做的 XXXX，你看要不要 XXXX"
+- 被你指出问题时略带崇拜（"还是师兄眼尖"），但科研判断就事论事
 - 人设仅在"师弟"触发时生效，不影响其他对话
 
 ## 📤 交付物
 
 | 交付物 | 默认位置（可改） | 说明 |
 |:--|:--|:--|
-| 最终报告 | `~/shidi-output/` | Markdown（默认）或 Word，完整方案/调研报告 |
-| 交叉验证任务书 | `~/shidi-verify/` | 给另一个 LLM 的任务书，也是自查清单 |
-| 实验记录 | `~/lab-notes/` | 实验 ID/批次 ID 标准化归档 |
-| 文献卡片 | `~/literature-cards/` | 16 节论文卡片 |
+| 📄 最终报告 | `~/shidi-output/` | Markdown（默认）或 Word，完整方案/调研报告 |
+| ✅ 交叉验证任务书 | `~/shidi-verify/` | 给另一个 LLM 的任务书，也是自查清单 |
+| 🧪 实验记录 | `~/lab-notes/` | 实验 ID/批次 ID 标准化归档 |
+| 🗂 文献卡片 | `~/literature-cards/` | 16 节论文卡片 |
 
 ## ⚙️ 依赖
 
@@ -112,7 +123,7 @@ SKILL.md 采用标准 frontmatter 格式，兼容 Codex / OpenClaw / OpenCode �
 - 可选增强：作图分支使用 numpy/scipy/matplotlib/pandas/sympy（3D 用 pyvista，替代装不上的 Mayavi）
 - 检索降级链：WebSearch → 开放学术 API（OpenAlex/Crossref/arXiv，无需 key）
 
-## 🔒 防护机制
+## 🛡 防护机制
 
 1. 六维评分每维封顶，总分重算
 2. 主题匹配 <10 分一票否决
@@ -123,9 +134,8 @@ SKILL.md 采用标准 frontmatter 格式，兼容 Codex / OpenClaw / OpenCode �
 
 ## 📜 致谢
 
-- 设计理念借鉴 [nature-skills](https://github.com/Yuan1z0825/nature-skills)（袁一哲团队）：Router 分层、六维评分、检索降级链、论文卡片等机制
-- 期刊清单基于 JCR / 中科院分区表（以最新版为准）
+设计理念借鉴 [nature-skills](https://github.com/Yuan1z0825/nature-skills)（袁一哲团队）：Router 分层、六维评分、检索降级链、论文卡片等机制。
 
 ## 📄 许可证
 
-[MIT License](LICENSE)
+[MIT License](LICENSE) — 随便用，记得请师弟喝奶茶 🧋
