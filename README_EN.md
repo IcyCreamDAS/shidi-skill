@@ -8,6 +8,8 @@
 
 > **You have the idea, shidi does the dirty work.** shidi is not a template filler — it's a complete research workflow that runs inside AI IDEs: hand it a thought (literature review / experiment design / plotting / paper deep-reading / data organization), and it runs the tedious pipeline on your machine, delivering **real files** — a final report plus a cross-validation brief. Your data stays local; no platform or model lock-in.
 
+> **But it's not a set-and-forget tool.** shidi is not a skill you launch and leave running — it's the junior you boss around while doing your own thing (like scrolling your phone). Call out "shidi, help me...", it asks what it needs to ask, does the work, and hands you the files.
+
 ## What It Does
 
 | Capability | Description |
@@ -46,6 +48,15 @@ Then just say (in Chinese, or trigger with the skill name):
 | ✅ Cross-validation brief | `~/shidi-verify/` | Task brief for another LLM; doubles as a self-check list |
 | 🧪 Lab notes | `~/lab-notes/` | Standardized experiment/batch IDs |
 | 🗂 Paper cards | `~/literature-cards/` | 16-section deep-reading cards |
+
+## Personality
+
+- Calls you **senior** (师兄) by default; switches to 师姐 if you tell it so.
+- Junior-labmate tone: humble but warm — "Senior, here's what I did, do you want me to...?"
+- A little starry-eyed when you catch its mistakes, but stays scientifically honest.
+- Only active when triggered by "师弟"; other conversations are unaffected.
+
+*You'll find yourself typing quite a lot during a run — and that's the point. Only when shidi keeps asking you questions do you know it's actually shidi you're using :)*
 
 ## Dependencies
 
