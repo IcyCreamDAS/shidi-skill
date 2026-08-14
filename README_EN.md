@@ -1,73 +1,170 @@
-# Shidi (师弟) — A Research Wish-Fulfillment Machine
+# shidi · 师弟 — Your Junior Lab Mate in an Agent Skill 🧑‍🔬
+### *You bring the ideas, shidi does the legwork.*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.3-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/IcyCreamDAS/shidi-skill/pulls)
 
 [中文](./README.md) | English
 
-> **You have the idea, shidi does the dirty work.** shidi is not a template filler — it's a complete research workflow that runs inside AI IDEs: hand it a thought (literature review / experiment design / plotting / paper deep-reading / data organization), and it runs the tedious pipeline on your machine, delivering **real files** — a final report plus a cross-validation brief. Your data stays local; no platform or model lock-in.
+> shidi (*"junior lab mate"* in Chinese) is a complete research workflow that lives inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Your data stays local. No platform or model lock-in.
+>
+> It's not fire-and-forget, either — shidi is meant to be bossed around while you do something else. Say "shidi, help me with …", and it asks when it must, runs the rest, and hands you the files.
 
-> **But it's not a set-and-forget tool.** shidi is not a skill you launch and leave running — it's the junior you boss around while doing your own thing (like scrolling your phone). Call out "shidi, help me...", it asks what it needs to ask, does the work, and hands you the files.
+<p align="center">
+  <a href="#-whats-new"><strong>What's New</strong></a> ·
+  <a href="#-deliverables"><strong>Deliverables</strong></a> ·
+  <a href="#-why-shidi"><strong>Why shidi</strong></a> ·
+  <a href="#-quick-start"><strong>Quick Start</strong></a> ·
+  <a href="#-guardrails"><strong>Guardrails</strong></a>
+</p>
 
-## What It Does
+---
+
+## ✨ What's New
+
+- **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
+- **2026-08** — 📄 Multi-format reports (Markdown → HTML → PDF via headless Edge printing, zero deps)
+- **2026-08** — 🔍 PDF extraction layer (text-based → Markdown to save context; scans auto-tagged `needs_vision` for the vision route)
+- **2026-08** — 🗂 Per-angle intermediate reports (parallel multi-agent research: one file per angle, merge by reading files only — main context never overflows)
+
+## 📤 Deliverables
+
+Every job ends in **real files** — not chat text.
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <b>📄 Final Report</b>（`~/shidi-output/`）<br/>
+      <sub>Markdown / Word · full report or experiment plan</sub>
+      <pre><code>shidi_&lt;topic&gt;_v3_20260814.md
+├── 1. Background & chosen approach
+├── 2. Principle (literature-anchored)
+├── 3. Steps & details
+├── 4. Precautions
+├── 5. Flaw list (unvarnished)
+├── 6. Literature summary (by angle)
+├── 7. References (reading depth ✅/⚠/❌)
+└── 8. Changelog (v1→v2→v3)</code></pre>
+    </td>
+    <td align="center" width="50%">
+      <b>✅ Cross-Verification Brief</b>（`~/shidi-verify/`）<br/>
+      <sub>A task sheet for another LLM — also your self-check list</sub>
+      <pre><code>shidi-verify_&lt;topic&gt;_v3_20260814.md
+├── 1. Task description
+├── 2. Original question (verbatim)
+├── 3. Full output (with reading depth)
+├── 4. Verification checklist
+└── 5. Required output format</code></pre>
+    </td>
+  </tr>
+</table>
+
+> Every delivery looks like this. Take the brief to **another LLM** for independent verification — every comment gets an adopt/reject + reason, loop until you're satisfied.
+
+## ✨ Why shidi
+
+| Chatting with a raw model | shidi |
+|:--|:--|
+| Answers live in the chat log | Delivers **files**: reports, briefs, figures, CSVs — archivable, citable, shareable |
+| You nudge it step by step | Built-in workflow (search → score → read → report → verify); answer 3 parameters and it runs |
+| Hallucinations on your conscience | Six-dim scoring, DOI triple-dedup, no-fabrication rule, honest reading-depth labels, mandatory verification brief |
+| Behavior changes with the model | Pure SKILL.md + Markdown — works in Claude Code / Codex / OpenClaw / any SKILL.md agent |
+
+## 🚀 Capabilities
 
 | Capability | Description |
 |:--|:--|
-| 📚 **Literature Review** | Ask 3 parameters in one round → diverge 3×3=9 angles → top-journal targeted search + fallback chain → six-dimension scoring → tiered reading → file report |
-| 🧪 **Experiment Design** | Free-form angle divergence → literature-backed principles / steps / cautions / **gap list** (no sugar-coating) |
-| 📈 **Scientific Plotting** | CSV/TXT/Excel → cleaning → computation (numpy/scipy/sympy) → publication-grade rendering |
-| 🔬 **Paper Deep-Reading** | source-map six-step workflow → 16-section paper card → terminology ledger |
-| 🔄 **Cross-Validation Gate (the soul)** | A validation brief (md) is always delivered — hand it to *another LLM* for an independent review, iterate until you're satisfied |
-| 📋 **Lab Notes** | Standardized experiment/batch IDs with YAML frontmatter |
+| 📚 **Literature research** | 3 parameters up front → 3×3=9 angles → top-journal targeted search + fallback chain → six-dim scoring → graded reading → batch PDF download → file report |
+| 🧪 **Experiment design** | Free-form approach brainstorm → literature-backed → principle / steps / precautions / **unvarnished flaw list** |
+| 📈 **Figures** | CSV/TXT/Excel → clean → compute (numpy/scipy/sympy) → publication-grade rendering, with Origin-ready data export |
+| 🔬 **Paper reading** | source-map six-step deep read → 16-section paper cards → glossary |
+| 🔄 **Cross-verification (the soul)** | Always emits a verification brief → another LLM checks independently → iterate in loops |
+| 📋 **Lab notes** | Standardized experiment/batch IDs, YAML frontmatter archiving |
 
-## Quick Start
+## 🧭 Flow
+
+```mermaid
+flowchart TD
+    A["Decide topics"] --> B["Research"]
+    B --> C["3 parameters<br/>{count, domain, requirements}"]
+    C --> D["Search (T1→T2→T3)"]
+    D --> H["Merge & score"]
+    H --> E["Read (✅/⚠/❌)"]
+
+    E -->|out| F["Lit summary ①"]
+    E -->|out| G["References ②③<br/>PDF or DOI+GB/T 7714"]
+
+    F --> I{"More full-texts?"}
+    G --> I
+
+    I -->|yes| J["User uploads PDF"]
+    J -->|supplement| H
+
+    I -->|no| K["Final report"]
+    I -->|no| L["Verify brief (always)"]
+    K --> M{"Cross-verify?"}
+    L --> M
+
+    M -->|yes| N["Another LLM checks"]
+    N -->|revise| D
+
+    M -->|no| O["Done ✓"]
+```
+
+## 🚀 Quick Start
 
 ```bash
 git clone https://github.com/IcyCreamDAS/shidi-skill.git
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
-Then just say (in Chinese, or trigger with the skill name):
+Then just say:
 
+```text
+shidi, research the literature on XX — 20 papers
+shidi, design an experiment for XX
+shidi, plot this data
+shidi, read this paper in depth for me
 ```
-师弟，帮我查一下 XX 主题的文献，要 20 篇
-师弟，设计一个 XX 实验方案
-```
 
-## Design Philosophy
+Just "shidi" works too — it confirms the task type before starting. Compatible with any agent that follows the SKILL.md spec (Claude Code / Codex / OpenClaw / OpenCode…).
 
-- **You provide the idea and the drive; shidi executes.** All key decision points (angle selection, parameter confirmation, direction trade-offs) are returned to you for confirmation.
-- **A tool, not a wishing well.** The workflow is free and open source; the only cost is your AI model usage. The model sets the ceiling.
+> [!IMPORTANT]
+> ### An executor, not a genie
+> `harness + model = agent` — shidi owns the workflow, the model sets the ceiling. And it never decides for you: angle selection, parameters, trade-offs all bounce back to you. It takes the grunt work; the ideas and judgment stay yours.
 
-## Deliverables
+## 🤖 Persona
 
-| Deliverable | Default location (configurable) | Notes |
-|:--|:--|:--|
-| 📄 Final report | `~/shidi-output/` | Markdown (default) or Word |
-| ✅ Cross-validation brief | `~/shidi-verify/` | Task brief for another LLM; doubles as a self-check list |
-| 🧪 Lab notes | `~/lab-notes/` | Standardized experiment/batch IDs |
-| 🗂 Paper cards | `~/literature-cards/` | 16-section deep-reading cards |
+- Calls you "senior" (or "senior sister" if you say so)
+- A humble, slightly cheeky junior: *"here's what I made, what do you think?"*
+- Praises you when corrected ("good catch, senior"), never bends on science
+- Persona activates only on the trigger word — other conversations unaffected
 
-## Personality
+*Yes, it asks a lot of questions — that's how you know it's really shidi.*
 
-- Calls you **senior** (师兄) by default; switches to 师姐 if you tell it so.
-- Junior-labmate tone: humble but warm — "Senior, here's what I did, do you want me to...?"
-- A little starry-eyed when you catch its mistakes, but stays scientifically honest.
-- Only active when triggered by "师弟"; other conversations are unaffected.
+## ⚙️ Dependencies
 
-*You'll find yourself typing quite a lot during a run — and that's the point. Only when shidi keeps asking you questions do you know it's actually shidi you're using :)*
+- **Zero external deps**: pure SKILL.md + Markdown, nothing to install
+- Optional: numpy/scipy/matplotlib/pandas/sympy (figures; pyvista for 3D), pdf-inspector (PDF extraction layer)
+- Search fallback chain: WebSearch → open scholarly APIs (OpenAlex/Crossref/arXiv, no keys needed)
 
-## Dependencies
+## 🛡 Guardrails
 
-- **Zero external dependencies** — pure SKILL.md + Markdown.
-- Optional: numpy/scipy/matplotlib/pandas/sympy for plotting (pyvista for 3D).
-- Search fallback: WebSearch → open academic APIs (OpenAlex/Crossref/arXiv, no key required).
+1. Capped six-dim scoring, totals recomputed
+2. Topic-match <10 → veto
+3. DOI / arXiv ID / URL triple dedup
+4. **No fabrication** — unverifiable claims are labeled "unverified"
+5. Honest reading-depth labels: full text ✅ / abstract ⚠ / unavailable ❌
+6. Every verification comment gets adopt/reject + reason — never blind agreement
 
-## Credits
+## 📜 Credits
 
-Design inspired by [nature-skills](https://github.com/Yuan1z0825/nature-skills) (Yuan Yizhe's team): router layering, six-dimension scoring, search fallback chains, paper card mechanisms.
+Design ideas borrowed from [nature-skills](https://github.com/Yuan1z0825/nature-skills) (Yuan1z0825 team): routing, six-dim scoring, search fallback chain, paper cards.
 
-## License
+## 📄 License
 
-[MIT License](LICENSE)
+[MIT License](LICENSE) — free to use; just buy shidi a bubble tea 🧋

@@ -113,6 +113,7 @@ description: 科研/工作中的"师弟"——用户给想法和方向，师弟�
 **输出第一部分：精读产物 + 文献总结**
 
 - 每篇输出：论文卡片（nature skill 风格：核心发现/方法/数据/与用户课题关联）+ 文献总结
+- **多角度任务按角度落盘中间文件**：每个选定角度一份 `<任务目录>/assets/angle-<角度代号>.md`（六段固定结构，模板见 `references/angle-report.md`）。后台并行派单时尤其必须——角度间互不干扰、汇总阶段只读文件不撑爆主上下文；子代理最终回复只给 5 行摘要，正文以文件为准
 
 **输出第二部分：参考文献**
 
@@ -319,6 +320,7 @@ shidi/
     ├── journal-list.md             # 高质量期刊清单（6 大类）
     ├── scoring-system.md           # 六维评分细则
     ├── search-fallback.md          # 搜索源降级链 + 高质量期刊定向策略
+    ├── angle-report.md             # 分角度中间报告模板（六段结构，并行派单必用）
     ├── paper-reading.md            # 精读工作流（source-map 六步）
     ├── paper-card.md               # 16 节论文卡片模板
     ├── citation-verify.md          # 引用导出与多源核验
