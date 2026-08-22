@@ -1,0 +1,43 @@
+{
+  "name": "shidi-dsh-plugin",
+  "version": "0.3.0",
+  "description": "shidi — scientific research workflow skill bundle for DeepSeek Harness: multi-angle literature review, anchored experiment design, figures, paper reading; cross-verification briefs.",
+  "type": "module",
+  "main": "index.mjs",
+  "files": [
+    "index.mjs",
+    "skills.mjs",
+    "cordis.patch.yml",
+    "skills/",
+    "README.md",
+    "README_EN.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-skill-filesystem": ">=0.1.0-rc.6 <0.2.0"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IcyCreamDAS/shidi-skill.git"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "skills",
+    "research",
+    "literature-review",
+    "experiment-design"
+  ]
+}

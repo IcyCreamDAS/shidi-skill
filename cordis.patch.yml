@@ -1,0 +1,9 @@
+- insert:
+    - id: shidi-skills
+      name: '@deepseek-ai/cordis-plugin-group'
+      group: true
+      isolate:
+        shidiSkills: true
+      config:
+        - id: shidi-skills-runtime
+          name: 'shidi-dsh-plugin'
