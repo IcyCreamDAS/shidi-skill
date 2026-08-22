@@ -1,4 +1,5 @@
 # shidi · 师弟 — Your Junior Lab Mate in an Agent Skill 🧑‍🔬
+*Research workflow skill for AI coding agents: literature review · experiment design · scientific figures · paper reading · data organization*
 ### *You bring the ideas, shidi does the legwork.*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
@@ -19,7 +20,19 @@
   <a href="#-deliverables"><strong>Deliverables</strong></a> ·
   <a href="#-why-shidi"><strong>Why shidi</strong></a> ·
   <a href="#-quick-start"><strong>Quick Start</strong></a> ·
+  <a href="#-demo"><strong>Demo</strong></a> ·
   <a href="#-guardrails"><strong>Guardrails</strong></a>
+</p>
+
+---
+
+## 👀 Demo
+
+> Screenshots below are **illustrative** (content redacted) — real runs produce fresh files for your own topic.
+
+<p align="center">
+  <img src="assets/demo-report.png" alt="Final report structure" width="560"/>
+  <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
 ---

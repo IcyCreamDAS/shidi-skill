@@ -25,7 +25,20 @@
   <a href="#-deliverables--交付物"><strong>Deliverables</strong></a> ·
   <a href="#-why-shidi--为什么用它"><strong>Why shidi</strong></a> ·
   <a href="#-quick-start--快速开始"><strong>Quick Start</strong></a> ·
+  <a href="#-demo--示例预览"><strong>Demo</strong></a> ·
   <a href="#-guardrails--防护机制"><strong>Guardrails</strong></a>
+</p>
+
+---
+
+## 👀 Demo · 示例预览
+
+> 下图是**结构示例**(内容脱敏)——真实交付按你的课题动态生成,每次跑完都是新文件。
+> *Screenshots below are **illustrative** (content redacted) — real runs produce fresh files for your own topic.*
+
+<p align="center">
+  <img src="assets/demo-report.png" alt="Final report structure" width="560"/>
+  <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
 ---
