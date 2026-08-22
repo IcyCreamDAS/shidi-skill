@@ -20,6 +20,9 @@
 >
 > *It's not fire-and-forget, either — shidi is meant to be bossed around while you do something else. Yell "shidi, help me with …", and it asks when it must, runs the rest, and hands you the files.*
 
+> **为 AI for Science 与科研 Agent 而生** — 面向 AI4S 场景、理工科研究生与所有用 Agent 辅助科研的人：文献调研、实验方案、作图、精读,从"聊天答案"变成可交付、可交叉验证的文件。
+> *Built for AI for Science workflows, grad students and researchers using agentic AI — deliverable, cross-verifiable files instead of chat answers.*
+
 <p align="center">
   <a href="#-whats-new--更新日志"><strong>What's New</strong></a> ·
   <a href="#-deliverables--交付物"><strong>Deliverables</strong></a> ·

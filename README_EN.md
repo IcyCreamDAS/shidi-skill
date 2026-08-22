@@ -15,6 +15,8 @@
 >
 > It's not fire-and-forget, either — shidi is meant to be bossed around while you do something else. Say "shidi, help me with …", and it asks when it must, runs the rest, and hands you the files.
 
+> **Built for AI for Science workflows, grad students and researchers using agentic AI** — literature review, experiment design, figures and paper reading become deliverable, cross-verifiable files instead of chat answers.
+
 <p align="center">
   <a href="#-whats-new"><strong>What's New</strong></a> ·
   <a href="#-deliverables"><strong>Deliverables</strong></a> ·
