@@ -42,11 +42,15 @@ jobs:
           test -s /tmp/render/smoke.html
 
       - name: verify_refs offline smoke test
-        run: python skills/shidi/scripts/verify_refs.py --style-only README.md
+        run: |
+          python -c "from pathlib import Path; Path('/tmp/style.md').write_text('# Title\n\nShort sentence.\n', encoding='utf-8')"
+          python skills/shidi/scripts/verify_refs.py --style-only /tmp/style.md
 
       - name: Install example dependencies
         run: python -m pip install --quiet -r examples/materials_small_data/requirements.txt
 
       - name: Materials ML example smoke test
         working-directory: examples/materials_small_data
-        run: python run_demo.py --quick
+        run: |
+          python run_demo.py --quick
+          python run_demo.py --quick --priors priors_template.csv

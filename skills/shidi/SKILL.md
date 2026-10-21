@@ -92,9 +92,12 @@ description: 科研/工作中的"师弟"——用户给想法和方向，师弟�
 
 ## 步骤 4：标注
 
-- **六维评分**（细则见 `references/scoring-system.md`）：主题匹配×35 + 方法价值×20 + 期刊质量×15 + 网络关联×10 + 应用价值×10 + 归档价值×10
+- **评分（v2 七维，脚本确定性校验）**（细则见 `references/scoring-system.md`）：主题 30 + 方法 20 + 数据完备 15 + 期刊 10 + 网络 5 + 应用 10 + 归档 10。LLM 只输出各维**整数分 JSON**，封顶/一票否决/总分/排序交给脚本：
+  ```powershell
+  python scripts/score_papers.py scores.json --format md
+  ```
 - 期刊清单识别：命中清单内期刊 → 标注 🔴高质量
-- 每篇标注：期刊名 / IF 约值 / 中科院分区 / 命中角度 / 六维评分
+- 每篇标注：期刊名 / IF 约值 / 中科院分区 / 命中角度 / 七维评分（v2，脚本复核）
 - 分区是标注项+可筛选项，不硬过滤
 
 ## 步骤 5：阅读 → 输出两部分（补充文献）
@@ -303,6 +306,7 @@ pyvista                                       ← 3D 可视化（替代 Mayavi�
 # 通用流程（其他脏活）
 
 1. 复述任务 → 2. 拆解子任务（3 个以内，并列明顺序）→ 3. 逐项执行 → 4. 汇总交付 → 5. 请用户验收
+2. **文献/实验数据整理**：按 `references/data-extraction-schema.md` 的列结构导出 CSV（测试标准、条件、n、误差、`value_type` 三类标签）；同标准同条件才可合并，缺元数据标 `not-reported`
 
 # 输出总规范
 
@@ -312,8 +316,8 @@ pyvista                                       ← 3D 可视化（替代 Mayavi�
 
 # 防护机制（借鉴 nature-skills）
 
-1. **评分封顶**：六维评分每维不得超出权重，总分必须重算（不信任子代理算术）
-2. **一票否决**：主题匹配 <10 分直接淘汰，不看其他维度
+1. **评分封顶与总分由脚本算**：`score_papers.py` 执行封顶、一票否决（主题<10）、总分与排序（不信任子代理/模型算术）
+2. **期刊/人脉不主导排序**：v2 权重把数据完备度（15）放在期刊（10）与人脉（5）之上，防"权威偏见"
 3. **三级去重**：DOI / arXiv ID / URL 三重去重
 4. **不编造**：无法核验的引用、DOI、数据一律标注"未验证"，绝不生成假文献
 5. **角度锁定**：用户确认后的角度集合，执行中不得自行增删
@@ -325,17 +329,20 @@ pyvista                                       ← 3D 可视化（替代 Mayavi�
 shidi/
 ├── SKILL.md                        # 主流程（本文件）
 ├── scripts/
-│   ├── fetch_pdfs.py               # 文献 PDF 批量下载（OpenAlex/Unpaywall OA 定位 + 下载归档）
-│   ├── extract_pdfs.py             # PDF 抽取层（pdf-inspector 分类 + 文本型转 Markdown，扫描件标 needs_vision）
-│   └── render_report.py            # 多格式报告渲染（Markdown → HTML → PDF，Edge 无头打印）
+│   ├── fetch_pdfs.py               # 文献 PDF 批量下载（OpenAlex/Unpaywall OA 定位 + 重试退避）
+│   ├── extract_pdfs.py             # PDF 抽取层（分类 text_based/vision/mixed + 文本型转 Markdown）
+│   ├── render_report.py            # 多格式报告渲染（Markdown → HTML → PDF，跨平台浏览器探测）
+│   ├── verify_refs.py              # 引用核验（DOI/撤稿检测 + 文风 lint，stdlib）
+│   └── score_papers.py             # 七维评分确定性计算（封顶/一票否决/排序）
 └── references/
     ├── journal-list.md             # 高质量期刊清单（6 大类）
-    ├── scoring-system.md           # 六维评分细则
+    ├── scoring-system.md           # 七维评分细则 v2（脚本 score_papers.py 校验）
     ├── search-fallback.md          # 搜索源降级链 + 高质量期刊定向策略
     ├── angle-report.md             # 分角度中间报告模板（六段结构，并行派单必用）
     ├── paper-reading.md            # 精读工作流（source-map 六步）
     ├── paper-card.md               # 16 节论文卡片模板
     ├── citation-verify.md          # 引用导出与多源核验
-    ├── experiment-log.md           # 实验记录标准化（ID/批次规则）
+    ├── experiment-log.md           # 实验记录标准化（ID/批次/测试标准规则）
+    ├── data-extraction-schema.md   # 文献→配方/性能数据抽取 schema（标准/条件/误差/标签）
     └── figure-guidelines.md        # 科研图规范 + 统计报告规范
 ```

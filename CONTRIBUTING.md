@@ -35,6 +35,8 @@ Thanks for helping. This repository ships one SKILL.md-based research workflow
 ## 版本与发布 / Versioning and releases
 
 - The maintainer bumps `package.json` + README badges + git tag + npm release together.
+  Between releases the repository version may be **ahead of npm** (publishing needs the
+  maintainer's 2FA) — read the git tag / npm dist-tag, not only the badge, when installing.
   Third-party PRs do **not** need a version bump.
 - `package.json`, both README badges and the git tag must agree; `validate.py` enforces the first two.
 

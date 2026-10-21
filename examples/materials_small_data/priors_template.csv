@@ -1,0 +1,5 @@
+feature,min,max,note
+gf_wt_pct,30,42,"EDIT: glass-fibre window from the literature survey; not a ground truth"
+coupling_agent_wt_pct,0.4,1.0,"silane coupling agent, phr; replace with your survey range"
+lubricant_wt_pct,0.2,0.6,"internal lubricant, phr; replace with your survey range"
+melt_temp_C,352,372,"barrel setpoint window, C; replace with your survey range"

@@ -3,7 +3,7 @@
 ### *You bring the ideas, shidi does the legwork.*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -42,7 +42,8 @@
 
 ## ✨ What's New
 
-- **2026-10** — 🛡 **CI + repository self-check** (`validate.py`: version consistency, relative links, script compilation, bundle structure) · 🤝 CONTRIBUTING / SECURITY / issue forms / PR template · 🧪 **AI4S methodology example** (synthetic data + LOGO validation + GP uncertainty + constrained shortlist)
+- **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
+- **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
 - **2026-08** — 📄 Multi-format reports (Markdown → HTML → PDF via headless Edge printing, zero deps)
 - **2026-08** — 🔍 PDF extraction layer (text-based → Markdown to save context; scans auto-tagged `needs_vision` for the vision route)
@@ -88,14 +89,14 @@ Every job ends in **real files** — not chat text.
 |:--|:--|
 | Answers live in the chat log | Delivers **files**: reports, briefs, figures, CSVs — archivable, citable, shareable |
 | You nudge it step by step | Built-in workflow (search → score → read → report → verify); answer 3 parameters and it runs |
-| Hallucinations on your conscience | Six-dim scoring, DOI triple-dedup, no-fabrication rule, honest reading-depth labels, mandatory verification brief |
+| Hallucinations on your conscience | Seven-dim scoring (computed by script), DOI/retraction verification, DOI triple-dedup, no-fabrication rule, honest reading-depth labels, mandatory verification brief |
 | Behavior changes with the model | Pure SKILL.md + Markdown — works in Claude Code / Codex / OpenClaw / any SKILL.md agent |
 
 ## 🚀 Capabilities
 
 | Capability | Description |
 |:--|:--|
-| 📚 **Literature research** | 3 parameters up front → 3×3=9 angles → top-journal targeted search + fallback chain → six-dim scoring → graded reading → batch PDF download → file report |
+| 📚 **Literature research** | 3 parameters up front → 3×3=9 angles → top-journal targeted search + fallback chain → seven-dim scoring (v2, script-checked) → graded reading → batch PDF download → file report |
 | 🧪 **Experiment design** | Free-form approach brainstorm → literature-backed → principle / steps / precautions / **unvarnished flaw list** |
 | 📈 **Figures** | CSV/TXT/Excel → clean → compute (numpy/scipy/sympy) → publication-grade rendering, with Origin-ready data export |
 | 🔬 **Paper reading** | source-map six-step deep read → 16-section paper cards → glossary |
@@ -109,16 +110,22 @@ Every job ends in **real files** — not chat text.
 
 - **Grouped validation** (leave-one-project-out) — sibling samples from the same project never leak into training, so scores stay honest
 - **GP predictions with uncertainty** — empirical coverage of ±1σ / ±2σ on held-out projects, compared with the 68% / 95% targets
-- **Constrained candidate search** — expected-improvement ranking inside `P(MFR ≥ 32) ≥ 80%`, returning a top-8 formulation shortlist
+- **Batch calibration test** — zero-shot vs adding 1–2 benchmark runs from the new project; coverage barely moves, and the negative result is reported instead of hidden
+- **ARD feature relevance** — per-feature GP length scales (smaller = more influential; at the upper bound = the data cannot identify a dependence)
+- **Constrained search with ECI** — `ECI = EI × P(MFR ≥ 28)` instead of a hard feasibility cutoff, plus a feasibility-only shortlist
+- **Multi-objective Pareto front** — tensile strength vs MFR posterior means
+- **Mass-fraction closure** — glass fibre + coupling agent + lubricant + resin = 100 wt%; candidates keep `resin ≥ 40 wt%`
+- **Literature-prior interface** — `priors_template.csv` feeds survey bounds into the search space (bounds only, no prior mean)
 - **Separated evidence labels** — `measured` / `predicted` / `exploratory`; only `measured` may be reported as a result
 - **Hard rule: an exploration screening range is NOT a statistical confidence interval**
 
 ```bash
 cd examples/materials_small_data
 pip install -r requirements.txt && python run_demo.py
+python run_demo.py --priors priors_template.csv   # constrain the search space with survey bounds
 ```
 
-**What it does not claim:** the data is synthetic, so it predicts no real PEEK/PAEK property; the GP scores do not transfer to any real formulation dataset; the shortlist is not proven better than an experienced engineer's DOE intuition. Real industrial formulations stay under NDA — what is published here is the **method**, not data.
+**What it does not claim:** the data is synthetic, so it predicts no real PEEK/PAEK property; the GP scores do not transfer to any real formulation dataset; the shortlist is not proven better than an experienced engineer's DOE intuition; independent single-output GPs ignore output correlation (tensile ↔ flexural ≈ 0.9); 1–2 benchmark runs do not calibrate a batch offset (that needs a mixed-effects GP). Real industrial formulations stay under NDA — what is published here is the **method**, not data.
 
 ## 🧭 Flow
 
@@ -183,22 +190,24 @@ Just "shidi" works too — it confirms the task type before starting. Compatible
 
 ## ⚙️ Dependencies
 
-- **Zero external deps**: pure SKILL.md + Markdown, nothing to install
+- **Zero core deps**: pure SKILL.md + Markdown, nothing to install
+- Report rendering: `markdown` (HTML/PDF), plus a local Edge / Chrome / Chromium for PDF (auto-discovered cross-platform; override with `SHIDI_BROWSER`)
 - Optional: numpy/scipy/matplotlib/pandas/sympy (figures; pyvista for 3D), pdf-inspector (PDF extraction layer)
-- Search fallback chain: WebSearch → open scholarly APIs (OpenAlex/Crossref/arXiv, no keys needed)
+- Scoring / citation scripts (`score_papers.py`, `verify_refs.py`): stdlib only
+- Search fallback chain: WebSearch → open scholarly APIs (OpenAlex/Crossref/arXiv, no keys needed); the Unpaywall fallback in PDF download needs `UNPAYWALL_EMAIL`
 
 ## 🛡 Guardrails
 
-1. Capped six-dim scoring, totals recomputed
+1. Capped seven-dim scoring; totals and ranking computed by `score_papers.py`, never by the model
 2. Topic-match <10 → veto
 3. DOI / arXiv ID / URL triple dedup
-4. **No fabrication** — unverifiable claims are labeled "unverified"
+4. **No fabrication** — unverifiable claims are labeled "unverified"; every report passes `verify_refs.py` (DOI resolution / retractions / style) before rendering
 5. Honest reading-depth labels: full text ✅ / abstract ⚠ / unavailable ❌
 6. Every verification comment gets adopt/reject + reason — never blind agreement
 
 ## 📜 Credits
 
-Design ideas borrowed from [nature-skills](https://github.com/Yuan1z0825/nature-skills) (Yuan1z0825 team): routing, six-dim scoring, search fallback chain, paper cards.
+Design ideas borrowed from [nature-skills](https://github.com/Yuan1z0825/nature-skills) (Yuan1z0825 team): routing, scoring dimensions (v1 six-dim → v2 seven-dim), search fallback chain, paper cards.
 
 ## 📄 License
 

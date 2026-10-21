@@ -158,7 +158,11 @@ required = [
     "skills/shidi/scripts/fetch_pdfs.py",
     "skills/shidi/scripts/render_report.py",
     "skills/shidi/scripts/verify_refs.py",
+    "skills/shidi/scripts/score_papers.py",
     "skills/shidi/references/scoring-system.md",
+    "skills/shidi/references/data-extraction-schema.md",
+    "skills/shidi/references/templates/formulation_properties.csv",
+    "examples/materials_small_data/priors_template.csv",
     "tests/__init__.py",
 ]
 missing = [rel for rel in required if not (ROOT / rel).is_file()]

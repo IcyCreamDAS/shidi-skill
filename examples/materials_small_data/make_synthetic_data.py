@@ -6,6 +6,10 @@ EVERY NUMBER IN THE OUTPUT IS INVENTED. This script exists so the workflow
 demonstrated on data whose ground truth is known, without touching any real
 industrial formulation. Do not cite these values as material properties.
 
+The recipes satisfy the mass-fraction closure constraint: glass fibre +
+coupling agent + lubricant + resin sum to 100 wt% in every row (resin is the
+remainder). This is checked by assert_closed() and by run_demo.py.
+
 Usage:
     python make_synthetic_data.py            # write data/synthetic_formulations.csv
 """
@@ -26,6 +30,7 @@ RESIN = ("A", "B", "C")  # low / medium / high viscosity resin grades
 COUPLING_RANGE = (0.2, 1.2)
 LUBRICANT_RANGE = (0.1, 0.8)
 MELT_RANGE = (345.0, 378.0)
+CLOSURE_TOLERANCE = 0.5  # wt% (rounding noise only)
 
 FIELDS = [
     "project",
@@ -34,6 +39,7 @@ FIELDS = [
     "gf_wt_pct",
     "coupling_agent_wt_pct",
     "lubricant_wt_pct",
+    "resin_wt_pct",
     "melt_temp_C",
     "tensile_MPa",
     "flexural_modulus_GPa",
@@ -64,6 +70,28 @@ def true_mfr(gf: float, lubricant: float, melt: float, grade: str, project: str 
     return base + 0.20 * PROJECT_OFFSET.get(project, 0.0)
 
 
+def closure_gap(row) -> float:
+    """|sum of mass fractions - 100| for one row."""
+    total = (
+        float(row["gf_wt_pct"])
+        + float(row["coupling_agent_wt_pct"])
+        + float(row["lubricant_wt_pct"])
+        + float(row["resin_wt_pct"])
+    )
+    return abs(total - 100.0)
+
+
+def assert_closed(rows, tolerance: float = CLOSURE_TOLERANCE) -> None:
+    """Raise if any row violates the mass-fraction closure constraint."""
+    bad = [row for row in rows if closure_gap(row) > tolerance]
+    if bad:
+        sample = bad[0]
+        raise ValueError(
+            f"{len(bad)} row(s) violate mass-fraction closure; first: "
+            f"{sample.get('project')}/{sample.get('sample')} gap={closure_gap(sample):.3f}"
+        )
+
+
 def build_rows(seed: int = SEED) -> list:
     rng = random.Random(seed)
     rows = []
@@ -71,9 +99,12 @@ def build_rows(seed: int = SEED) -> list:
         n = 20
         gf_low = 10.0 + 2.0 * project_index
         for i in range(n):
-            gf = gf_low + 30.0 * i / (n - 1)
-            coupling = rng.uniform(*COUPLING_RANGE)
-            lubricant = rng.uniform(*LUBRICANT_RANGE)
+            gf = round(gf_low + 30.0 * i / (n - 1), 1)
+            coupling = round(rng.uniform(*COUPLING_RANGE), 2)
+            lubricant = round(rng.uniform(*LUBRICANT_RANGE), 2)
+            resin = round(100.0 - gf - coupling - lubricant, 2)
+            if resin <= 0:
+                raise ValueError(f"invalid synthetic recipe: resin={resin}")
             melt = rng.uniform(*MELT_RANGE)
             grade = RESIN[rng.randrange(len(RESIN))]
             tensile = true_tensile(gf, coupling, melt, grade, project) + rng.gauss(0.0, 2.2)
@@ -84,9 +115,10 @@ def build_rows(seed: int = SEED) -> list:
                     "project": project,
                     "sample": f"S{i + 1:02d}",
                     "resin_grade": grade,
-                    "gf_wt_pct": round(gf, 1),
-                    "coupling_agent_wt_pct": round(coupling, 2),
-                    "lubricant_wt_pct": round(lubricant, 2),
+                    "gf_wt_pct": gf,
+                    "coupling_agent_wt_pct": coupling,
+                    "lubricant_wt_pct": lubricant,
+                    "resin_wt_pct": resin,
                     "melt_temp_C": round(melt, 1),
                     "tensile_MPa": round(max(tensile, 5.0), 2),
                     "flexural_modulus_GPa": round(max(modulus, 0.5), 3),
@@ -94,6 +126,7 @@ def build_rows(seed: int = SEED) -> list:
                     "data_source": "synthetic",
                 }
             )
+    assert_closed(rows)
     return rows
 
 

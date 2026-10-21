@@ -2,7 +2,7 @@
 ### *Your junior lab mate in an Agent Skill — ideas in, files out*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -49,7 +49,8 @@
 
 ## ✨ What's New · 更新日志
 
-- **2026-10** — 🛡 **CI + 仓库自检**（`validate.py`：版本一致性 / 相对链接 / 脚本编译 / bundle 结构一次验完）· 🤝 CONTRIBUTING / SECURITY / Issue 表单 / PR 模板 · 🧪 **AI4S 方法学示例**（合成数据 + LOGO 验证 + GP 不确定性 + 约束候选）
+- **2026-10** — 🛡 **发布版自检闭环**：GitHub Actions CI + `validate.py`（版本/链接/脚本编译/必需文件）+ `tests/` 离线单测 · 补上 `verify_refs.py` 引用核验（DOI 解析/撤稿检测/文风 lint）· 修 `render_report.py` 超时 bug 并支持跨平台浏览器探测 · `fetch_pdfs.py` 去掉硬编码邮箱、加指数退避
+- **2026-10** — 🔬 **确定性评分 + 数据 schema + AI4S 示例升级**：`score_papers.py` 七维评分（封顶/一票否决/排序由脚本算，v2 权重下调期刊与人脉）· 文献→配方/性能抽取 schema（测试标准/条件/n/误差/三类标签）· 示例升级（质量分数闭合、ARD 长度尺度、ECI 采集函数、1-2 基准配方校准对比、Pareto 前沿、文献先验边界接口）
 - **2026-08** — 📥 **PDF 批量下载**（OpenAlex/Unpaywall 自动定位 OA 直链，失败分类报告，不静默跳过）· *batch PDF download with honest failure reports*
 - **2026-08** — 📄 **多格式报告**（Markdown → HTML → PDF，Edge 无头打印，零依赖）· *MD → HTML → PDF rendering, zero deps*
 - **2026-08** — 🔍 **PDF 抽取层**（文本型转 Markdown 省上下文，扫描件自动标 needs_vision 走视觉路径）· *PDF extraction layer: text → Markdown, scans → vision route*
@@ -97,7 +98,7 @@
 |:--|:--|
 | 答案在聊天记录里 | 交付**文件**：报告 / 任务书 / 图 / 数据 CSV，可直接归档、引用、发给别人 |
 | 你盯着一步步催 | 完整工作流内置（检索→评分→阅读→报告→验证），问完三个参数就开跑 |
-| 幻觉靠自觉 | 六维评分、DOI 三级去重、**不编造**红线、阅读深度标注，验证任务书强制输出 |
+| 幻觉靠自觉 | 七维评分（脚本算分）、引用核验（DOI/撤稿）、DOI 三级去重、**不编造**红线、阅读深度标注，验证任务书强制输出 |
 | 换个模型就换套行为 | 纯 SKILL.md + Markdown，Claude Code / Codex / OpenClaw 都能用 |
 
 *Left: chatting with a raw model. Right: shidi — file-based deliverables, built-in workflow, anti-hallucination guardrails, agent-agnostic.*
@@ -106,7 +107,7 @@
 
 | Capability 能力 | 说明 Description |
 |:--|:--|
-| 📚 **文献调研** *Lit research* | 三参数一次问完 → 发散 3×3=9 角度 → 顶刊定向检索+降级链 → 六维评分 → 分级阅读 → PDF 批量下载 → 文件报告 |
+| 📚 **文献调研** *Lit research* | 三参数一次问完 → 发散 3×3=9 角度 → 顶刊定向检索+降级链 → 七维评分（v2，脚本校验）→ 分级阅读 → PDF 批量下载 → 文件报告 |
 | 🧪 **实验方案设计** *Experiment design* | 自由发散方案 → 文献支撑 → 原理/步骤/注意事项/**漏洞清单**（不掩饰） |
 | 📈 **科研作图** *Figures* | CSV/TXT/Excel → 清洗 → 计算（numpy/scipy/sympy）→ 出版级渲染，附 Origin 复刻说明 |
 | 🔬 **论文精读** *Paper reading* | source-map 六步精读 → 16 节论文卡片 → 术语表 |
@@ -120,16 +121,22 @@
 
 - **分组留出验证**（按项目整组留出 LOGO）——同批次样本不参与训练，避免分数虚高
 - **GP 预测带不确定性**——在留出项目上统计 ±1σ / ±2σ 的**实际覆盖率**，和 68% / 95% 理论值对照
-- **约束下的候选推荐**——在 `P(MFR ≥ 32) ≥ 80%` 的可行域内用 Expected Improvement 排序，输出 top-8 配方候选
+- **批次校准对比**——零样本 vs 加 1–2 个基准配方再训练；实测覆盖率基本不变 → 不假设"校准好了"，负结果写进报告
+- **ARD 特征相关性**——每个特征的 GP 长度尺度（越小越关键；停在上界 = 数据识别不了）
+- **约束候选用 ECI**——`ECI = EI × P(MFR ≥ 28)`，不做硬阈值截断；另给"仅可行域"排行榜
+- **多目标 Pareto 前沿**——拉伸强度 vs MFR 后验均值的非支配集
+- **质量分数闭合**——玻纤 + 偶联剂 + 润滑剂 + 树脂 = 100 wt%，候选另加 `resin ≥ 40 wt%`
+- **文献先验接口**——`priors_template.csv` 把文献边界喂给搜索空间（只约束边界，不注入先验均值）
 - **三类证据标签分开**——`measured` / `predicted` / `exploratory`，结论只允许用 `measured`
 - **硬规则：探索级筛选范围 ≠ 统计置信区间**
 
 ```bash
 cd examples/materials_small_data
 pip install -r requirements.txt && python run_demo.py
+python run_demo.py --priors priors_template.csv   # 用文献先验边界约束搜索空间
 ```
 
-**它不主张什么**：数据是合成的，不能预测真实 PEEK/PAEK 性能；GP 分数不能迁移到真实配方；候选不保证优于工程师的 DOE 直觉。真实企业配方受 NDA 约束不会进仓库——公开的是**方法**，不是数据。
+**它不主张什么**：数据是合成的，不能预测真实 PEEK/PAEK 性能；GP 分数不能迁移到真实配方；候选不保证优于工程师的 DOE 直觉；独立单输出 GP 忽略输出相关（拉伸↔弯曲 ≈ 0.9）；1–2 个基准配方校不准批次偏移（正确解法是混合效应 GP）。真实企业配方受 NDA 约束不会进仓库——公开的是**方法**，不是数据。
 
 ## 🧭 Flow · 流程图
 
@@ -197,22 +204,24 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 
 ## ⚙️ Dependencies · 依赖
 
-- **零外部依赖** *Zero external deps*：纯 SKILL.md + Markdown，无需安装任何包
+- **核心零依赖** *Zero core deps*：纯 SKILL.md + Markdown，无需安装任何包
+- 报告渲染 *Report rendering*：`markdown` 包（HTML/PDF），本机 Edge / Chrome / Chromium（PDF，自动跨平台探测，可用 `SHIDI_BROWSER` 指定）
 - 可选增强 *Optional*：作图分支 numpy/scipy/matplotlib/pandas/sympy（3D 用 pyvista）；PDF 抽取层 pdf-inspector
-- 检索降级链 *Search fallback chain*：WebSearch → 开放学术 API（OpenAlex/Crossref/arXiv，无需 key）
+- 评分 / 引用核验脚本 *score_papers.py / verify_refs.py*：stdlib 零依赖
+- 检索降级链 *Search fallback chain*：WebSearch → 开放学术 API（OpenAlex/Crossref/arXiv，无需 key）；PDF 下载的 Unpaywall 兜底需 `UNPAYWALL_EMAIL`
 
 ## 🛡 Guardrails · 防护机制
 
-1. 六维评分每维封顶，总分重算 *capped six-dim scoring, recomputed totals*
+1. 七维评分每维封顶，总分/排序由 `score_papers.py` 计算（不信任模型心算）*seven-dim caps; totals and ranking computed by script*
 2. 主题匹配 <10 分一票否决 *topic-match <10 → veto*
 3. DOI / arXiv ID / URL 三级去重 *triple dedup*
-4. **不编造**：无法核验的引用/DOI/数据一律标"未验证" *no fabrication — unverifiable claims are labeled "unverified"*
+4. **不编造**：无法核验的引用/DOI/数据一律标"未验证"；报告落盘后必跑 `verify_refs.py`（DOI 解析/撤稿/文风）*no fabrication; every report passes verify_refs.py before rendering*
 5. 阅读状态透明：全文 ✅ / 仅摘要 ⚠ / 不可获取 ❌ *honest reading-depth labels*
 6. 交叉验证意见逐条回应（采纳/不采纳+理由），不盲从 *every verification comment gets adopt/reject + reason*
 
 ## 📜 Credits · 致谢
 
-设计理念借鉴 [nature-skills](https://github.com/Yuan1z0825/nature-skills)（袁一哲团队）：Router 分层、六维评分、检索降级链、论文卡片等机制。
+设计理念借鉴 [nature-skills](https://github.com/Yuan1z0825/nature-skills)（袁一哲团队）：Router 分层、评分维度设计（v1 六维 → v2 七维）、检索降级链、论文卡片等机制。
 *Design ideas borrowed from nature-skills (Yuan1z0825 team): routing, scoring, search fallback, paper cards.*
 
 ## 📄 License · 许可证
