@@ -29,6 +29,21 @@ jobs:
       - name: JS entrypoints parse
         run: node --check index.mjs && node --check skills.mjs
 
+      - name: Install render/test dependencies
+        run: python -m pip install --quiet markdown
+
+      - name: Script unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: render_report HTML smoke test
+        run: |
+          python -c "from pathlib import Path; Path('/tmp/smoke.md').write_text('# smoke\n\n| a | b |\n|---|---|\n| 1 | 2 |\n', encoding='utf-8')"
+          python skills/shidi/scripts/render_report.py /tmp/smoke.md --out /tmp/render --html-only
+          test -s /tmp/render/smoke.html
+
+      - name: verify_refs offline smoke test
+        run: python skills/shidi/scripts/verify_refs.py --style-only README.md
+
       - name: Install example dependencies
         run: python -m pip install --quiet -r examples/materials_small_data/requirements.txt
 

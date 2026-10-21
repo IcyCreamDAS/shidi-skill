@@ -138,6 +138,54 @@ if example.is_dir():
     for name in ("run_demo.py", "make_synthetic_data.py", "requirements.txt", "README.md"):
         check((example / name).is_file(), f"examples/materials_small_data/{name} exists")
 
+# -- 9. required files, docs contract, privacy guard ---------------------
+required = [
+    "README.md",
+    "README_EN.md",
+    "LICENSE",
+    "package.json",
+    "cordis.patch.yml",
+    "index.mjs",
+    "skills.mjs",
+    "validate.py",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "THIRD_PARTY_NOTICES.md",
+    ".gitattributes",
+    ".github/workflows/ci.yml",
+    "skills/shidi/SKILL.md",
+    "skills/shidi/scripts/extract_pdfs.py",
+    "skills/shidi/scripts/fetch_pdfs.py",
+    "skills/shidi/scripts/render_report.py",
+    "skills/shidi/scripts/verify_refs.py",
+    "skills/shidi/references/scoring-system.md",
+    "tests/__init__.py",
+]
+missing = [rel for rel in required if not (ROOT / rel).is_file()]
+check(not missing, "required files present", ", ".join(missing))
+check(any((ROOT / "tests").glob("test_*.py")), "tests/ has test modules")
+
+# SKILL.md must only point at scripts/references that really exist
+try:
+    skill_text = read_text("skills/shidi/SKILL.md")
+    script_refs = sorted(set(re.findall(r"scripts/([A-Za-z0-9_]+.py)", skill_text)))
+    bad_scripts = [name for name in script_refs if not (ROOT / "skills/shidi/scripts" / name).is_file()]
+    check(not bad_scripts, "SKILL.md script references resolve", ", ".join(bad_scripts))
+    ref_refs = sorted(set(re.findall(r"references/([A-Za-z0-9_-]+.md)", skill_text)))
+    bad_refs = [name for name in ref_refs if not (ROOT / "skills/shidi/references" / name).is_file()]
+    check(not bad_refs, "SKILL.md reference links resolve", ", ".join(bad_refs))
+except FileNotFoundError:
+    pass
+
+# no personal email or obvious credential hardcoded in shipped code
+shipped = [p for p in (ROOT / "skills").rglob("*.py")] + [ROOT / "README.md", ROOT / "README_EN.md"]
+leaks = []
+for path in shipped:
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    if "shidi.research@gmail.com" in text or "ghp_" in text or "npm_" in text:
+        leaks.append(path.relative_to(ROOT).as_posix())
+check(not leaks, "no hardcoded email/token in shipped files", ", ".join(leaks))
+
 # -- summary --------------------------------------------------------------
 print()
 if failures:

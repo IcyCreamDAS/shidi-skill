@@ -1,0 +1,9 @@
+# Normalize line endings (the repo is edited on Windows and CI runs on Linux)
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.zip binary

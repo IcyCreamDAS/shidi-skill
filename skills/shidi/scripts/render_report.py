@@ -6,24 +6,42 @@
     python render_report.py report.md --html-only      # 只出 HTML
     python render_report.py report.md --out dir/       # 指定输出目录
 
-PDF 通过本机 Edge(Windows 自带)headless 打印生成,零 Python 依赖。
-找不到 Edge 时降级为只出 HTML 并提示。
+HTML 渲染依赖 markdown 包(pip install markdown)。PDF 通过本机已安装的
+Edge / Chrome / Chromium headless 打印,跨平台自动探测(Windows / macOS / Linux);
+也可用环境变量 SHIDI_BROWSER 指定浏览器可执行文件。
+找不到浏览器时降级为只出 HTML 并提示。
 """
 
 from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-EDGE_CANDIDATES = [
+# 平台默认安装路径(便携版/非标准安装请用 SHIDI_BROWSER 指定)
+WINDOWS_BROWSERS = [
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
     r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
     r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
 ]
+MAC_BROWSERS = [
+    "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/Applications/Chromium.app/Contents/MacOS/Chromium",
+]
+BROWSER_NAMES = (
+    "msedge",
+    "microsoft-edge",
+    "google-chrome",
+    "google-chrome-stable",
+    "chromium",
+    "chromium-browser",
+    "chrome",
+)
 
 CSS = """
 body { font-family: "Microsoft YaHei", "SimSun", "Segoe UI", sans-serif;
@@ -44,15 +62,32 @@ a { color: #0645ad; }
 """
 
 
-def find_browser() -> str | None:
-    for cand in EDGE_CANDIDATES:
+def browser_candidates():
+    """按优先级给出候选浏览器:SHIDI_BROWSER -> PATH 中的命令 -> 平台默认安装路径。"""
+    override = os.environ.get("SHIDI_BROWSER", "").strip()
+    if override:
+        yield override
+    for name in BROWSER_NAMES:
+        found = shutil.which(name)
+        if found:
+            yield found
+    for cand in WINDOWS_BROWSERS + MAC_BROWSERS:
         if Path(cand).exists():
+            yield cand
+
+
+def find_browser() -> str | None:
+    for cand in browser_candidates():
+        if Path(cand).exists() or shutil.which(cand):
             return cand
     return None
 
 
 def md_to_html(md_text: str) -> str:
-    import markdown
+    try:
+        import markdown
+    except ImportError as exc:  # 渲染 HTML 的必需依赖,退化为报错而不是半成品
+        raise RuntimeError("HTML 渲染需要 markdown 包: pip install markdown") from exc
     body = markdown.markdown(md_text, extensions=["tables", "fenced_code", "toc"])
     return (
         "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n"
@@ -71,7 +106,7 @@ def html_to_pdf(browser: str, html_path: Path, pdf_path: Path) -> bool:
     ]
     try:
         result = subprocess.run(cmd, capture_output=True, timeout=90)
-    except (subprocess.TimeoutExpiredError, OSError) as exc:
+    except (subprocess.TimeoutExpired, OSError) as exc:
         print(f"! PDF 生成失败: {exc}", file=sys.stderr)
         return False
     if pdf_path.exists() and pdf_path.stat().st_size > 1000:
@@ -102,7 +137,11 @@ def main() -> int:
     out_dir = Path(args.out) if args.out else md_path.parent
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    html = md_to_html(md_path.read_text(encoding="utf-8"))
+    try:
+        html = md_to_html(md_path.read_text(encoding="utf-8"))
+    except RuntimeError as exc:
+        print(f"! {exc}", file=sys.stderr)
+        return 1
     html_path = out_dir / (md_path.stem + ".html")
     html_path.write_text(html, encoding="utf-8")
     print(f"✓ HTML: {html_path}")

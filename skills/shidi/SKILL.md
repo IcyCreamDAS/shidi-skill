@@ -105,7 +105,7 @@ description: 科研/工作中的"师弟"——用户给想法和方向，师弟�
   ```powershell
   python scripts/extract_pdfs.py assets/pdfs/ --out assets/md/
   ```
-  按 `.meta.json` 路由：`kind=textbased` → 精读读 `.md`（省上下文、表格不乱）；`kind=scanned/imagebased` → 走视觉路径（Read 逐页/GLM 桥接）；`kind=mixed` → 读 `.md` + 视觉补图。化学论文的结构式/谱图属图像，文本抽取必丢，视觉层照走，两层互补
+  按 `.meta.json` 路由：`kind=text_based` → 精读读 `.md`（省上下文、表格不乱）；`kind=vision` → 走视觉路径（读图/截图逐页）；`kind=mixed` → 读 `.md` + 视觉补图（`pages_needing_ocr` 列出需补读的页）。化学论文的结构式/谱图属图像，文本抽取必丢，视觉层照走，两层互补
 - 有全文 → 精读（`references/paper-reading.md`），可选产出 16 节论文卡片（`references/paper-card.md`）
 - 仅摘要 → 摘要级分析（**禁止假装读过全文**）
 - 每篇维护文献状态：全文 ✅ / 仅摘要 ⚠ / 不可获取 ❌
@@ -118,11 +118,14 @@ description: 科研/工作中的"师弟"——用户给想法和方向，师弟�
 **输出第二部分：参考文献**
 
 - 每篇：引用格式（GB/T 7714 默认）+ DOI（核验规则见 `references/citation-verify.md`）
+- **引用事前纪律（2026-08-19 加入，源自 ai4s-skills literature-survey，与 verify_refs 事后核验互补）**：
+  - 报告里每条引用必须出自本任务实际检索/读取过的文献（实际 fetch 的 URL 或 `assets/pdfs/` 里的 PDF）——**禁止凭记忆条目补引用**；想引但没读过 → 先补检索/下载，否则不写进报告
+  - 参考文献年份分布 sanity：主题若有公认奠基文献而报告年份严重偏新（全近年、无经典），说明检索角度漏了奠基文献——补一轮老文献定向检索再定稿
 - 全文获取（PaperPilot 式批量下载）：把调研全部 DOI 收集为 `dois.txt`（每行一个）→ 运行：
   ```powershell
   python scripts/fetch_pdfs.py --input dois.txt --out <任务目录>/assets/pdfs
   ```
-  自动经 OpenAlex / Unpaywall 找 OA 直链并下载；**下载失败自动分类报告**（付费墙 404 / 站点超时 / 反爬 403），成功归档到 `assets/pdfs/`，**失败则明确告知用户并输出 DOI + 引用格式，不静默跳过**
+  自动经 OpenAlex / Unpaywall 找 OA 直链并下载（Unpaywall 需 `UNPAYWALL_EMAIL` 环境变量；未设置时自动只走 OpenAlex）；**下载失败自动分类报告**（付费墙 404 / 站点超时 / 反爬 403），成功归档到 `assets/pdfs/`，**失败则明确告知用户并输出 DOI + 引用格式，不静默跳过**
 - 付费墙文献：给出 DOI + 引用格式，可提供 Sci-Hub 自查提示（仅提示，不代劳）
 - 仅摘要 / 无权限 → **告知用户"无法获取全文"**，输出 DOI + 引用格式，不静默跳过
 
@@ -155,7 +158,16 @@ description: 科研/工作中的"师弟"——用户给想法和方向，师弟�
   ```powershell
   python scripts/render_report.py ~/shidi-output/shidi_<主题>_<YYYYMMDD>.md
   ```
-  同目录产出 `.html` 与 `.pdf`（Edge 无头打印，零依赖；无 Edge 时降级只出 HTML 并提示）。交付时给用户三份格式 + 文件路径
+  同目录产出 `.html` 与 `.pdf`（本机 Edge / Chrome / Chromium 无头打印，跨平台自动探测，可用 `SHIDI_BROWSER` 指定；未装浏览器时降级只出 HTML。HTML 渲染需 `markdown` 包：`pip install markdown`）。交付时给用户三份格式 + 文件路径
+- **引用核验（2026-08-19 加入，源自 OpenAI4S literature-review，MIT）**：报告 MD 落盘后、渲染前，必跑引用核验器：
+  ```powershell
+  python scripts/verify_refs.py ~/shidi-output/shidi_<主题>_<YYYYMMDD>.md
+  ```
+  输出 JSON：`verified_dois`（每 DOI：ok=True 已解析 / ok=False 疑似编造，附真实标题年份 / ok=None 断网未核验，不得判假）+ `style` 文风 lint。规则：
+  - `ok=False` 的 DOI：**必须处理**——用 `crossref_lookup`（脚本内函数）按标题反查正确 DOI，或从原文 PDF 里取；处理不了就在报告里删掉该引用/标注"未核验"
+  - `retracted=True`：引用必须标注"已撤稿"并换文献
+  - `ok=None`（网络失败）：报告明说"引用未核验（断网）"，不许假装验证过
+  - style 的 issues 逐条修复后再交付（procnote 流程叙述必删）
 - 对话中只给摘要指引 + 文件路径，完整内容在文件里
 - 报告结构：
   1. 课题文献调研报告正文（按角度分组，引用锚定）

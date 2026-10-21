@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import sys
 import time
@@ -26,7 +27,18 @@ from pathlib import Path
 
 TIMEOUT = 30
 USER_AGENT = "shidi-literature-fetcher (research use)"
-EMAIL = "shidi.research@gmail.com"  # Unpaywall 要求提供邮箱,仅用于识别调用方
+RETRYABLE_STATUS = (429, 500, 502, 503, 504)
+DEFAULT_EMAIL = os.environ.get("UNPAYWALL_EMAIL", "").strip()
+
+
+def backoff_seconds(attempt: int, retry_after: str | None = None) -> float:
+    """第 attempt 次重试(0-based)前的等待秒数:Retry-After 优先,否则指数退避。"""
+    if retry_after:
+        try:
+            return max(0.0, min(float(retry_after), 60.0))
+        except ValueError:
+            pass
+    return min(2.0 ** attempt, 8.0)
 
 
 def doi_from_text(text: str) -> str:
@@ -39,23 +51,47 @@ def doi_from_text(text: str) -> str:
     return urllib.parse.unquote(doi)
 
 
-def http_get(url: str, headers: dict | None = None) -> bytes | None:
+def http_get(
+    url: str,
+    headers: dict | None = None,
+    retries: int = 3,
+    opener=None,
+    sleep=time.sleep,
+) -> bytes | None:
+    """带指数退避的 GET。429/5xx 重试(尊重 Retry-After),网络错误同样退避;
+
+    opener/sleep 可注入,便于离线单测。
+    """
     req_headers = {"User-Agent": USER_AGENT}
     if headers:
         req_headers.update(headers)
     req = urllib.request.Request(url, headers=req_headers)
-    try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
-            return resp.read()
-    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
-        print(f"  ! 请求失败 {url}: {exc}", file=sys.stderr)
-        return None
+    open_ = opener or urllib.request.urlopen
+    for attempt in range(retries + 1):
+        try:
+            with open_(req, timeout=TIMEOUT) as resp:
+                return resp.read()
+        except urllib.error.HTTPError as exc:
+            if exc.code in RETRYABLE_STATUS and attempt < retries:
+                retry_after = exc.headers.get("Retry-After") if exc.headers else None
+                sleep(backoff_seconds(attempt, retry_after))
+                continue
+            print(f"  ! 请求失败 {url}: HTTP {exc.code}", file=sys.stderr)
+            return None
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            if attempt < retries:
+                sleep(backoff_seconds(attempt))
+                continue
+            print(f"  ! 请求失败 {url}: {exc}", file=sys.stderr)
+            return None
+    return None
 
 
-def find_oa_pdf(doi: str) -> str:
+def find_oa_pdf(doi: str, email: str = "") -> str:
     """OpenAlex 优先,Unpaywall 兜底,返回 OA PDF URL(找不到返回空)。
 
     pdf_url 缺失时扫描所有 locations 里的 pdf_url(green OA 常见)。
+    Unpaywall 需要邮箱;未提供时跳过(OpenAlex 不需要)。
     """
     # 1. OpenAlex(无 key,公开)
     data = http_get(f"https://api.openalex.org/works/doi:{urllib.parse.quote(doi)}")
@@ -74,10 +110,12 @@ def find_oa_pdf(doi: str) -> str:
                 return pdf_url
         except Exception:
             pass
-    # 2. Unpaywall(无 key,需邮箱)
+    # 2. Unpaywall(无 key,需邮箱;未配置则跳过)
+    if not email:
+        return ""
     time.sleep(0.5)  # 礼貌限速
     data = http_get(
-        f"https://api.unpaywall.org/v2/{urllib.parse.quote(doi)}?email={EMAIL}"
+        f"https://api.unpaywall.org/v2/{urllib.parse.quote(doi)}?email={urllib.parse.quote(email)}"
     )
     if data:
         try:
@@ -92,12 +130,17 @@ def find_oa_pdf(doi: str) -> str:
     return ""
 
 
+def looks_like_pdf(data: bytes | None) -> bool:
+    """内容以 %PDF 开头(允许前导空白/UTF-8 BOM)。"""
+    return bool(data) and data[:8].lstrip().startswith(b"%PDF")
+
+
 def download_pdf(url: str, dest: Path) -> bool:
     """下载 PDF 到 dest,校验内容以 PDF 开头。"""
     data = http_get(url, headers={"Accept": "application/pdf"})
     if data is None:
         return False
-    if not data[:5].lstrip().startswith(b"%PDF"):
+    if not looks_like_pdf(data):
         print(f"  ! 不是 PDF 内容(可能是 HTML 登录页): {url}", file=sys.stderr)
         return False
     dest.write_bytes(data)
@@ -117,7 +160,20 @@ def main() -> int:
     parser.add_argument("--input", help="每行一个 DOI 的文本文件")
     parser.add_argument("--out", default="assets/pdfs", help="输出目录(默认 assets/pdfs)")
     parser.add_argument("--keep-going", action="store_true", help="个别失败不中断")
+    parser.add_argument(
+        "--email",
+        default=DEFAULT_EMAIL,
+        help="Unpaywall 联系邮箱(默认读取环境变量 UNPAYWALL_EMAIL;未设置则跳过 Unpaywall)",
+    )
     args = parser.parse_args()
+
+    email = (args.email or "").strip()
+    if not email:
+        print(
+            "提示: 未设置 UNPAYWALL_EMAIL / --email,Unpaywall 兜底已跳过(OpenAlex 仍可用)。"
+            " 设置环境变量 UNPAYWALL_EMAIL=your@email 可启用。",
+            file=sys.stderr,
+        )
 
     dois: list[str] = []
     if args.dois:
@@ -142,7 +198,7 @@ def main() -> int:
     ok, fail = 0, 0
     for idx, doi in enumerate(dois, start=1):
         print(f"[{idx}/{len(dois)}] {doi}", file=sys.stderr)
-        pdf_url = find_oa_pdf(doi)
+        pdf_url = find_oa_pdf(doi, email)
         if not pdf_url:
             print(f"  ✗ 无 OA PDF(付费墙或未收录): {doi}", file=sys.stderr)
             fail += 1

@@ -28,6 +28,26 @@ TEXT_TYPES = ("text_based", "textbased")
 VISION_TYPES = ("scanned", "image_based", "imagebased")
 MIXED_TYPES = ("mixed",)
 
+# 对外契约:meta.json 的 kind 字段(与 SKILL.md 的路由规则一一对应)
+KIND_TEXT = "text_based"
+KIND_VISION = "vision"
+KIND_MIXED = "mixed"
+
+
+def classify(pdf_type: str | None) -> str:
+    """把 pdf-inspector 的 pdf_type 映射为稳定的 kind 契约。
+
+    text_based/textbased -> text_based(读 .md)
+    scanned/image_based/imagebased -> vision(走视觉路径)
+    其余(含 mixed/空值) -> mixed(.md + 视觉补图)
+    """
+    ptype = str(pdf_type or "").strip().lower()
+    if ptype in TEXT_TYPES:
+        return KIND_TEXT
+    if ptype in VISION_TYPES:
+        return KIND_VISION
+    return KIND_MIXED
+
 
 def main() -> int:
     for stream in (sys.stdout, sys.stderr):
@@ -70,13 +90,7 @@ def main() -> int:
             data = pdf.read_bytes()
             res = pi.process_pdf_bytes(data)  # PdfResult: pdf_type/confidence/markdown/pages_needing_ocr/...
             ptype = str(res.pdf_type or "").lower()
-
-            if ptype in TEXT_TYPES:
-                kind = "text_based"
-            elif ptype in VISION_TYPES:
-                kind = "vision"
-            else:
-                kind = "mixed"
+            kind = classify(res.pdf_type)
 
             markdown = res.markdown or ""
             needs_ocr_pages = list(res.pages_needing_ocr or [])
@@ -87,6 +101,7 @@ def main() -> int:
                 md_path.write_text(markdown, encoding="utf-8")
             meta = {
                 "source": pdf.name,
+                "kind": kind,
                 "pdf_type": ptype,
                 "confidence": res.confidence,
                 "needs_vision": needs_vision,
