@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Example run artefacts (regenerate with: python run_demo.py)
+examples/materials_small_data/outputs/
+
+# Local credentials (never commit npm/github tokens)
+.npmrc
+.env

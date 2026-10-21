@@ -3,7 +3,7 @@
 ### *You bring the ideas, shidi does the legwork.*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.3-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -23,7 +23,8 @@
   <a href="#-why-shidi"><strong>Why shidi</strong></a> ·
   <a href="#-quick-start"><strong>Quick Start</strong></a> ·
   <a href="#-demo"><strong>Demo</strong></a> ·
-  <a href="#-guardrails"><strong>Guardrails</strong></a>
+  <a href="#-guardrails"><strong>Guardrails</strong></a> ·
+  <a href="#ai4s-evidence"><strong>AI4S</strong></a>
 </p>
 
 ---
@@ -41,6 +42,7 @@
 
 ## ✨ What's New
 
+- **2026-10** — 🛡 **CI + repository self-check** (`validate.py`: version consistency, relative links, script compilation, bundle structure) · 🤝 CONTRIBUTING / SECURITY / issue forms / PR template · 🧪 **AI4S methodology example** (synthetic data + LOGO validation + GP uncertainty + constrained shortlist)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
 - **2026-08** — 📄 Multi-format reports (Markdown → HTML → PDF via headless Edge printing, zero deps)
 - **2026-08** — 🔍 PDF extraction layer (text-based → Markdown to save context; scans auto-tagged `needs_vision` for the vision route)
@@ -99,6 +101,24 @@ Every job ends in **real files** — not chat text.
 | 🔬 **Paper reading** | source-map six-step deep read → 16-section paper cards → glossary |
 | 🔄 **Cross-verification (the soul)** | Always emits a verification brief → another LLM checks independently → iterate in loops |
 | 📋 **Lab notes** | Standardized experiment/batch IDs, YAML frontmatter archiving |
+
+<a id="ai4s-evidence"></a>
+## 🧪 AI4S Evidence
+
+[`examples/materials_small_data/`](examples/materials_small_data/) is a **synthetic-only**, small-data formulation → property demo that shows the claim discipline shidi uses for AI4S data work:
+
+- **Grouped validation** (leave-one-project-out) — sibling samples from the same project never leak into training, so scores stay honest
+- **GP predictions with uncertainty** — empirical coverage of ±1σ / ±2σ on held-out projects, compared with the 68% / 95% targets
+- **Constrained candidate search** — expected-improvement ranking inside `P(MFR ≥ 32) ≥ 80%`, returning a top-8 formulation shortlist
+- **Separated evidence labels** — `measured` / `predicted` / `exploratory`; only `measured` may be reported as a result
+- **Hard rule: an exploration screening range is NOT a statistical confidence interval**
+
+```bash
+cd examples/materials_small_data
+pip install -r requirements.txt && python run_demo.py
+```
+
+**What it does not claim:** the data is synthetic, so it predicts no real PEEK/PAEK property; the GP scores do not transfer to any real formulation dataset; the shortlist is not proven better than an experienced engineer's DOE intuition. Real industrial formulations stay under NDA — what is published here is the **method**, not data.
 
 ## 🧭 Flow
 

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate bundle, skill files and the AI4S example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Structure, version and link checks (stdlib only)
+        run: python validate.py
+
+      - name: JS entrypoints parse
+        run: node --check index.mjs && node --check skills.mjs
+
+      - name: Install example dependencies
+        run: python -m pip install --quiet -r examples/materials_small_data/requirements.txt
+
+      - name: Materials ML example smoke test
+        working-directory: examples/materials_small_data
+        run: python run_demo.py --quick

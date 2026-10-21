@@ -1,0 +1,57 @@
+name: Bug report
+description: Something in shidi behaves incorrectly
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please **redact confidential data and tokens** before pasting
+        anything — use synthetic examples instead of real formulation or lab data.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what actually happened?
+      placeholder: "Expected ..., got ..."
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Agent / harness and model
+      placeholder: "DeepSeek Harness 0.3.x + deepseek-flash, or Claude Code 2.1.x + claude-sonnet"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Installed skills/shidi under ...
+        2. Said "师弟，帮我 ..."
+        3. Observed ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: shidi version or commit
+      placeholder: "v0.3.0 / commit sha"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output / logs
+      description: Redact secrets, paths and customer names.
+      render: text
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I searched existing issues and this is not a duplicate
+          required: true
+        - label: I redacted confidential data and tokens from this report
+          required: true

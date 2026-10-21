@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a capability or improvement
+title: "[feat] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What research chore is painful today? Describe the workflow, not the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What should shidi do differently? Keep the workflow/deliverable shape in mind.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Literature research
+        - Experiment design
+        - Figures
+        - Paper reading
+        - Cross-verification
+        - Lab notes / data organisation
+        - Packaging / DSH bundle
+        - Docs
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: This does not require committing confidential data
+          required: true

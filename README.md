@@ -2,7 +2,7 @@
 ### *Your junior lab mate in an Agent Skill — ideas in, files out*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.3-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -29,7 +29,8 @@
   <a href="#-why-shidi--为什么用它"><strong>Why shidi</strong></a> ·
   <a href="#-quick-start--快速开始"><strong>Quick Start</strong></a> ·
   <a href="#-demo--示例预览"><strong>Demo</strong></a> ·
-  <a href="#-guardrails--防护机制"><strong>Guardrails</strong></a>
+  <a href="#-guardrails--防护机制"><strong>Guardrails</strong></a> ·
+  <a href="#ai4s-evidence"><strong>AI4S</strong></a>
 </p>
 
 ---
@@ -48,6 +49,7 @@
 
 ## ✨ What's New · 更新日志
 
+- **2026-10** — 🛡 **CI + 仓库自检**（`validate.py`：版本一致性 / 相对链接 / 脚本编译 / bundle 结构一次验完）· 🤝 CONTRIBUTING / SECURITY / Issue 表单 / PR 模板 · 🧪 **AI4S 方法学示例**（合成数据 + LOGO 验证 + GP 不确定性 + 约束候选）
 - **2026-08** — 📥 **PDF 批量下载**（OpenAlex/Unpaywall 自动定位 OA 直链，失败分类报告，不静默跳过）· *batch PDF download with honest failure reports*
 - **2026-08** — 📄 **多格式报告**（Markdown → HTML → PDF，Edge 无头打印，零依赖）· *MD → HTML → PDF rendering, zero deps*
 - **2026-08** — 🔍 **PDF 抽取层**（文本型转 Markdown 省上下文，扫描件自动标 needs_vision 走视觉路径）· *PDF extraction layer: text → Markdown, scans → vision route*
@@ -110,6 +112,24 @@
 | 🔬 **论文精读** *Paper reading* | source-map 六步精读 → 16 节论文卡片 → 术语表 |
 | 🔄 **交叉验证门（灵魂）** *Cross-verification* | 必出验证任务书 → 交给另一个 LLM 独立验证 → 回环迭代 |
 | 📋 **实验记录** *Lab notes* | 实验 ID / 批次 ID 标准化，YAML frontmatter 归档 |
+
+<a id="ai4s-evidence"></a>
+## 🧪 AI4S Evidence · 材料信息学方法学示例
+
+[`examples/materials_small_data/`](examples/materials_small_data/) 是一个**只用合成数据**的小样本「配方 → 性能」建模示例，演示 shidi 做 AI4S 数据工作时坚持的口径：
+
+- **分组留出验证**（按项目整组留出 LOGO）——同批次样本不参与训练，避免分数虚高
+- **GP 预测带不确定性**——在留出项目上统计 ±1σ / ±2σ 的**实际覆盖率**，和 68% / 95% 理论值对照
+- **约束下的候选推荐**——在 `P(MFR ≥ 32) ≥ 80%` 的可行域内用 Expected Improvement 排序，输出 top-8 配方候选
+- **三类证据标签分开**——`measured` / `predicted` / `exploratory`，结论只允许用 `measured`
+- **硬规则：探索级筛选范围 ≠ 统计置信区间**
+
+```bash
+cd examples/materials_small_data
+pip install -r requirements.txt && python run_demo.py
+```
+
+**它不主张什么**：数据是合成的，不能预测真实 PEEK/PAEK 性能；GP 分数不能迁移到真实配方；候选不保证优于工程师的 DOE 直觉。真实企业配方受 NDA 约束不会进仓库——公开的是**方法**，不是数据。
 
 ## 🧭 Flow · 流程图
 
