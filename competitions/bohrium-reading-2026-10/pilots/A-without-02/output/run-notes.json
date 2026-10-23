@@ -1,0 +1,84 @@
+{
+  "schema": "local-paper-reading-run/v1",
+  "status": "completed",
+  "started_at_utc": "2026-10-23T05:56:48+00:00",
+  "ended_at_utc": "2026-10-23T06:04:37.749423+00:00",
+  "duration_seconds": 469.749423,
+  "timestamp_scope": "开始时间来自首条终端date -u实测（秒级）；结束时间是最终校验完成后本脚本的真实UTC时间，不含工具结果传回与最终消息耗时。",
+  "tool_usage": {
+    "functions.exec_calls": 5,
+    "exec_command_calls": 5,
+    "total_including_orchestration_and_nested_tools": 10,
+    "other_tool_calls": 0,
+    "counting_scope": "本子任务实际发起的工具调用；外层编排与内层执行分别计数，保守共10次。不含父任务调用；平台计量接口不可获取。"
+  },
+  "failures": 0,
+  "retries": 0,
+  "human_intervention_during_execution": false,
+  "human_intervention_note": "仅接收初始任务指派；没有中途用户澄清、人工补值或审批。",
+  "model_information": {
+    "declared_identity": "Codex, based on GPT-6（会话开发者说明）",
+    "served_model_id": null,
+    "reasoning_effort": null,
+    "temperature": null,
+    "other_settings": null,
+    "token_usage": null,
+    "cost": null,
+    "unavailable_reason": "执行环境未提供实际服务模型标识、推理/采样配置、token计量或费用接口；不得由角色名称推断。"
+  },
+  "limits": {
+    "requested_tool_calls_max": 12,
+    "requested_wall_clock_seconds_max": 900,
+    "requested_core_output_bytes_max": 24576,
+    "core_output_bytes": {
+      "report.md": 10948,
+      "evidence.csv": 12217
+    },
+    "core_output_bytes_total": 23165,
+    "within_observed_limits": true,
+    "hard_enforcement": {
+      "tool_calls": false,
+      "wall_clock": false,
+      "core_output_bytes_assertion": true
+    },
+    "enforcement_note": "调用次数与15分钟预算由执行者自限并在末尾核验，没有平台硬阻断/计时终止机制；文件合计字节数用断言检查。"
+  },
+  "sources_read": [
+    "PROMPT.md",
+    "task.md",
+    "criteria.md",
+    "run.json",
+    "input/paper.md",
+    "input/paper.xml"
+  ],
+  "network_used": false,
+  "dependencies_installed": false,
+  "git_used": false,
+  "skill_used": null,
+  "output_files": [
+    "output/report.md",
+    "output/evidence.csv",
+    "output/commands.log",
+    "output/run-notes.json"
+  ],
+  "trace": {
+    "terminal_output_file": "output/commands.log",
+    "capture_method": "5次实际终端执行的stdout与stderr均当次通过tee写入/追加",
+    "complete_native_session": false,
+    "native_session_export": null,
+    "limitation": "commands.log是实际终端输出，不是完整原生会话，不包含全部工具请求JSON、模型内部推理、平台token/费用或父任务会话；没有事后编造终端输出。"
+  },
+  "validation": [
+    "41条证据ID唯一且必填字段完整",
+    "CSV所有XML根锚点存在",
+    "报告引用证据ID存在",
+    "报告模拟表全部单元格与XML表1/2一致",
+    "CSV模拟表与XML一致",
+    "关键实验相对变化分母核验",
+    "核心文件合计字节数与实测耗时在限额内"
+  ],
+  "core_output_sha256": {
+    "report.md": "2c7a9a23808d5f8f7761dff4e8d498e3bcaea26de16d7a74eb4af64ac5034bbb",
+    "evidence.csv": "600637c23723c1b786a25d65365f06594c435e1a6bb3a6fa3acfe2deaad83e91"
+  }
+}
