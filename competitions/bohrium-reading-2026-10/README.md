@@ -10,6 +10,7 @@
 - [评估参考](evaluation/README.md)：运行代理不得读取；当前参考由 AI 标注，需人工复核。
 - [进展与限制](STATUS.md)：区分代码检查、试跑结果和正式赛事证据。
 - [真实试跑报告](pilot-report.md)：A对照未测出准确率增益；B换篇复用完成；C保留部分输出和中断记录。原始输出、用时与失败如实保留。
+- [草稿打包与实际校验记录](packaging/README.md)：已通过官方结构检查；完整会话证据仍缺，尚未提交。
 
 ## 开始一次独立运行
 
@@ -34,4 +35,16 @@ python3 competitions/bohrium-reading-2026-10/prepare_run.py --case A --arm witho
 playground task download --challenge-id skill-13890f6a --out my-skill-challenge
 ```
 
-完整取得官方资源后，使用同版本 `make_review.py`、`check_submission.py` 和 `submit.py`，按模板生成作品、索引与回执。不要加 `--skip-datasets`。账号登录在本机进行，密钥不入库。提交需要真实会话导出；本目录不包含伪造的原生轨迹，也不提供假成绩。
+完整官方资源已取得，下载时未使用 `--skip-datasets`。`official-resources-lock.json` 固定14份资源的版本、大小和SHA-256；官方脚本不随本仓库重新分发。账号登录已解决，凭据不入库。
+
+在仓库根目录运行下列命令，资源参数指向实际下载目录，输出必须是仓库外尚不存在的目录：
+
+```sh
+python3 competitions/bohrium-reading-2026-10/build_submission.py \
+  --resources ../bohrium-challenge/datasets/paper2arm-task-skill-13890f6a-e481adb7/1/resources \
+  --out ../shidi-submission-draft-new
+```
+
+脚本先校验官方资源、冻结材料与原始试跑哈希，再复制原件、创建索引并调用同版本 `make_review.py` 与 `check_submission.py`。输出包含 `deliverables/submission.zip`、`official-check.json`、`draft-status.json`；不调用模型、联网或上传，拒绝覆盖。官方工具会给新增ZIP条目写入运行时间，因此不同构建的最终ZIP哈希可能不同；各原始文件保持一致。
+
+当前草稿固定标记为 `ready_to_submit: false`：完整真实会话导出仍缺，失败日志缺口与C中断已披露。取得会话记录、按协议完成正式验证后才能另行准备提交；本脚本不会运行 `submit.py` 或产生回执。

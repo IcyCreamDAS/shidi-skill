@@ -1,0 +1,82 @@
+{
+  "challenge_id": "skill-13890f6a",
+  "source": "https://play.bohrium.com/challenge/skill-13890f6a",
+  "dataset": "paper2arm-task-skill-13890f6a-e481adb7",
+  "dataset_version": "1",
+  "rules_version": "product-skill-rules-v2.5-read-minor-20261016-r2",
+  "download_completed_at_utc": "2026-10-23T12:32:38.183862+00:00",
+  "public_manifest_sha256": "dec3efa3e2aae3b19eda1f4cef120bcb03783f0f93e58c8955ade9d81da7d0d1",
+  "files": [
+    {
+      "path": "CONTRACT.md",
+      "bytes": 5049,
+      "sha256": "a862feb49df05b59d6b99386b62503988596ffa16ee6e1ba637347d141d699da"
+    },
+    {
+      "path": "README.md",
+      "bytes": 322,
+      "sha256": "17956adc17cc90ca40e2e52c8fe0a9a9783d7a5494491ce9ab532e7a447dce2f"
+    },
+    {
+      "path": "RECORDS.md",
+      "bytes": 2160,
+      "sha256": "6ba72a8d6a155c4b2d5763f33121de768f992f23dab28e6f21d5caffb1697e94"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 5521,
+      "sha256": "8da22cfe940ce8b3a4875f44b9e7fb453053c801213658fdfdf6ddbedc4bbc21"
+    },
+    {
+      "path": "SCORING.md",
+      "bytes": 11664,
+      "sha256": "0163cf58523a75bec8a592d85776d8434a841b7f2dad58e2c06df694b6b39238"
+    },
+    {
+      "path": "SUBMISSION.md",
+      "bytes": 6463,
+      "sha256": "1a8aef653b6cc2affdc23b20710dec673e0dd81f99c5860275166c3685795671"
+    },
+    {
+      "path": "check_submission.py",
+      "bytes": 10802,
+      "sha256": "c3de01222dc3e46ccac3d3f46b9e7462a608e9be7addb9da22d1ec105770aa00"
+    },
+    {
+      "path": "make_review.py",
+      "bytes": 2555,
+      "sha256": "c6ab9a784f5b44087930699b35c4e74a924257bbd9c744be179c6eec1009b3d3"
+    },
+    {
+      "path": "review_contract.py",
+      "bytes": 11092,
+      "sha256": "6a8e85d299463b3614035b32ea0e1252fbae8297c71a846136b46734335d0f83"
+    },
+    {
+      "path": "submit.py",
+      "bytes": 9027,
+      "sha256": "332916dc76f0386e7190a9d26279578422dff95a186fee9f832e7bdb4c7ee3a1"
+    },
+    {
+      "path": "templates/case.txt",
+      "bytes": 675,
+      "sha256": "ec4cc8dea64f9f146abff03701a381b0a0fd2e0d75e9c4a8349ec3be8bba13a4"
+    },
+    {
+      "path": "templates/manifest-with-bonus.json",
+      "bytes": 2800,
+      "sha256": "5c16f5121f17aef717326697f2fcb7094459560d0ae3fa2223e4d7af06f6d7ec"
+    },
+    {
+      "path": "templates/manifest.json",
+      "bytes": 1743,
+      "sha256": "8b0ba1026b26e76b1ac463684d97f16fdb54e182e89c41f3526097d69917ac8d"
+    },
+    {
+      "path": "templates/review-selections.json",
+      "bytes": 142,
+      "sha256": "4ffe923f04c61bdd7e3375b2a7be113a5b897158a7e481c53040efc076ff65f4"
+    }
+  ],
+  "download_note": "Complete official CLI download, without skip-datasets. An ephemeral loopback adapter forwarded authenticated Wenyon requests and its presigned object downloads through the environment-managed HTTP proxy. Official resource bytes were not modified; every listed size and SHA-256 was independently checked. Credentials and presigned URLs are excluded from this repository."
+}

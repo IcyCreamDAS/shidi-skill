@@ -50,6 +50,7 @@
 ## ✨ What's New · 更新日志
 
 - **开发中：指定论文阅读** — 提供论文后直接进入[条件提取与证据核验](skills/shidi/references/focused-reading.md)，检查配方基准、模拟/实测区别、指标定义及正文与表格冲突；材料不足时说明边界。参赛准备与真实试跑状态见 [Bohrium 阅读案例](competitions/bohrium-reading-2026-10/README.md)。
+- **参赛草稿打包** — 根据固定哈希的官方资源，保存原始输出并生成证据索引。[草稿已通过结构校验](competitions/bohrium-reading-2026-10/packaging/README.md)，完整会话记录仍缺，尚未提交或取得赛事成绩。
 - **2026-10** — 🛡 **发布版自检闭环**：GitHub Actions CI + `validate.py`（版本/链接/脚本编译/必需文件）+ `tests/` 离线单测 · 补上 `verify_refs.py` 引用核验（DOI 解析/撤稿检测/文风 lint）· 修 `render_report.py` 超时 bug 并支持跨平台浏览器探测 · `fetch_pdfs.py` 去掉硬编码邮箱、加指数退避
 - **2026-10** — 🔬 **确定性评分 + 数据 schema + AI4S 示例升级**：`score_papers.py` 七维评分（封顶/一票否决/排序由脚本算，v2 权重下调期刊与人脉）· 文献→配方/性能抽取 schema（测试标准/条件/n/误差/三类标签）· 示例升级（质量分数闭合、ARD 长度尺度、ECI 采集函数、1-2 基准配方校准对比、Pareto 前沿、文献先验边界接口）
 - **2026-08** — 📥 **PDF 批量下载**（OpenAlex/Unpaywall 自动定位 OA 直链，失败分类报告，不静默跳过）· *batch PDF download with honest failure reports*
