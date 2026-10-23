@@ -4,11 +4,11 @@
   "optional_issues": {},
   "review_contract": {
     "version": "bounded-review-v1",
-    "core_bytes": 41941,
-    "selected_bytes": 112895,
+    "core_bytes": 44292,
+    "selected_bytes": 115246,
     "audit_bytes": 24430,
     "selection_count": 28,
-    "original_text_bytes": 963113,
+    "original_text_bytes": 965470,
     "source_file_count": 88,
     "audit_files": [
       {

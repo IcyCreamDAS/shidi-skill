@@ -169,7 +169,7 @@ def make_manifest(resources):
             "skill_version": SKILL_VERSION if with_skill else "none",
             "output_files": outputs, "primary_output_files": outputs, "trace_files": logs,
             "started_at": notes.get("started_at_utc", "2026-10-23T06:08:39Z"),
-            "duration_seconds": notes.get("elapsed_seconds"), "cost": None,
+            "duration_seconds": notes.get("elapsed_seconds", notes.get("duration_seconds")), "cost": None,
             "unavailable_metadata": "精确模型配置、token和费用不可取得；C结束时间及工具计数也不可取得",
             "human_steps": [],
             "result": "运行完成；只作开发试跑，评阅见 report.md" if notes else "写出核心文件后因用量限制中断；部分文本符合预期，不声明完整运行或预算合规",

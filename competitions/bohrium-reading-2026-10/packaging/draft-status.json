@@ -1,19 +1,19 @@
 {
   "status": "draft-evidence-incomplete",
   "ready_to_submit": false,
-  "archive_sha256": "fc2557f9c2475abd76df815f32861846aa33798cd4d5860726bbea09e6b2da46",
-  "archive_bytes": 349390,
+  "archive_sha256": "a475a975598673301f43919b291d1d4b97b53ec2d53c9c5736a028cda4c5d0f6",
+  "archive_bytes": 350493,
   "official_structure_check": {
     "status": "intake_complete",
     "missing": [],
     "optional_issues": {},
     "review_contract": {
       "version": "bounded-review-v1",
-      "core_bytes": 41941,
-      "selected_bytes": 112895,
+      "core_bytes": 44292,
+      "selected_bytes": 115246,
       "audit_bytes": 24430,
       "selection_count": 28,
-      "original_text_bytes": 963113,
+      "original_text_bytes": 965470,
       "source_file_count": 88,
       "audit_files": [
         {

@@ -16,6 +16,21 @@ spec.loader.exec_module(builder)
 
 
 class SubmissionPackagingTests(unittest.TestCase):
+    def test_manifest_preserves_duration_from_both_original_note_schemas(self):
+        original_read = builder.read_json
+        def fixture_read(path):
+            if path.name == "manifest-with-bonus.json":
+                return {"cases": []}
+            return original_read(path)
+        with patch.object(builder, "read_json", side_effect=fixture_read):
+            manifest = builder.make_manifest(Path("unused-official-template-directory"))
+        runs = {row["id"]: row for row in manifest["runs"]}
+        self.assertEqual(runs["A-with-02"]["duration_seconds"], 610.134)
+        self.assertEqual(runs["A-without-02"]["duration_seconds"], 469.749423)
+        self.assertEqual(runs["B-with-02"]["duration_seconds"], 407.707281)
+        self.assertIsNone(runs["C-with-02"]["duration_seconds"])
+        self.assertFalse(manifest["submission_readiness"]["ready_to_submit"])
+
     def test_output_cannot_overwrite_evidence_or_source_repository(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
