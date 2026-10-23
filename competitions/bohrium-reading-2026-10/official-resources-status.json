@@ -1,0 +1,22 @@
+{
+  "checked_date_utc": "2026-10-23",
+  "challenge_id": "skill-13890f6a",
+  "challenge_url": "https://play.bohrium.com/challenge/skill-13890f6a",
+  "challenge_statement_fetched": true,
+  "playground_cli_version": "0.1.42",
+  "playground_package_sha256": "f1e648fb7a0860dbd2466638cda886598ce7205e5e77da8469d3a84c60d58a43",
+  "dataset": "paper2arm-task-skill-13890f6a-e481adb7",
+  "dataset_version": "1",
+  "download_attempt": "playground task download --challenge-id skill-13890f6a --out /tmp/bohrium-challenge",
+  "skip_datasets": false,
+  "official_resource_download_status": "blocked-authentication-required",
+  "observed_error_code": "COMMAND_FAILED",
+  "observed_http": 400,
+  "observed_error_message": "no SDK Vouch session; run bohr --profile 'default' auth login (one shared login)",
+  "official_manifest_template_obtained": false,
+  "official_checker_run": false,
+  "submitted": false,
+  "attempt_id": null,
+  "score": null,
+  "note": "No official validation, upload, receipt or score is claimed. Login is required before downloading the complete official resources."
+}

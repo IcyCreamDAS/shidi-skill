@@ -17,7 +17,7 @@
 | `formulation_id` | 文献内配方编号（没有就填 1,2,3） | F3 |
 | `component` | 组分名（树脂/玻纤/偶联剂/润滑剂…） | glass fibre |
 | `role` | 组分角色 | matrix / reinforcement / coupling / lubricant / filler |
-| `wt_pct` | 质量分数（%）；若原文为 phr/vol%，换算后注明 | 30 |
+| `wt_pct` | 质量分数（%）；只在原文明确或换算依据齐全时填写，未知为 not-reported | 30 |
 | `property` | 性能名（统一命名） | tensile strength |
 | `value` | 数值 | 182.5 |
 | `unit` | 单位（统一到 SI 或行业惯用单位并注明） | MPa |
@@ -41,11 +41,14 @@
 
 ## 汇总规则
 
+0. **保留配方基准**：原文为 phr、vol% 或相对基体的添加量时，在 notes 保留原比例与分母；需要时增加 `composition_value`、`composition_unit`、`composition_basis` 列。缺密度或添加基准不能换算成 wt%；“基体 9:1 + 添加剂 1%”不能直接默认为总配方 90/10/1 wt%。
 1. **同标准同条件才可合并**：不同标准的数据分表存放；要合并必须先换算并注明。
 2. **负样本必收**：失败配方/未达指标的数据一并记录（`value_type=measured`，notes 标"failed formulation"），只收冠军数据会让模型学到偏差。
 3. **单位统一**：MPa / GPa / kJ/m² / g·10min⁻¹；混用单位会在建模时被当作噪声。
 4. **来源可追溯**：每行必须有 doi + source_page；聚合值（如文献综述的表）标原始出处。
 5. **缺元数据**：一律 `not-reported`，不要猜；建模前按缺失模式决定是否剔除该行。
+   仅收到摘要、缺页或缺附件时，对无法检查的字段使用 `not-available-in-input`，不声称全文没有报告。
+6. **保留定义与矛盾**：notes 记录指标分母、作者报告值与独立复算值的差异；质量损失百分比、原子脱离比例和体积磨损率不得混作同一个 property。制备温度写入 test_conditions/notes，`temperature_C` 只写实际测试温度。
 
 ## 与建模示例的衔接
 

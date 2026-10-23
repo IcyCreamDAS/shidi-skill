@@ -42,6 +42,7 @@
 
 ## ✨ What's New
 
+- **In development: supplied-paper reading** — Route supplied papers directly to [condition extraction and evidence checking](skills/shidi/references/focused-reading.md). Preserve composition bases, separate simulations from measurements, check metric definitions and text/table conflicts, and state input limitations. See the [Bohrium reading preparation](competitions/bohrium-reading-2026-10/README.md) for actual pilot status.
 - **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
 - **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
