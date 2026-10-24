@@ -1,0 +1,23 @@
+{
+  "status": "completed",
+  "case": "holdout-pd",
+  "arm": "without",
+  "freeze_lock": "freeze-patched.json",
+  "prepared_at_utc": "2026-10-24T07:59:01.565854+00:00",
+  "task_sha256": "0093a05f5a63dc99926cc944b6ac087a4de6322299585079ecbd21a3cc4e58ff",
+  "prompt_sha256": "82f37b05a290d4fac050ed30b8a4715b317ceb8a13af795eeb67835d9cf070e5",
+  "skill_sha256": null,
+  "native_conversation_export": false,
+  "visible_conversation_copy": true,
+  "required_model": "kimi-code/kimi-for-coding",
+  "required_reasoning_effort": "max",
+  "agent_id": "agent-7",
+  "assistant_turns": 1,
+  "model": "kimi-code/kimi-for-coding",
+  "reasoning_effort": "max",
+  "tokens": {"inputOther": 1194, "output": 704, "inputCacheRead": 96768, "inputCacheCreation": 0},
+  "wall_time_seconds_by_turn": [20.858],
+  "cost": null,
+  "cost_currency": "CNY",
+  "cost_status": "unverifiable-no-per-run-charge-field"
+}

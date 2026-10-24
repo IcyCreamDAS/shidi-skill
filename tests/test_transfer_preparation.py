@@ -24,19 +24,24 @@ class TransferPreparationTests(unittest.TestCase):
     def test_both_arms_receive_same_inputs_without_gold_leakage(self):
         with tempfile.TemporaryDirectory() as tmp:
             a, b = Path(tmp) / "with", Path(tmp) / "without"
-            x, y = prepare.prepare("with", a), prepare.prepare("without", b)
-            for key in ("input_sha256", "task_sha256", "criteria_sha256", "recorder_sha256"):
-                self.assertEqual(x[key], y[key])
-            self.assertEqual(len(list((a / "input").glob("*.xml"))), 3)
-            self.assertTrue((a / "skill/SKILL.md").is_file())
-            self.assertFalse((b / "skill").exists())
-            for root in (a, b):
-                self.assertFalse((root / "evaluation").exists())
-                self.assertFalse((root / "freeze.json").exists())
-                self.assertEqual(list((root / "output").iterdir()), [])
-            self.assertIsNone(y["native_conversation_export"])
-            with self.assertRaises(FileExistsError):
-                prepare.prepare("without", b)
+            lock = json.loads((BASE / "freeze.json").read_text(encoding="utf-8"))
+            real_hashes = prepare.hashes
+            frozen_skill = lambda root: (lock["skill_sha256"] if Path(root) == prepare.REPO / "skills/shidi"
+                                         else real_hashes(root))
+            with patch.object(prepare, "hashes", side_effect=frozen_skill):
+                x, y = prepare.prepare("with", a), prepare.prepare("without", b)
+                for key in ("input_sha256", "task_sha256", "criteria_sha256", "recorder_sha256"):
+                    self.assertEqual(x[key], y[key])
+                self.assertEqual(len(list((a / "input").glob("*.xml"))), 3)
+                self.assertTrue((a / "skill/SKILL.md").is_file())
+                self.assertFalse((b / "skill").exists())
+                for root in (a, b):
+                    self.assertFalse((root / "evaluation").exists())
+                    self.assertFalse((root / "freeze.json").exists())
+                    self.assertEqual(list((root / "output").iterdir()), [])
+                self.assertIsNone(y["native_conversation_export"])
+                with self.assertRaises(FileExistsError):
+                    prepare.prepare("without", b)
 
     def test_real_failure_and_retry_streams_are_preserved(self):
         with tempfile.TemporaryDirectory() as tmp:
