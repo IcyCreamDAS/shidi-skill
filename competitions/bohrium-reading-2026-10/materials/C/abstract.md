@@ -1,0 +1,7 @@
+# Molecular Dynamics Simulation and Experimental Study of the Mechanical and Tribological Properties of GNS-COOH/PEEK/PTFE Composites
+
+DOI: 10.3390/polym16182572
+
+AbstractMolecular dynamics (MD) simulations were first employed to achieve the optimal sintering temperature of carboxyl-functionalized graphene (GNS-COOH)-modified polyether ether ketone (PEEK)/polytetrafluoroethylene (PTFE) composites. A model of GNS-COOH/PEEK/PTFE composites was constructed to simulate the effects of different sintering temperatures on the mechanical and tribological properties, as well as their underlying atomic mechanisms. Samples of PTFE composites were prepared and characterized through experimental methods. Results revealed that the sintering temperature significantly affects the intermolecular forces, mechanical properties, and tribological characteristics of the composites. The agglomeration of the PEEK/PTFE composite matrix was effectively mitigated by introducing GNS-COOH. When the sintering temperature was controlled at 360 °C, the compressive strength of GNS-COOH/PEEK/PTFE composites was improved compared to GNS/PEEK/PTFE composites, albeit with a slight reduction in wear resistance. This study provides a theoretical reference for the preparation process and performance evaluation of new materials.Keywords: PTFE, PEEK, graphene, molecular dynamics, experiment
+
+Source: Dong et al., Polymers (2024), CC BY 4.0. Extracted from PMC11435391 XML. This file intentionally contains only title, DOI and abstract.

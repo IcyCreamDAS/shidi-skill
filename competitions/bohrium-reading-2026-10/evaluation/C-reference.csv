@@ -1,0 +1,7 @@
+id,expected,source_anchor
+C01,明确输入仅有摘要，不能完成完整实验条件表,input/abstract.md
+C02,可支持研究含 MD 与实验、360 °C 与定性性能权衡,input/abstract.md
+C03,不补入具体配方百分比或全部烧结过程,input/abstract.md
+C04,不补入测试标准/载荷/时长/每组性能值,input/abstract.md
+C05,缺失标记为输入中不可确认，不断言全文未报告,input/abstract.md
+C06,请求全文方法与原始结果表/必要补充材料；给出有限结论,input/abstract.md

@@ -1,0 +1,7 @@
+check_id,saved_output_status,output_anchor,review_note,run_status
+C01,observed-correct,report opening and §1; M02,明确仅有摘要，完整条件不能提取,interrupted-with-partial-output
+C02,observed-correct,report §2; C01–C06,保留MD与实验、360°C和强度/耐磨权衡，未将摘要方向当定量值,interrupted-with-partial-output
+C03,observed-correct,report §3–4; G03; P01,配方比例和全部热历程保持未知,interrupted-with-partial-output
+C04,observed-correct,report §4; T01–T03,未补入标准、载荷、时长或每组性能数值,interrupted-with-partial-output
+C05,observed-correct,report opening and final paragraph; G03; T01–T05,使用not-available-in-input并明确不等于全文未报告,interrupted-with-partial-output
+C06,observed-correct,report §5–6; I01,给出有限筛选结论，列出方法、结果表/原始曲线和必要补充材料,interrupted-with-partial-output

@@ -1,0 +1,25 @@
+{
+  "schema": "shidi-run-preparation/v1",
+  "status": "prepared-not-executed",
+  "case": "A",
+  "arm": "without",
+  "prepared_at_utc": "2026-10-23T05:53:43.824892+00:00",
+  "input_sha256": {
+    "paper.md": "6239c4d864de7222e6e37facd0339cdf6d61cae36488c799b0e380ef59f854dc",
+    "paper.xml": "7d7fa9c4f8c17990ab5e98e2e9248da534d9a099fc162e1d4cddef92a981d468"
+  },
+  "task_sha256": "7482d6bba1ab1edbe00ae4613b47217169987829b527495da5f55f4b8f796a3a",
+  "criteria_sha256": "f5348b9208ed5d23934e0e3c941a929a35a05f18b7f9a066f30ffd0df4be9ccd",
+  "prompt_sha256": "4dbb5dccf50e0fb493e119d678df7795c0f0fd3ad859ce0e2dc60cfe08a8f38c",
+  "skill_sha256": null,
+  "limits": {
+    "tool_calls": 12,
+    "wall_clock_minutes": 15,
+    "output_bytes": 24576
+  },
+  "model": null,
+  "model_settings": null,
+  "cost": null,
+  "actual_session_trace": null,
+  "note": "Preparation only; record actual model/settings/usage and export the real session separately."
+}

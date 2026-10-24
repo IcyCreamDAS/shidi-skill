@@ -1,0 +1,45 @@
+claim_id,claim,value,unit,evidence_type,conditions,source_anchor,notes,doi,value_type
+F1,纯PTFE配方,100;0;0,vol%,作者方法,组分顺序PTFE;PEEK;Nano-ZrO2；总配方体积为分母,input/paper.xml#polymers-15-03626-t001/row1,各行合计100；wt_pct=not-reported；未换算质量分数,10.3390/polym15173626,
+F2,PEEK/PTFE配方,90;10;0,vol%,作者方法,组分顺序PTFE;PEEK;Nano-ZrO2；总配方体积为分母,input/paper.xml#polymers-15-03626-t001/row2,各行合计100；wt_pct=not-reported；未换算质量分数,10.3390/polym15173626,
+F3,Nano-ZrO2/PTFE配方,92;0;8,vol%,作者方法,组分顺序PTFE;PEEK;Nano-ZrO2；总配方体积为分母,input/paper.xml#polymers-15-03626-t001/row3,各行合计100；wt_pct=not-reported；未换算质量分数,10.3390/polym15173626,
+F4,Nano-ZrO2/PEEK/PTFE配方,82;10;8,vol%,作者方法,组分顺序PTFE;PEEK;Nano-ZrO2；总配方体积为分母,input/paper.xml#polymers-15-03626-t001/row4,各行合计100；wt_pct=not-reported；未换算质量分数,10.3390/polym15173626,
+R1,PTFE原料,25;2.16,μm;g/cm³,作者方法,POLYFLON M-18F；Daikin,input/paper.xml#sec2dot1-polymers-15-03626/p1,原料平均粒径及密度,10.3390/polym15173626,
+R2,ZrO2原料,20–40;5.89;12.31;99,nm;g/cm³;m²/g;wt%,作者方法,XFI01；江苏先丰,input/paper.xml#sec2dot1-polymers-15-03626/p1,末值是原料纯度；不是配方wt%,10.3390/polym15173626,
+R3,PEEK原料,50;1.3,μm;g/cm³,作者方法,Victrex PEEK 450 PF,input/paper.xml#sec2dot1-polymers-15-03626/p1,原文particles/pellets并用,10.3390/polym15173626,
+P1,配料混合筛分,0.1;150,mg;mesh,作者方法,天平精度；高速气流混合；筛除团聚,input/paper.xml#sec2dot1-polymers-15-03626/p2,未给批量和混合参数,10.3390/polym15173626,
+P2,冷压成型,6;45,mm;MPa,作者方法,圆柱模腔直径；液压冷压压力,input/paper.xml#sec2dot1-polymers-15-03626/p2,保压时间与试样长度not-reported,10.3390/polym15173626,
+P3,烧结,375;2;120,°C;°C/min;min,作者方法,升温；保温；自然冷却至室温,input/paper.xml#sec2dot1-polymers-15-03626/p2,气氛和冷却曲线not-reported；非测试温度,10.3390/polym15173626,
+P4,端面及清洁,2000,grit,作者方法,金相砂纸；丙酮超声；烘干后称量,input/paper.xml#sec2dot1-polymers-15-03626/p2,超声与烘干时间温度not-reported,10.3390/polym15173626,
+P5,连续阶段间操作,卸下;称重;观察;重装,操作,作者方法,每段完成后继续同一摩擦系统,input/paper.xml#sec2dot2-polymers-15-03626/p3–6,保护已形成转移膜；不是七个独立新试样；未报告逐段清洗,10.3390/polym15173626,
+P6,表征设备参数,50–1000;2560×1920;50,倍;pixel;倍,作者方法,Axio Imager M2m观察/拼接；MicroXAM-800测膜厚粗糙度,input/paper.xml#sec2dot2-polymers-15-03626/p4–6,磨屑分散剂超声分散后喷金；Quanta FEG450；分散剂未命名,10.3390/polym15173626,
+P7,转移膜图像处理,灰度;均衡;中值;Laplace;Otsu;Sobel;形态学,流程,作者方法,RGB图像处理与特征提取,input/paper.xml#sec2dot3-polymers-15-03626,灰度三维表面不是实测高度；参数/代码不完整,10.3390/polym15173626,
+T1,摩擦试验设定,180;6.3;20;120;25,N;MPa;mm;r/min;°C,作者方法,LSM-200线性往复；6.3为近似名义压力,input/paper.xml#sec2dot2-polymers-15-03626/p1–2,湿度和标准not-reported,10.3390/polym15173626,
+T2,名义压力复算,6.3661977,MPa,独立计算,180 N与6 mm直径圆面,input/paper.xml#sec2dot1-polymers-15-03626/p2;input/paper.xml#sec2dot2-polymers-15-03626/p2,180/(π×3²)；实际接触面积未知,10.3390/polym15173626,exploratory
+T3,平均行程速度,4.8;0.08,m/min;m/s,独立计算,20 mm单程；每转一次往复的解释,input/paper.xml#sec2dot2-polymers-15-03626/p1–2,2×0.020×120；与作者总行程一致；非瞬时恒速,10.3390/polym15173626,exploratory
+D1,第1段时长与路程,0.5;0.5;2.4;2.4,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D2,第2段时长与路程,1;1.5;4.8;7.2,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D3,第3段时长与路程,2;3.5;9.6;16.8,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D4,第4段时长与路程,5;8.5;24;40.8,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D5,第5段时长与路程,30;38.5;144;184.8,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D6,第6段时长与路程,120;158.5;576;760.8,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+D7,第7段时长与路程,300;458.5;1440;2200.8,min;min;m;m,作者方法+独立计算,顺序为本段时间;累计时间;本段路程;累计路程,input/paper.xml#sec2dot2-polymers-15-03626/p1–2;input/paper.xml#sec3dot1-polymers-15-03626/p1,第1–6段四组；第7段仅三种填充组；累计时间不含停机观测,10.3390/polym15173626,exploratory
+T4,纯PTFE提前终止及摩擦系数窗口,158.5;760.8;720;0.18,min;m;m;1,作者报告结果,前六段结束；第5–6段合计720 m且平均系数0.18,input/paper.xml#sec3dot1-polymers-15-03626/p1,180 N、25 °C；没有第7段纯PTFE数据,10.3390/polym15173626,measured
+W1,每段体积磨损率定义,K=Δm/(ρNL),mm³/(N·m),作者方法,Δm磨损质量；ρ试样实际密度；N法向载荷；L滑动路程,input/paper.xml#sec2dot2-polymers-15-03626/p3;input/paper.xml#FD1-polymers-15-03626,每段Δm须配同一段L；不能用原料密度替代试样实际密度,10.3390/polym15173626,
+W2,磨损率单位与全程聚合,1000Δm_g/(ρNL);Σ(K_i L_i)/ΣL_i,mm³/(N·m),独立计算,ρ用g/cm³；N与ρ固定；若质量用mg无需1000,input/paper.xml#sec2dot2-polymers-15-03626/p3,量纲与代数推导；禁止七段直接算术平均；缺质量和实际ρ无法数值复算,10.3390/polym15173626,exploratory
+W3,纯PTFE体积磨损率,7.7e-4;3e-4,mm³/(N·m),作者报告结果,第一段0–30 s；随后阶段高水平,input/paper.xml#sec3dot1-polymers-15-03626/p1,纯PTFE仅前六段；结论(1)复述3e-4,10.3390/polym15173626,measured
+W4,PEEK/PTFE体积磨损率,>1e-4;约1e-5;3.53e-6,mm³/(N·m),作者报告结果,初期；稳定期概述；最低值,input/paper.xml#sec3dot1-polymers-15-03626/p2,最低值具体阶段not-reported；系数初期低于纯PTFE而稳定期高于纯PTFE,10.3390/polym15173626,measured
+W5,Nano-ZrO2/PTFE磨损及摩擦,<1e-5;4.56e-6;约0.24,mm³/(N·m);mm³/(N·m);1,作者报告结果,末三段磨损；最低磨损；七段摩擦系数,input/paper.xml#sec3dot1-polymers-15-03626/p3,最低值具体阶段未给,10.3390/polym15173626,measured
+W6,复合填充组稳定后期性能,1.76e-6;0.22,mm³/(N·m);1,作者报告结果,Nano-ZrO2/PEEK/PTFE；稳定/后期,input/paper.xml#sec3dot1-polymers-15-03626/p3;input/paper.xml#sec4-polymers-15-03626/conclusion(1),正文同期间Nano-ZrO2/PTFE系数0.24；精确阶段窗口未知,10.3390/polym15173626,measured
+W7,复合填充组摘要最低磨损率,1.76e-4,mm³/(N·m),作者报告结果,Nano-ZrO2/PEEK/PTFE最低值,input/paper.xml#abstract,与正文结论冲突；保留原值，不替作者勘误,10.3390/polym15173626,measured
+C1,摘要与正文结论数值冲突,100,倍,核验判断+独立计算,同材料同单位；摘要/正文=1.76e-4/1.76e-6,input/paper.xml#abstract;input/paper.xml#sec3dot1-polymers-15-03626/p3;input/paper.xml#sec4-polymers-15-03626/conclusion(1),正文和结论相符不等于已确认勘误；需原始数据,10.3390/polym15173626,exploratory
+C2,PEEK稳定值与最低值口径,约1e-5与3.53e-6并存,mm³/(N·m),核验判断,未说明最低值所在阶段,input/paper.xml#sec3dot1-polymers-15-03626/p2,可为概述/阶段差别；不凭缺失曲线强行判错,10.3390/polym15173626,
+C3,跨阶段比较限制,不能构成四组全程同程比较,判断,核验判断,纯PTFE仅六段；其他组七段；各最低值阶段未定位,input/paper.xml#sec2dot2-polymers-15-03626/p1;input/paper.xml#sec3dot1-polymers-15-03626/p1–3,不报告跨阶段改善倍数或百分比；后期系数窗口也不能擅自对齐,10.3390/polym15173626,
+M1,转移膜厚度与机理边界,>500,nm,作者报告结果+作者解释,稳定期Nano-ZrO2/PTFE和Nano-ZrO2/PEEK/PTFE,input/paper.xml#sec3dot1-polymers-15-03626/p3;input/paper.xml#polymers-15-03626-f006,正文报告厚度；图像缺失；支撑/包裹/抑制滑移是作者解释，相关性不证明因果,10.3390/polym15173626,measured
+C4,覆盖率分母不一致,文字A1/(A−A1)；公式A1/A,1,核验判断,A注释为图像总像素数；文字写覆盖/未覆盖,input/paper.xml#polymers-15-03626-t002/Coverage ratio;input/paper.xml#polymers-15-03626-t002/Remarks,已检查MathML；需要原始代码确认采用口径,10.3390/polym15173626,
+C5,五项相关特征及显著性口径,五项均>0.9；单膜面积0.903301132/0.931414003/0.932489267,1,核验判断,五项为覆盖率、面积、均值、三阶矩、一致性；数值顺序ZrO2、PEEK、复合,input/paper.xml#polymers-15-03626-t004;input/paper.xml#sec3dot3-polymers-15-03626;input/paper.xml#sec4-polymers-15-03626/conclusion(3),S33自定显著阈值|r|>0.95；面积三组均不满足；不能代替p值检验,10.3390/polym15173626,
+C6,纹理熵及相关方向疑点,0.792752312;0.642134468;0.932279773,1,核验判断,顺序Nano-ZrO2/PTFE；PEEK/PTFE；复合组,input/paper.xml#polymers-15-03626-t004/Texture entropy;input/paper.xml#sec3dot3-polymers-15-03626,末段列六项称五项；熵不都>0.9；T4全正，需核查r或|r|，不可自行补符号,10.3390/polym15173626,
+U1,制备缺失信息,not-reported,,缺失项,批量/称样；混合速度时间；筛后损失；保压；长度；气氛；超声及烘干参数,input/paper.xml#sec2dot1-polymers-15-03626,正文可读但未给；不得凭通用实验常识填入,10.3390/polym15173626,
+U2,摩擦条件缺失信息,not-reported,,缺失项,对偶金属牌号、尺寸、硬度、初始粗糙度/处理；湿度；润滑状态操作说明；标准,input/paper.xml#sec2dot2-polymers-15-03626,引言所引他人对偶材料不是本研究测试条件,10.3390/polym15173626,
+U3,磨损复算和统计缺失信息,not-reported,,缺失项,试样实际密度及测法；逐段质量；独立重复数；误差定义；显著性检验；终止阈值,input/paper.xml#sec2dot1-polymers-15-03626;input/paper.xml#sec2dot2-polymers-15-03626;input/paper.xml#sec3dot1-polymers-15-03626;input/paper.xml#sec3dot3-polymers-15-03626,阶段数不能当独立样本数；原料密度不代替实测试样密度,10.3390/polym15173626,
+U4,图像与完整处理数据不可得,not-available-in-input;not-reported,,缺失项,前者图1–11像素/原始曲线/补充材料；后者完整代码、滤波形态学参数、图像控制,input/paper.xml#sec2dot3-polymers-15-03626;input/paper.xml#polymers-15-03626-f001–f011,不读取曲线点值；不声称独立验证形貌；灰度高低不等于物理厚度,10.3390/polym15173626,
+U5,阶段图标签的累计口径未明,1;5;30;300,min,核验判断,正文图相关时间表述与每段时长/累计时点须区分,input/paper.xml#sec2dot2-polymers-15-03626/p1;input/paper.xml#sec3dot2-polymers-15-03626;input/paper.xml#sec3dot3-polymers-15-03626,图轴像素未提供；未将标签擅自改为累计终点,10.3390/polym15173626,

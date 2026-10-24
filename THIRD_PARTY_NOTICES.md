@@ -22,3 +22,20 @@ adds a deterministic style lint.
   typography composed by this repository.
 - Design ideas (routing, six-dim scoring, search fallback chain, paper cards)
   borrowed from **nature-skills** (Yuan1z0825 team), MIT — see README credits.
+
+## Open-access papers used in reading preparation
+
+The articles under `competitions/bohrium-reading-2026-10/materials/` and their
+reading derivatives are **CC BY 4.0, not MIT**. The repository MIT license does
+not replace the articles' licenses. Original author credits, DOI links, source
+URLs, retrieval dates, modifications and hashes are recorded in
+`competitions/bohrium-reading-2026-10/materials/SOURCES.md` and `sources.json`.
+
+- Dong et al. (2024), DOI `10.3390/polym16182572`, PMCID `PMC11435391`.
+- Qi et al. (2023), DOI `10.3390/polym15173626`, PMCID `PMC10490335`.
+- License: https://creativecommons.org/licenses/by/4.0/
+- Unchanged JATS XML was obtained through Europe PMC. Markdown reading aids and
+  an intentionally abstract-only case are identified as derivatives. Figure
+  image files and supplementary files are not included.
+- Pilot terminal logs may reproduce those same article excerpts; the article
+  attribution and CC BY 4.0 license continue to apply to those excerpts.

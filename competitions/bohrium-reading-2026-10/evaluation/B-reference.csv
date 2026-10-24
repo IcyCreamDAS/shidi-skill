@@ -1,0 +1,17 @@
+id,expected,source_anchor
+B01,四配方依序 PTFE/PEEK/ZrO2=100/0/0、90/10/0、92/0/8、82/10/8；均为 vol%,Table 1
+B02,筛网 150 mesh；冷压 45 MPa；圆柱直径 6 mm,Section 2.1
+B03,烧结 375 °C；升温 2 °C/min；保温 120 min；自然冷却,Section 2.1
+B04,抛光 2000 grit；丙酮超声清洗；干燥后称量,Section 2.1
+B05,七阶段时长依序 30 s/1 min/2 min/5 min/30 min/2 h/5 h,Section 2.2
+B06,七段累计 458.5 min、2200.8 m；每段不能误作累计时间,Section 2.2
+B07,测试 180 N；名义压力约 6.3 MPa,Section 2.2
+B08,行程 20 mm；电机 120 r/min；环境 25 °C,Section 2.2
+B09,各阶段拆装并称量/观察；避免污染与破坏转移膜,Section 2.2
+B10,纯 PTFE 提前结束：六阶段累计 158.5 min、760.8 m,Section 3.1
+B11,K=Δm/(ρNL)；保留体积磨损率 mm³/(N·m) 与密度/载荷/滑动距离定义,Section 2.2 Eq. 1
+B12,复合三元组稳定段最低 1.76×10^-6 mm³/Nm；摘要为 1.76×10^-4，存在两数量级冲突不可静默选取,Abstract; Section 3.1; Conclusions
+B13,PEEK/PTFE 最低 3.53×10^-6；ZrO2/PTFE 最低 4.56×10^-6 mm³/Nm,Section 3.1
+B14,PTFE 初始高磨损与复合材料稳定段不能当同阶段公平改进倍数,Sections 2.2 and 3.1
+B15,不编造重复数/误差/原始曲线点；无图像时明确仅核验文字,Input scope; Methods
+B16,相关性不证明转移膜形貌对磨损的独立因果效应,Sections 3.3 and 4
