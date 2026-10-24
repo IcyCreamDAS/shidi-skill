@@ -1,0 +1,233 @@
+{
+  "status": "AI-prepared-reference-needs-human-review",
+  "not_official_score": true,
+  "checks": [
+    {
+      "id": "T01",
+      "critical": true,
+      "papers": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "source_anchor": "Methods and target task",
+      "expected": "P1是直接水性薄涂层证据，P2为PEEK基块材，P3为PTFE基块材；后两者不能宣称已验证目标涂层。"
+    },
+    {
+      "id": "T02",
+      "critical": true,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "Abstract; Results 3.2; Conclusions",
+      "expected": "PEK低摩擦和PEKK低磨损不是保持PEEK粘结材料时已获得的改进；可作为范围外备选但不可冒充满足硬约束。"
+    },
+    {
+      "id": "T03",
+      "critical": false,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "2.2",
+      "expected": "78 g粘结材料+14.5 g PTFE，147 g水/DOSS溶液；固含约38 wt%，PTFE占固体约15.8 wt%，对应10:90体积比，不能写成PTFE 10 wt%。"
+    },
+    {
+      "id": "T04",
+      "critical": false,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "Table 2;2.2",
+      "expected": "PEEK成膜420°C/15min，PEK400°C/30min，PEKK400°C/15min；不能混用。"
+    },
+    {
+      "id": "T05",
+      "critical": false,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "2.2",
+      "expected": "钢件基底；喷涂1.2bar、100°C干燥5min，最终25±5µm厚度，能提供目标薄涂层工艺参考但不是直接可用保证。"
+    },
+    {
+      "id": "T06",
+      "critical": true,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "2.4;3.2 Fig15 discussion",
+      "expected": "约105µm在线磨损包含涂层/对偶磨损及热膨胀，且破膜后发生钢钢接触；不能当作纯涂层磨损深度或直接换算体积比磨损率。"
+    },
+    {
+      "id": "T07",
+      "critical": false,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "2.4",
+      "expected": "短程5/10/20/40N、0.1m/s、各150m；长程20N、0.1m/s、4300m。不同试验条件不拼接为一组。"
+    },
+    {
+      "id": "T08",
+      "critical": false,
+      "papers": [
+        "P1"
+      ],
+      "source_anchor": "2.4",
+      "expected": "至少两次可重复测试的平均；不声称完全没有重复数。"
+    },
+    {
+      "id": "T09",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "2",
+      "expected": "压制烧结400°C、15MPa、降温2°C/min；酒精分散并干燥后加工块材，不是水性喷涂工艺。"
+    },
+    {
+      "id": "T10",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "Table2;Table5",
+      "expected": "10 wt% PTFE与0.3 wt%纳米填料；0.3 wt% Cu对应0.044 vol%，不得把wt%当vol%。"
+    },
+    {
+      "id": "T11",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "2",
+      "expected": "10N、0.3m/s、3km；6mm钢或ZrO2对偶；条件不能与P1/P3直接当等价。"
+    },
+    {
+      "id": "T12",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "Abstract;Conclusions",
+      "expected": "对偶影响结论，金属纳米颗粒的两组分PEEK复合物在陶瓷对偶可恶化磨损；不能推广所有填料/对偶都改善。"
+    },
+    {
+      "id": "T13",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "Abstract;Conclusions;Introduction",
+      "expected": "三组分22倍/12倍改善以neat PEEK为比较基准；不能把引言他人研究的900倍或260000倍当本研究结果。"
+    },
+    {
+      "id": "T14",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "Table5",
+      "expected": "耐磨收益不能掩盖力学代价：neat PEEK拉伸106.9MPa、PEEK/10PTFE83.9MPa，三组分改善相对PEEK/10PTFE仍不等于超过neat PEEK。"
+    },
+    {
+      "id": "T15",
+      "critical": false,
+      "papers": [
+        "P2"
+      ],
+      "source_anchor": "2",
+      "expected": "至少四个每类样品及至少10条轨迹剖面；不把轨迹数当独立样品数，也不称完全没有重复。"
+    },
+    {
+      "id": "T16",
+      "critical": true,
+      "papers": [
+        "P3"
+      ],
+      "source_anchor": "Table1;2.1",
+      "expected": "PCTP为85 wt% PTFE+5%CF+5%TiC+5%PEEK，不是PEEK为主的涂层。"
+    },
+    {
+      "id": "T17",
+      "critical": false,
+      "papers": [
+        "P3"
+      ],
+      "source_anchor": "2.1",
+      "expected": "冷压后350°C烧结2h，先60°C干燥6h；不能直接作为PEEK薄涂层成膜已验证参数。"
+    },
+    {
+      "id": "T18",
+      "critical": false,
+      "papers": [
+        "P3"
+      ],
+      "source_anchor": "2.2",
+      "expected": "5N、0.33m/s、30min、6mm GCr15；测试25/50/100/150/200/250°C，不把烧结350°C当工作温度。"
+    },
+    {
+      "id": "T19",
+      "critical": false,
+      "papers": [
+        "P3"
+      ],
+      "source_anchor": "2.2;Abstract;Conclusions",
+      "expected": "比磨损率单位mm³/(N·m)，由磨损体积除载荷/滑距；PCTP正文结论上限1.96e-4，不能和P1综合位移µm直接比。"
+    },
+    {
+      "id": "T20",
+      "critical": false,
+      "papers": [
+        "P3"
+      ],
+      "source_anchor": "2.2",
+      "expected": "同条件至少三次测量；只说明可获得的重复信息，不凭空扩展误差统计。"
+    },
+    {
+      "id": "T21",
+      "critical": true,
+      "papers": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "source_anchor": "Methods across three papers",
+      "expected": "跨论文不能仅按摩擦系数、磨损数值/改善倍数排列最优：材料形态/基体/对偶/载荷/速度/距离和指标定义影响可比性。"
+    },
+    {
+      "id": "T22",
+      "critical": true,
+      "papers": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "source_anchor": "Task;Methods;Conclusions",
+      "expected": "目标载荷寿命门槛未知；给出条件性候选和补查/补验需求，不宣称现有证据已确定最优可用配方。"
+    },
+    {
+      "id": "T23",
+      "critical": false,
+      "papers": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "source_anchor": "Input inventory",
+      "expected": "未提供图片像素/补充材料；可引用正文报告的数值和图注，不能自称独立读取图像数据或排除全文未提供附件内容。"
+    },
+    {
+      "id": "T24",
+      "critical": false,
+      "papers": [
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "source_anchor": "Whole output",
+      "expected": "关键取舍及数字有paper_id和可定位锚点，报告与CSV不矛盾；新增关键主张另查，不默认表外正确。"
+    }
+  ],
+  "grading": "correct/wrong/missing/not-assessable; mark critical errors separately; preserve disagreements; do not infer human time savings"
+}
