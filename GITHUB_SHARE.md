@@ -60,7 +60,7 @@
 
 这个案例重点展示问题如何形成：Pro 从“像打疫苗”这个类比，走到状态产生、保持与第二次修复动力学三个可分别核查的环节，为继续追问提供了入口。
 
-第二案例的完整三组输出、六维图与分项见[独立复评目录](https://github.com/IcyCreamDAS/shidi-skill/blob/feature/shidi-pro-flash/examples/pro-flash-evaluation/independent-review/README.md)。
+第二案例的完整三组输出、六维图与分项见[独立复评目录](https://github.com/IcyCreamDAS/shidi-skill/blob/competition/sanitized-2026-10-27/examples/pro-flash-evaluation/independent-review/README.md)。
 
 ## 这两个案例展示了什么
 
@@ -70,10 +70,10 @@
 
 ## 安装与调用
 
-Pro/Flash 当前位于公开的 `feature/shidi-pro-flash` 分支，安装时指定该分支：
+Pro/Flash 已通过 PR 发布到默认 `main` 分支，直接安装即可：
 
 ```bash
-git clone --branch feature/shidi-pro-flash --single-branch https://github.com/IcyCreamDAS/shidi-skill.git
+git clone https://github.com/IcyCreamDAS/shidi-skill.git
 mkdir -p ~/.claude/skills
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
@@ -95,6 +95,6 @@ Pro 会展开较多检索、核验和交互；没有约定范围与停止条件�
 
 ## 材料与评分方法
 
-[完整实例与复现步骤](https://github.com/IcyCreamDAS/shidi-skill/blob/feature/shidi-pro-flash/examples/pro-flash-evaluation/README.md)保留两案例各三组的输入、报告、文献、获取记录、用量和可见工具轨迹。
+[完整实例与复现步骤](https://github.com/IcyCreamDAS/shidi-skill/blob/competition/sanitized-2026-10-27/examples/pro-flash-evaluation/README.md)保留两案例各三组的输入、报告、文献、获取记录、用量和可见工具轨迹。
 
 本次执行模型统一为 K2.8 Preview + max，各组从独立会话开始，使用同一初始问题、共同任务要求和工具预算；实际问答与投入按原记录保留。本文主展示为 ChatGPT 对现有输出的六维内容复评，权重为15/25/20/20/10/10，各轴0–4档。评分者已知条件名，为事后非盲评阅。评分数据、量表、源文件哈希和绘图代码见独立复评目录；此前 Kimi 评分保留在历史表中另列。结果对应这里展示的两次案例运行，时间、token与交互另表呈现。

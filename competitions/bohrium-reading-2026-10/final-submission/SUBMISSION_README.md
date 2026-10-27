@@ -10,10 +10,10 @@ Shidi 面向只有兴趣起点、尚未形成系统研究问题的用户，组�
 
 ## 安装与调用
 
-Pro/Flash 当前位于公开的 `feature/shidi-pro-flash` 分支。一次安装包含两种完整模式，默认 Pro；“快速调研”或“flash 模式”选择 Flash。本包 `skill/` 为实验时冻结的 Pro 文件。
+Pro/Flash 已通过 PR 发布到默认 `main` 分支。一次安装包含两种完整模式，默认 Pro；“快速调研”或“flash 模式”选择 Flash。本包 `skill/` 为当前脱敏 Pro 资源；历史对照使用冻结的 Pro `b28eb4e`，Flash 对照为 `6e03d72`。
 
 ```bash
-git clone --branch feature/shidi-pro-flash --single-branch https://github.com/IcyCreamDAS/shidi-skill.git
+git clone https://github.com/IcyCreamDAS/shidi-skill.git
 mkdir -p ~/.claude/skills
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
@@ -47,6 +47,10 @@ python competitions/bohrium-reading-2026-10/final-submission/build_submission.py
 完整运行目录布局为 `sequential-logic/{pro,without}/` 和 `damage-memory/{pro,without}/`，各组保留 `output/pdfs/`。`--out` 必须是尚不存在的目录。脚本先检查原件哈希，再打包和运行官方结构检查，不自动上传。
 
 评分是事后、非盲的内容复评；权重为15/25/20/20/10/10，各维0–4档。单独重绘导出的评分图可给 render_radars.py 加 --scores-only，回到完整仓库运行时默认还会校验源报告哈希。本包对应所列两次案例运行，平台成绩以提交回执为准。
+
+## 当前打包与脱敏说明
+
+`manifest.json` 分别记录当前打包 revision 与历史运行版本。Pro/Flash 的 `SKILL.md` 和可执行脚本与冻结版本逐字节一致，仅配方 schema 与模板进行了角色化和企业敏感内容清理。本次没有重新运行模型、重新评分或改写原始科研输出。
 
 ## 模型与预算建议
 

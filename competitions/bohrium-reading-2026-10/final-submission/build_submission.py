@@ -4,6 +4,7 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 
 BASE = Path(__file__).resolve().parent
 REPO = BASE.parents[2]
@@ -63,6 +64,9 @@ def make_manifest(resources):
     m = common.read_json(resources / "templates/manifest-with-bonus.json")
     m["cases"] = [case for case in m["cases"] if case["id"] in CASES]
     m["skill_version"] = SKILL_VERSION
+    m["packaged_skill_revision"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip()
+    m["historical_run_skill_versions"] = {"pro": "git:b28eb4e", "flash": "git:6e03d72"}
+    m["resource_sanitization"] = "Documentation-only role/company-sensitive-content update to current resources; no new runs or rescoring. SKILL.md and scripts are byte-identical to the frozen versions."
     m["environment"] = {
         "host": "Kimi Code Desktop；独立 coder 子代理，无跨会话记忆",
         "model": "kimi-code/kimi-for-coding（K2.8 Preview），默认 max；profile.bind 已核对",
