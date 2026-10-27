@@ -11,7 +11,9 @@
 
 [中文](./README.md) | English
 
-> shidi (*"junior lab mate"* in Chinese) is a complete research workflow that lives inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Your data stays local. No platform or model lock-in.
+**Start with an interest, identify gaps in cross-field evidence, and form a testable research question.** Shidi organizes search, source retrieval, candidate comparison and validation plans into reusable files.
+
+> shidi (*"junior lab mate"* in Chinese) is a complete research workflow that lives inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Deliverables are saved in your working directory. No platform or model lock-in.
 >
 > It's not fire-and-forget, either — shidi is meant to be bossed around while you do something else. Say "shidi, help me with …", and it asks when it must, runs the rest, and hands you the files.
 
@@ -42,6 +44,7 @@
 
 ## ✨ What's New
 
+- **2026-10-27: Pro / Flash modes** — One installation includes both workflows. Pro is the default; request “quick research” or “flash mode” for Flash. Released to the default `main` branch through a pull request.
 - **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
 - **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
@@ -161,13 +164,24 @@ flowchart TD
 
 ```bash
 git clone https://github.com/IcyCreamDAS/shidi-skill.git
+mkdir -p ~/.claude/skills
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
 Then just say:
 
 ```text
-shidi, research the literature on XX — 20 papers
+师弟，帮我详细调研一下 XXX              # Pro
+师弟，请你用 pro 模式给我调研一下 XXX   # Pro
+师弟，帮我快速调研一下 XXX              # Flash
+师弟，请你用 flash 模式给我调研一下 XXX # Flash
+```
+
+**One download includes the complete Pro and Flash modes.** If the request does not specify “详细”, “快速”, “pro”, or “flash”, it defaults to **Pro**: structured searching, interactive clarification, and deep deliverables. Flash minimizes confirmation and starts quickly. Modes change the workflow and use the models supported by the host.
+
+Other examples:
+
+```text
 shidi, design an experiment for XX
 shidi, plot this data
 shidi, read this paper in depth for me
@@ -177,7 +191,7 @@ Just "shidi" works too — it confirms the task type before starting. Compatible
 
 > [!IMPORTANT]
 > ### An executor, not a genie
-> `harness + model = agent` — shidi owns the workflow, the model sets the ceiling. And it never decides for you: angle selection, parameters, trade-offs all bounce back to you. It takes the grunt work; the ideas and judgment stay yours.
+> `harness + model = agent` — shidi owns the workflow, the model sets the ceiling. Pro returns angle selection and parameter confirmation to you; Flash proposes defaults and reduces formal confirmation. It takes the grunt work; the ideas and judgment stay yours.
 
 ## 🤖 Persona
 
