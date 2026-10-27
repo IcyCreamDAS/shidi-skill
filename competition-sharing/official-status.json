@@ -1,0 +1,124 @@
+{
+  "status": "ready-to-submit-locally-validated",
+  "ready_to_submit": true,
+  "archive_sha256": "9b33077defac00c1b508766b9ccca1427ae6e053ea8bb5cc400892a1dcf476a5",
+  "archive_bytes": 67315013,
+  "official_structure_check": {
+    "status": "intake_complete",
+    "missing": [],
+    "optional_issues": {},
+    "review_contract": {
+      "version": "bounded-review-v1",
+      "core_bytes": 30056,
+      "selected_bytes": 78579,
+      "audit_bytes": 23350,
+      "selection_count": 27,
+      "original_text_bytes": 1039752,
+      "source_file_count": 120,
+      "audit_files": [
+        {
+          "path": "runs/A-pro/output/literature-list.md",
+          "windows": 4,
+          "failure_word_matches": 1
+        },
+        {
+          "path": "runs/A-pro/output/report.md",
+          "windows": 5,
+          "failure_word_matches": 3
+        },
+        {
+          "path": "runs/A-pro/run.json",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/A-pro/trace-export.jsonl",
+          "windows": 5,
+          "failure_word_matches": 104
+        },
+        {
+          "path": "runs/A-without/output/references_文献清单.md",
+          "windows": 5,
+          "failure_word_matches": 2
+        },
+        {
+          "path": "runs/A-without/output/先光照后遇湿_化学顺序门控报告.md",
+          "windows": 5,
+          "failure_word_matches": 4
+        },
+        {
+          "path": "runs/A-without/run.json",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/A-without/trace-export.jsonl",
+          "windows": 5,
+          "failure_word_matches": 47
+        },
+        {
+          "path": "runs/B-pro/output/参考文献清单.md",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/B-pro/output/损伤记忆涂层调研报告.md",
+          "windows": 5,
+          "failure_word_matches": 2
+        },
+        {
+          "path": "runs/B-pro/run.json",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/B-pro/trace-export.jsonl",
+          "windows": 5,
+          "failure_word_matches": 38
+        },
+        {
+          "path": "runs/B-without/output/literature.md",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/B-without/output/report.md",
+          "windows": 5,
+          "failure_word_matches": 2
+        },
+        {
+          "path": "runs/B-without/run.json",
+          "windows": 3,
+          "failure_word_matches": 0
+        },
+        {
+          "path": "runs/B-without/trace-export.jsonl",
+          "windows": 5,
+          "failure_word_matches": 52
+        }
+      ],
+      "limits": {
+        "core_bytes": 65536,
+        "selected_bytes": 163840,
+        "audit_bytes": 24576
+      },
+      "all_original_files_preserved": true,
+      "full_archive_semantically_reviewed": false
+    },
+    "files": 120
+  },
+  "rules_version": "product-skill-rules-v2.5-read-minor-20261016-r2",
+  "limits": [
+    "单主题单次运行，增益不可外推",
+    "公共提示词指导是归因限制",
+    "费用无法核验"
+  ],
+  "submit_helper_run": false,
+  "uploaded": false,
+  "attempt_id": null,
+  "score": null,
+  "platform_trace": "submission-trace.jsonl",
+  "platform_trace_kind": "export",
+  "platform_trace_records": 422,
+  "platform_trace_sha256": "b99c5c42a11b8042adaafd3f2f0dcefa0cbf9f4c1753f4302da9038819db473f"
+}
