@@ -1,5 +1,7 @@
 # 顺序逻辑材料：b28 / 6e03d72 / without 三组比较
 
+> 历史Kimi协调者评阅与当时决策记录，不是当前ChatGPT直接复评。当前主评分为78.75 / 61.25 / 50.00，见[独立复评](../independent-review/sequential-logic-scores.md)。下文保留历史分值和原始判断，不事后改写为ChatGPT评分。
+
 日期：2026-10-26。三组均使用 K2.8 Preview + max、同一 task/CONTEXT、同一预算和交付要求。b28 与 6e03d72 的唯一版本差异为 Shidi 文件版本；without 不接触 Skill。b28 有一次 K3.1 Pro 统一用户代答，另外两组无提问。
 
 ## 总结

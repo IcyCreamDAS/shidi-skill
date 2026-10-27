@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "provenance": {
+    "evaluator": "Kimi Code coordinator",
+    "scoring_type": "retrospective internal review",
+    "depth_rubric_origin": "Six-dimensional rubric discussed with ChatGPT; scores assigned by Kimi, not independent ChatGPT grades.",
+    "source_session": "session_e0734084-d3da-42d4-8205-f3a15da5443b",
+    "source_date": "2026-10-27",
+    "note": "Recovered original score entries; no rescoring."
+  },
+  "depth": {
+    "weights": {
+      "question": 15,
+      "mechanism": 25,
+      "evidence": 20,
+      "falsification": 20,
+      "synthesis": 10,
+      "autonomy": 10
+    },
+    "arms": {
+      "pro": {
+        "question": 15,
+        "mechanism": 22,
+        "evidence": 17,
+        "falsification": 20,
+        "synthesis": 9,
+        "autonomy": 9
+      },
+      "flash": {
+        "question": 14,
+        "mechanism": 18,
+        "evidence": 12,
+        "falsification": 15,
+        "synthesis": 8,
+        "autonomy": 8
+      },
+      "without": {
+        "question": 11,
+        "mechanism": 16,
+        "evidence": 15,
+        "falsification": 13,
+        "synthesis": 8,
+        "autonomy": 7
+      }
+    }
+  },
+  "workflow": {
+    "nine_dimensions": [
+      {
+        "id": "exploration",
+        "weight": 10,
+        "pro": 10,
+        "flash": 7.5,
+        "without": 10
+      },
+      {
+        "id": "evidence_reliability",
+        "weight": 15,
+        "pro": 11.25,
+        "flash": 7.5,
+        "without": 11.25
+      },
+      {
+        "id": "evidence_separation",
+        "weight": 10,
+        "pro": 10,
+        "flash": 10,
+        "without": 7.5
+      },
+      {
+        "id": "pdf_delivery",
+        "weight": 10,
+        "pro": 10,
+        "flash": 5,
+        "without": 10
+      },
+      {
+        "id": "synthesis",
+        "weight": 10,
+        "pro": 10,
+        "flash": 7.5,
+        "without": 10
+      },
+      {
+        "id": "autonomy",
+        "weight": 10,
+        "pro": 5,
+        "flash": 10,
+        "without": 10
+      },
+      {
+        "id": "damage_memory",
+        "weight": 15,
+        "pro": 15,
+        "flash": 11.25,
+        "without": 7.5
+      },
+      {
+        "id": "second_acceleration",
+        "weight": 10,
+        "pro": 10,
+        "flash": 7.5,
+        "without": 5
+      },
+      {
+        "id": "distinction_failure",
+        "weight": 10,
+        "pro": 10,
+        "flash": 10,
+        "without": 10
+      }
+    ]
+  },
+  "aggregate_rule": "Depth values except evidence and autonomy. evidence=(depth.evidence + (workflow.evidence_reliability+workflow.evidence_separation)*20/25)/2; autonomy=(depth.autonomy+workflow.autonomy)/2."
+}

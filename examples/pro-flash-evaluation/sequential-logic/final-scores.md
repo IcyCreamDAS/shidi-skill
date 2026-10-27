@@ -1,10 +1,10 @@
-# 三大评分体系与最终得分
+# ChatGPT 直接复评：当前主评分
 
-| 条件 | ChatGPT 权重续评 | Kimi 修正评分 | 三大体系汇总 |
-|---|---:|---:|---:|
-| pro | 93 | 88.75 | 89.25 |
-| flash | 73 | 80.0 | 73.0 |
-| without | 58 | 67.5 | 58.5 |
+| 条件 | ChatGPT 六维内容复评 |
+|---|---:|
+| pro | 78.75 |
+| flash | 61.25 |
+| without | 50.00 |
 
-汇总轴由 ChatGPT 深度轴与对应 Kimi 归一化轴各取一半，其他轴沿用 ChatGPT 值，不是简单平均。
-以 ChatGPT 权重续评为主展示增益；三组同时呈现，避免只展示 Pro。
+来源：[真实分项、评分者与报告哈希](../independent-review/scores.json)。各维0–4档，权重15/25/20/20/10/10；2026-10-27事后非盲复评，每条件一次运行。不是官方成绩。
+历史Kimi评分及派生综合分保留在evaluation.json、computed-scores.json与RESULTS.md中，不能标为ChatGPT直接评分，也不与本表混合。

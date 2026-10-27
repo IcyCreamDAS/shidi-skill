@@ -1,62 +1,94 @@
 #!/usr/bin/env python3
+"""Copy canonical ChatGPT charts and render explicitly historical Kimi charts."""
+import argparse
+import shutil
 from pathlib import Path
-import json
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 import numpy as np
+from build_tables import BASE, CASES, ARMS, compute, read_json
 
-BASE = Path(__file__).resolve().parent
-data = json.loads((BASE.parent / "shidi-evaluation-review-20261027/computed-scores.json").read_text(encoding="utf-8"))
-weights = json.loads((BASE.parent / "shidi-evaluation-review-20261027/scores.json").read_text(encoding="utf-8"))["weights"]
-keys = list(weights)
-labels = ["问题保真", "机制与因果", "原始证据", "证伪与对照", "综合路线", "透明与自主"]
-colors = {"pro": "#0072B2", "flash": "#009E73", "without": "#E69F00"}
-names = {"pro": "Pro", "flash": "Flash", "without": "without Skill"}
-markers = {"pro": "o", "flash": "^", "without": "s"}
-plt.rcParams.update({"font.family": "sans-serif", "font.sans-serif": ["Microsoft YaHei", "SimHei", "DejaVu Sans"],
-                     "axes.unicode_minus": False, "font.size": 10, "figure.dpi": 180,
-                     "savefig.dpi": 260, "savefig.bbox": "tight", "legend.frameon": False})
-kimi_axes = {
-    "pro": [100, 85, 100, 100, 100, 25],
-    "flash": [100, 60, 100, 60, 100, 100],
-    "without": [100, 35, 100, 45, 87.5, 100],
-}
-for system, title in (("chatgpt", "ChatGPT 权重续评：顺序逻辑"),
-                      ("kimi", "Kimi 修正评分：顺序逻辑"),
-                      ("aggregate", "三大体系汇总：顺序逻辑")):
-    fig, ax = plt.subplots(figsize=(8.1, 7.1), subplot_kw={"projection": "polar"})
-    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
-    closed = angles + angles[:1]
-    for arm in ("pro", "flash", "without"):
-        raw = data["systems"][system]["sequential_logic"][arm]
-        if system == "chatgpt":
-            values = [raw[key] / weights[key] * 100 for key in keys]
-        elif system == "aggregate":
-            values = [raw[key] / weights[key] * 100 for key in keys]
-        else:
-            values = kimi_axes[arm]
-        series = values + values[:1]
-        ax.plot(closed, series, color=colors[arm], linewidth=1.9, marker=markers[arm], markersize=5, label=names[arm])
-        ax.fill(closed, series, color=colors[arm], alpha=0.055)
-    ax.set_theta_offset(np.pi / 2)
-    ax.set_theta_direction(-1)
-    ax.set_xticks(angles)
-    ax.set_xticklabels(labels)
-    ax.tick_params(axis="x", pad=18)
-    ax.set_ylim(0, 100)
-    ax.set_yticks([0, 25, 50, 75, 100])
-    ax.set_yticklabels(["0", "25", "50", "75", "100"])
-    ax.set_rlabel_position(90)
-    ax.grid(color="#888888", alpha=0.24, linewidth=0.6)
-    ax.spines["polar"].set_color("#888888")
-    ax.spines["polar"].set_linewidth(0.7)
-    ax.set_title(title, pad=28)
-    ax.legend(loc="lower center", bbox_to_anchor=(0.5, -0.20), ncol=3)
-    fig.text(0.5, 0.01, "每条件 n=1；同一 K2.8 Preview + max。时间/token/PDF 另列。",
-             ha="center", fontsize=9, color="#555555")
-    fig.subplots_adjust(left=0.16, right=0.84, top=0.82, bottom=0.24)
-    fig.savefig(BASE / "sequential-logic" / f"{system}-six-dimensions.png", facecolor="white")
-    fig.savefig(BASE / "sequential-logic" / f"{system}-six-dimensions.svg", facecolor="white")
-    plt.close(fig)
-    print(f"Saved sequential-logic/{system}-six-dimensions.png and .svg")
+TITLES = {"sequential-logic": "顺序化学逻辑", "damage-memory": "涂层损伤记忆"}
+SYSTEMS = {"workflow": ("kimi", "历史工作流评分 · Kimi"),
+           "aggregate": ("aggregate", "历史派生综合分 · Kimi输入")}
+ENGLISH = {"问题保真": "Question fidelity", "机制与因果": "Mechanism",
+           "原始证据": "Source evidence", "证伪与对照": "Falsification",
+           "综合路线": "Research route", "透明与自主": "Transparency",
+           "探索覆盖": "Exploration", "证据可靠与分层": "Evidence",
+           "PDF 交付": "PDF delivery", "主题判据": "Topic criteria",
+           "综合与失效边界": "Synthesis / limits", "交互与自主": "Autonomy"}
+COLORS = {"pro": "#0072B2", "flash": "#009E73", "without": "#E69F00"}
+NAMES = {"pro": "Pro", "flash": "Flash", "without": "without Skill"}
+MARKERS = {"pro": "o", "flash": "^", "without": "s"}
+
+
+def render(output_root, font=None):
+    if font:
+        font_manager.fontManager.addfont(str(font))
+        family = font_manager.FontProperties(fname=str(font)).get_name()
+        plt.rcParams["font.family"] = family
+        chinese = True
+    else:
+        available = {f.name for f in font_manager.fontManager.ttflist}
+        chinese_fonts = [n for n in ("Noto Sans CJK SC", "Microsoft YaHei", "SimHei") if n in available]
+        chinese = bool(chinese_fonts)
+        plt.rcParams["font.family"] = chinese_fonts[0] if chinese_fonts else "DejaVu Sans"
+    plt.rcParams.update({"axes.unicode_minus": False, "font.size": 11,
+                         "svg.hashsalt": "shidi-evaluation-v1", "legend.frameon": False})
+    for case in CASES:
+        content = compute(read_json(BASE / case / "evaluation.json"))
+        destination = output_root / case
+        destination.mkdir(parents=True, exist_ok=True)
+        for suffix in ("png", "svg"):
+            shutil.copyfile(BASE / "independent-review" / f"{case}-radar.{suffix}",
+                            destination / f"chatgpt-six-dimensions.{suffix}")
+        for system, (filename, title) in SYSTEMS.items():
+            labels = list(content["axes"]["pro"][system])
+            angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
+            closed = angles + angles[:1]
+            fig = plt.figure(figsize=(8.5, 8.5))
+            ax = fig.add_axes([.20, .23, .60, .60], projection="polar")
+            for arm in ARMS:
+                values = list(content["axes"][arm][system].values())
+                series = values + values[:1]
+                ax.plot(closed, series, color=COLORS[arm], linewidth=2, marker=MARKERS[arm],
+                        markersize=5, label=NAMES[arm])
+                ax.fill(closed, series, color=COLORS[arm], alpha=.045)
+            ax.set_theta_offset(np.pi / 2)
+            ax.set_theta_direction(-1)
+            ax.set_xticks(angles, labels if chinese else [ENGLISH[x] for x in labels])
+            ax.tick_params(axis="x", pad=16)
+            ax.set_ylim(0, 100)
+            ax.set_yticks([25, 50, 75, 100])
+            ax.set_yticklabels(["25", "50", "75", "100"], fontsize=8, color="#666666")
+            ax.set_rlabel_position(15)
+            ax.grid(color="#888888", alpha=.25, linewidth=.6)
+            ax.spines["polar"].set_color("#aaaaaa")
+            heading = TITLES[case] + "\n" + title if chinese else case + "\nHistorical " + system + " / Kimi review"
+            fig.suptitle(heading, y=.96, fontsize=15, linespacing=1.6)
+            fig.legend(*ax.get_legend_handles_labels(), loc="lower center", bbox_to_anchor=(.5, .10), ncol=3)
+            note = "历史Kimi评分及派生值；当前ChatGPT直接复评见独立复评目录" if chinese else "Historical Kimi ratings; current ChatGPT review is in independent-review"
+            fig.text(.5, .045, note, ha="center", fontsize=9, color="#555555")
+            for suffix in ("png", "svg"):
+                target = destination / f"{filename}-six-dimensions.{suffix}"
+                fig.savefig(target, dpi=220,
+                            facecolor="white", metadata={"Date": None} if suffix == "svg" else None)
+                if suffix == "svg":
+                    target.write_text("\n".join(line.rstrip() for line in target.read_text(encoding="utf-8").splitlines()) + "\n",
+                                      encoding="utf-8", newline="\n")
+            plt.close(fig)
+            print(f"{case}/{filename}-six-dimensions.png + .svg")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, default=BASE)
+    parser.add_argument("--font", type=Path, help="optional CJK font; otherwise use an installed CJK font or English labels")
+    args = parser.parse_args()
+    render(args.out, args.font)
+
+
+if __name__ == "__main__":
+    main()

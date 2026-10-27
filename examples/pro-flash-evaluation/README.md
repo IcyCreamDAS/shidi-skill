@@ -1,56 +1,64 @@
-# Pro / Flash / without：两组真实评测实例
+# Pro / Flash / without：两组实例与 ChatGPT 直接复评
 
-这里保留 **2 个跨学科一句话问题 × 3 个独立子代理 = 6 份真实结果**。Pro=`b28eb4e`，Flash=`6e03d72`，without 不加载 Skill。所有执行代理均为 K2.8 Preview + max；禁止读取或利用宿主用户记忆。
+**本页当前主评分由 ChatGPT 于2026-10-27直接阅读既有输出后给出。** 不是让Kimi代打分，也不是只采用ChatGPT提出的权重。评分原档位、加权分、评分者与源报告哈希见[独立复评数据](independent-review/scores.json)，量表见[RUBRIC.md](independent-review/RUBRIC.md)。
 
-这些实例展示的是**质量与自主性的权衡，而不是某一版本永远更好**。ChatGPT 权重续评是主要参考，Kimi 修正评分和三大汇总用于交叉检查；续评不是 ChatGPT 最终公开评分或官方成绩。
+两个科研兴趣起点、六份真实运行结果。执行模型统一为K2.8 Preview + max；Pro固定为`b28eb4e`，Flash固定为`6e03d72`，without不加载Skill。每条件一次运行；ChatGPT评阅为事后、非盲、单人内容评价，不是平台成绩，不作统计显著性或稳定普遍增益结论。
 
-## 顺序化学逻辑
+六轴为问题保真15%、机制与因果25%、原始证据20%、证伪与对照20%、路线与下一步10%、透明与可审计10%。各轴0–4档，总分为各项“权重×档位÷4”之和。
 
-> 能不能用一串选择性化学反应代替电子逻辑电路，让材料只有在“先光照、后遇湿”时才打开？
+## 第一题：顺序化学逻辑
 
-![顺序逻辑三大汇总六维图](sequential-logic/aggregate-six-dimensions.png)
+> 材料能不能只在“先光照、后遇湿”时才打开？
 
-| 条件 | ChatGPT 权重续评 | Kimi 修正评分 | 三大汇总 | 核验 PDF | Agent 墙钟 |
-|---|---:|---:|---:|---:|---:|
-| [Pro](sequential-logic/pro/) | 93 | 88.75 | 89.25 | 6 | 1659.432 s |
-| [Flash](sequential-logic/flash/) | 73 | 80.00 | 73.00 | 3 | 503.256 s |
-| [without](sequential-logic/without/) | 58 | 67.50 | 58.50 | 5 | 585.335 s |
+| 条件 | ChatGPT 直接复评 | 核验 PDF | Agent 墙钟 |
+|---|---:|---:|---:|
+| [Pro](sequential-logic/pro/) | 78.75 | 6 | 1659.432 s |
+| [Flash](sequential-logic/flash/) | 61.25 | 3 | 503.256 s |
+| [without](sequential-logic/without/) | 50.00 | 5 | 585.335 s |
 
-Pro 识别了水下预浸后照光不能证明逆序关闭，守住关键科学关口；Flash 更快但把反序无效说得过满；without 将同一来源误作直接证据。
+![顺序逻辑：ChatGPT直接复评](independent-review/sequential-logic-radar.png)
 
-其他图表：[ChatGPT 续评](sequential-logic/chatgpt-six-dimensions.png) · [Kimi 修正](sequential-logic/kimi-six-dimensions.png)。表格：[ChatGPT 细则](sequential-logic/chatgpt-rubric.md) · [Kimi 细则](sequential-logic/kimi-rubric.md) · [最终评分](sequential-logic/final-scores.md) · [用量](sequential-logic/usage.md)。
+Pro识别了“水已经存在时，后来生成的酸仍可能触发反应”的逆序风险，重点展示机制与因果判断。
 
-## 涂层“疫苗式损伤记忆”
+[0–4档位与总分](independent-review/sequential-logic-scores.md) · [六维加权分项](sequential-logic/chatgpt-rubric.md) · [当前总分](sequential-logic/final-scores.md) · [实际用量](sequential-logic/usage.md)
 
-> 能不能让一层涂层像打过疫苗一样，第一次划伤后留下记忆，下次受伤时修复得更快？
+## 第四题：涂层损伤记忆
 
-![损伤记忆三大汇总六维图](damage-memory/aggregate-six-dimensions.png)
+> 涂层能不能像打过疫苗一样，第一次划伤后，第二次修复得更快？
 
-| 条件 | ChatGPT 权重续评 | Kimi 修正评分 | 三大汇总 | 核验 PDF | Agent 墙钟 |
-|---|---:|---:|---:|---:|---:|
-| [Pro](damage-memory/pro/) | 92 | 91.25 | 90.00 | 3 + 1 XML | 316.917 s |
-| [Flash](damage-memory/flash/) | 75 | 76.25 | 77.00 | 2 | 205.852 s |
-| [without](damage-memory/without/) | 70 | 81.25 | 71.50 | 6 | 324.277 s |
+| 条件 | ChatGPT 直接复评 | 核验 PDF | Agent 墙钟 |
+|---|---:|---:|---:|
+| [Pro](damage-memory/pro/) | 68.75 | 3 + 1 XML | 316.917 s |
+| [Flash](damage-memory/flash/) | 67.50 | 2 | 205.852 s |
+| [without](damage-memory/without/) | 47.50 | 6 | 324.277 s |
 
-Pro 明确“自增强不等于第二次修复加速”，并形成双循环证伪实验；Flash 的全文阅读较少；without 的中心表述存在矛盾。三组均未找到完整的二次加速时序对照证据。
+![损伤记忆：ChatGPT直接复评](independent-review/damage-memory-radar.png)
 
-其他图表：[ChatGPT 续评](damage-memory/chatgpt-six-dimensions.png) · [Kimi 修正](damage-memory/kimi-six-dimensions.png)。表格：[ChatGPT 细则](damage-memory/chatgpt-rubric.md) · [Kimi 细则](damage-memory/kimi-rubric.md) · [最终评分](damage-memory/final-scores.md) · [用量](damage-memory/usage.md)。
+Pro与Flash相差1.25分，不描述为明显领先。这个案例展示Skill如何把类比拆成状态产生、保持与第二次修复动力学，形成可核查的研究问题。
 
-## 实例内容
+[0–4档位与总分](independent-review/damage-memory-scores.md) · [六维加权分项](damage-memory/chatgpt-rubric.md) · [当前总分](damage-memory/final-scores.md) · [实际用量](damage-memory/usage.md)
 
-每个组别目录均包含：
+## 数据、图表与复现
 
-- `task.md`、`CONTEXT.md` 和 `run.json`：输入、模型、版本、用量和耗时；
-- `visible_conversation.md`：可见用户问答；
-- `trace-export.jsonl`：脱敏的可见文本与工具事件，不含宿主系统提示或隐藏推理；
-- `output/`：最终报告、文献清单、失败记录、运行说明和 PDF 验证；
-- 每案例的 4 个表（Markdown+CSV）和 3 张六维图（PNG+SVG）。
+- `independent-review/scores.json`是当前ChatGPT直接复评的唯一数据源，保留六份源报告的SHA-256。
+- `chatgpt-rubric.*`、`final-scores.*`已经切换到这次直接复评；旧的`chatgpt-six-dimensions.*`链接也使用与独立复评目录逐字节相同的图。
+- 各组保留任务、背景、实际提示词、模型与用量、可见问答、脱敏工具轨迹、原始报告、文献清单、失败与PDF核验信息。论文原文、模型输出和事后评阅分别保留。
 
-[make_radar.py](make_radar.py) 与 [make_figures.py](make_figures.py) 可复现绘图；[build_tables.py](build_tables.py) 生成表格。各案例 `RESULTS.md` 保留完整证据边界。
+在仓库根目录运行：
 
-## 脱敏与原件边界
+```bash
+python examples/pro-flash-evaluation/build_tables.py
+python -m pip install matplotlib numpy
+python examples/pro-flash-evaluation/make_figures.py
+python examples/pro-flash-evaluation/independent-review/render_radars.py --out /path/to/exports
+```
 
-- 公开前扫描用户名、绝对路径、宿主记忆、账号/设备码、凭据和签名 URL；原始 wire 不进入仓库。
-- 本实例不直接收录 PDF 二进制原件：公开获取不自动等于允许再分发，许可需逐项确认。文献清单保留 DOI/来源链接，`pdf-verification.json` 保留页数、字节和 SHA-256，便于复核。
-- 时间/token 为平台日志数据；费用没有逐次扣费字段，统一记无法核验。实验预测阈值不是实测结果。
-- 两轮 Pro 均显示增益，但单主题单次运行不能证明所有任务都有同等效果；公共提示词也已预先拆解部分研究问题。
+表格脚本只使用标准库。旧绘图入口复制当前ChatGPT原图，并将Kimi历史图明确标为历史。独立绘图脚本验证评分、量表与源报告哈希，再重绘；无中文字体时使用英文，可用`--font`指定字体。脚本均可通过`--out`输出到独立目录。
+
+## 历史评分的归属
+
+早期科研深度分和工作流分均由Kimi执行；前者采用与ChatGPT讨论的量表，不能归名为ChatGPT直接评分。历史原分保留在两个案例的`evaluation.json`中；`computed-scores.json`的`totals`、`axes`为Kimi历史数据，`current_chatgpt_totals`为本次主评分，不混算成新的综合分。
+
+[顺序逻辑历史评阅](sequential-logic/RESULTS.md) · [损伤记忆历史评阅](damage-memory/RESULTS.md)。`kimi-rubric.*`、`kimi-six-dimensions.*`和`aggregate-six-dimensions.*`只作Kimi历史评分及派生值记录。
+
+原始科研输出与运行前冻结协议不因事后改分而重写。PDF清单保留题名、页数、来源与哈希；此目录不直接收录PDF二进制。费用无逐次扣费字段时保留null，时间与token沿用真实日志。
