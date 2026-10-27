@@ -32,6 +32,23 @@ Thanks for helping. This repository ships one SKILL.md-based research workflow
   (Chinese or English both welcome).
 - Be civil: critique the change, not the person. For scientific claims, attach evidence or a citation.
 
+## DSH 兼容性声明 / DSH compatibility declaration
+
+`package.json` declares which DeepSeek Harness runtimes may load this bundle. DSH validates every
+`@deepseek-ai/dsh` / `@deepseek-ai/dsh-*` range in `peerDependencies` against the **runtime
+version** (`dsh --version`), not against the version of that npm package — the `@deepseek-ai/dsh-*`
+packages are version-locked to the runtime, so the two ranges mean the same thing to DSH.
+
+Keep the declared range a **lower bound only**:
+
+```json
+"peerDependencies": { "@deepseek-ai/dsh-skill-filesystem": ">=0.1.0-rc.6" }
+```
+
+An upper bound (`<0.2.0`) makes the plugin uninstallable on every later DSH release; that cap is
+what issue #2 reported (shidi-dsh-plugin 0.3.0 rejected on dsh 0.2.1-rc.2). `validate.py` fails a
+capped DSH range, and re-check the bundle on a new DSH minor before moving the lower bound up.
+
 ## 版本与发布 / Versioning and releases
 
 - The maintainer bumps `package.json` + README badges + git tag + npm release together.
