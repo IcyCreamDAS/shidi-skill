@@ -1,0 +1,69 @@
+{
+  "run": "shidi-damage-memory-runs/without",
+  "task": "能不能让一层涂层像打过疫苗一样，第一次划伤后留下记忆，下次受伤时修复得更快？",
+  "started_utc": "2026-10-26T16:51:42Z",
+  "ended_utc": "2026-10-26T16:56:30Z",
+  "paused_for_questions": false,
+  "questions_asked": [],
+  "budget": {
+    "soft_wall_minutes": 12,
+    "search_queries_limit": 24,
+    "page_actions_limit": 40,
+    "core_references_limit": 8,
+    "search_queries_used": 11,
+    "page_actions_used_estimate": 21,
+    "core_references_listed": 8
+  },
+  "queries": [
+    "\"damage memory\" self-healing polymer coating",
+    "self-healing material \"memory\" first damage heals faster subsequently vaccine-like",
+    "\"vaccine-like\" OR \"trained immunity\" analogy self-healing material research",
+    "mechanophore force-triggered self-healing polymer crack latent catalyst healing",
+    "self-healing hydrogel mechanical training damage memory strengthening sacrificial bonds repeated damage",
+    "self-healing corrosion coating \"memory effect\" inhibitor release first scratch subsequent protection",
+    "\"damage memory\" self-healing hydrogel OR elastomer OR polymer paper",
+    "healing efficiency increases repeated damage cycles self-healing polymer study",
+    "\"Self-Healing Polymer Material with Cascade-Responsive Properties\" Advanced Functional Materials 2025",
+    "Zheludkevich self-healing corrosion coating \"damage memory\" inhibitor nanocontainer active protection",
+    "mechanoradical fracture-induced polymerization self-strengthening polymer damage-triggered repair"
+  ],
+  "page_actions": [
+    "FetchURL PMC8695044 (full text read)",
+    "FetchURL the-innovation.org commentary (full text read)",
+    "FetchURL ADS abstract (405 failed)",
+    "curl batch download #1: 7 URLs, 1 success (Frontiers), 6 blocked",
+    "NCBI oa.fcgi x4: 404 (endpoint retired)",
+    "Europe PMC search API + OpenAlex x2 (metadata)",
+    "curl europepmc render x5: Cloudflare blocked",
+    "RSC articlepdf + MDPI retries: blocked",
+    "browser create_tab (europepmc render redirect discovery)",
+    "browser get_downloads",
+    "curl europepmc /api/getPdf x5: all success"
+  ],
+  "retries": {
+    "pmc_direct_pdf": 2,
+    "europepmc_render": 2,
+    "mdpi": 2,
+    "successful_channel": "https://europepmc.org/api/getPdf?pmcid=<PMCID>"
+  },
+  "files_delivered": [
+    "output/report.md",
+    "output/literature.md",
+    "output/failures.md",
+    "output/pdfs/matsuda2025_rapid_selfstrengthening_dn.pdf",
+    "output/pdfs/wang2025_harnessing_sacrificial_bonds.pdf",
+    "output/pdfs/stauch2021_mechanophore_linkers.pdf",
+    "output/pdfs/almaadeed2019_selfrepairing_composites.pdf",
+    "output/pdfs/lutz2016_multiple_action_coating.pdf",
+    "output/pdfs/cremaldi2018_bioinspired.pdf"
+  ],
+  "pdfs_downloaded_verified": 6,
+  "metrics_not_obtained": [
+    "Li et al. 2025 AFM full text (paywall, closed access)",
+    "Matsuda 2025 publisher-typeset version (only PMC author manuscript)",
+    "Hayes 2007 primary data table (abstract-level only)",
+    "Quantitative 'second-heal faster' datasets (no same-site pre-damage protocol found in any retrieved paper)",
+    "Patent/product landscape check"
+  ],
+  "interrupted": false
+}

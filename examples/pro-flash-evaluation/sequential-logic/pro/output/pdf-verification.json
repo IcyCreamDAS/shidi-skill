@@ -1,0 +1,60 @@
+{
+  "verified_at_utc": "2026-10-25T17:00:23.891469+00:00",
+  "pdf_count": 6,
+  "files": [
+    {
+      "file": "01_irie2010_diarylethene_pjab.pdf",
+      "bytes": 509136,
+      "pages": 12,
+      "sha256": "4824acc091a78afdfd6a0acb0c8227da2e509036e39bccacc655895037bc6377",
+      "metadata_title": "Photochromism of diarylethene molecules and crystals",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "02_pischel2018_keypad_csr.pdf",
+      "bytes": 4538868,
+      "pages": 15,
+      "sha256": "635dc0352f34f978aecc2e88ecd1e7345b6d786965fa1c83c0792b8c487c9cbd",
+      "metadata_title": "Molecules for security measures: From keypad locks to advanced communication protocols",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "03_erbas2018_logicgates_csr.pdf",
+      "bytes": 6498042,
+      "pages": 22,
+      "sha256": "05bd218cffc34a39484456ed05a3d397012f2f383750f0af58f2cbe62c3ee34d",
+      "metadata_title": "Molecular logic gates: the past, present and future",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "05_jacs2021_spiropyran_hydrogel.pdf",
+      "bytes": 2776120,
+      "pages": 10,
+      "sha256": "332cd8ccd0607e963fb6860c55150d6fcbef05b1e626298f3cf14b129e17df04",
+      "metadata_title": "",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "06_kobe_spiropyran_silica.pdf",
+      "bytes": 224778,
+      "pages": 12,
+      "sha256": "e6d5c9f747131095efdb95d8caef95987207f388842989817af16a5cc58ee318",
+      "metadata_title": "Microsoft Word - Thin Solid Films_PS1-37_Kinashi et al.2.doc",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "10_weinstain2020_release_review.pdf",
+      "bytes": 13829171,
+      "pages": 138,
+      "sha256": "24619121f027d0b2a5eebb0d00d6e7b01aea985dd83159f3c91e58e83565b710",
+      "metadata_title": "cr0c00663 1..138",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "run_dir": "<sequential-runs>/b28eb4e-k28max-01/without",
+  "task": "能不能用一串选择性化学反应代替电子逻辑电路，让材料只有在'先光照、后遇湿'时才打开？",
+  "started_at": "2026-10-26T00:22:00+0800",
+  "ended_at": "2026-10-26T00:31:00+0800",
+  "interrupted_for_questions": false,
+  "questions_asked": [],
+  "budget": {
+    "search_queries_used": 6,
+    "search_queries_limit": 24,
+    "page_actions_used": 13,
+    "page_actions_limit": 40,
+    "core_references_limit": 8,
+    "wall_clock_soft_limit": "12min"
+  },
+  "search_queries": [
+    "sequential chemical logic gate \"first light then\" moisture humidity responsive material",
+    "molecular keypad lock sequential inputs chemical logic gate review",
+    "spiropyran merocyanine humidity water vapor photochromic polymer gate hydrophilic",
+    "TiO2 photoinduced superhydrophilicity UV light then water wettability review",
+    "photobase generator latent base UV curing then moisture humidity two-step coating photolatent",
+    "photodegradable hydrogel o-nitrobenzyl light irradiation then water dissolution release sequential trigger",
+    "dual stimuli responsive actuator light humidity \"sequential\" order-dependent bilayer moisture photothermal NOT AND gate",
+    "photoacid generator latent superacid moisture deprotection siloxane sol-gel two step UV then humidity"
+  ],
+  "page_actions": [
+    {"type": "search", "engine": "kimi-websearch", "count": 8},
+    {"type": "download_attempt", "count": 13, "success": 5},
+    {"type": "html_fetch", "target": "PMC article pages + NCBI oa utility", "count": 2}
+  ],
+  "downloaded_verified_pdfs": [
+    {"file": "pdfs/01_keypad_locks_review_semanticscholar.pdf", "bytes": 4449227, "verified": "pdftotext title match: Andreasson & Pischel 2018 Chem Soc Rev 47 2266"},
+    {"file": "pdfs/03_tio2_history_JSAP.pdf", "bytes": 2134202, "verified": "pdftotext title match: TiO2 Photocatalysis JJAP 44 8269"},
+    {"file": "pdfs/04_photolatent_bases_radtech2006.pdf", "bytes": 262864, "verified": "pdftotext title+authors match: Studer et al Photolatent bases"},
+    {"file": "pdfs/05_spiropyran_hydrogel_review_frontiers2022.pdf", "bytes": 1606745, "verified": "pdftotext DOI match 10.3389/fbioe.2022.1075670"},
+    {"file": "pdfs/07_uv_nanosponge_scierep2015.pdf", "bytes": 6620393, "verified": "pdftotext title+DOI match 10.1038/srep12908"}
+  ],
+  "failed_items": [
+    {"target": "RSC c7cs00287d/c7cs00491e/c3py01334k official PDFs", "reason": "Cloudflare anti-bot"},
+    {"target": "MDPI 1422-0067/23/19/11535 pdf", "reason": "403 Access Denied"},
+    {"target": "PMC3897936 + PMC12163949 PDFs", "reason": "reCAPTCHA challenge; Europe PMC mirrors Cloudflare-blocked"},
+    {"target": "Sci. Adv. eaay0065 PDF", "reason": "403"},
+    {"target": "MATEC photolatent amidine PDF", "reason": "error page 784 bytes"},
+    {"target": "Estudo Geral photodegradable crosslinker PDF", "reason": "timeout"},
+    {"target": "radtech2020 Asemani dual-curing PDF", "reason": "domain dead/5.7KB non-PDF"}
+  ],
+  "metrics_unobtained": [
+    "Kloxin 2010 photodegradable hydrogel full text (only HTML page + review paraphrase)",
+    "Raman 2020 Sci Adv full text (abstract only)",
+    "direct full-text evidence combining photolatent catalyst + moisture cure in one paper (only separate evidence chains + patent/industry sources)",
+    "quantitative memory-window data (SP thermal back-reversion lifetimes) — report uses qualitative ranges from review paraphrase, not re-measured values"
+  ],
+  "deliverables": [
+    "output/先光照后遇湿_化学顺序门控报告.md",
+    "output/references_文献清单.md",
+    "output/失败清单.md",
+    "output/pdfs/ (5 verified PDFs)",
+    "output/run-notes.json"
+  ]
+}

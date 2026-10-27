@@ -1,0 +1,101 @@
+{
+  "run_id": "b28eb4e-k28max-01/with",
+  "rounds": 2,
+  "status": "completed",
+  "task_classification": "文献调研（顺序门控概念验证路线分析）",
+  "start_utc": "2026-10-25T16:25:40Z",
+  "end_utc": "2026-10-25T16:57:30Z",
+  "budget": {
+    "soft_wall_clock_minutes": 12,
+    "wall_clock_actual_note": "两轮合计约 32 分钟，超过 12 分钟软墙；超支主因：RSC/ACS/MDPI 反爬重试与 DOI 核验。软墙为软约束，已尽量压缩",
+    "search_queries_limit": 24,
+    "search_queries_used": 13,
+    "page_actions_limit": 40,
+    "page_actions_used_estimate": 19,
+    "page_actions_breakdown": "FetchURL×3(ACS 403/figshare ok/RSC 403) + PMC 页面×1 + OpenAlex API×7 + Crossref API×5 + S2 API×4(全 429)",
+    "core_references_limit": 8,
+    "core_references_used": 8
+  },
+  "actions": {
+    "searches": [
+      "sequential/order-of-stimuli dual responsive polymer light then humidity",
+      "molecular keypad lock order-dependent chemical inputs sequential logic review",
+      "spiropyran merocyanine thermal reversion half-life polymer matrix dark stability",
+      "photoacid generator latent acid light-triggered acetal crosslinked hydrogel degradation",
+      "sequence-dependent dual stimuli responsive block copolymer order of stimuli mesophase",
+      "diarylethene fatigue resistance cycles thermal stability half-life review open access",
+      "spiropyran hydrogel light humidity dual responsive swelling merocyanine",
+      "湿度 光 双响应 顺序 刺激 水凝胶 螺吡喃 (中文)",
+      "photo-humidity dual responsive film coating membrane responsive",
+      "keypad lock fluorescent password light water inputs order spiropyran molecular",
+      "two-step photocaged acid activation sequential hydrolysis degradable film coating on-demand",
+      "Dual-Responsive Jumping Actuators by Light and Humidity J. Mater. Chem. A 2022"
+    ],
+    "downloads_success": [
+      "01_irie2010_diarylethene_pjab.pdf (J-STAGE OA, 509KB, 标题核验✅)",
+      "02_pischel2018_keypad_csr.pdf (Chalmers 库, 4.5MB, ✅)",
+      "03_erbas2018_logicgates_csr.pdf (Bilkent 库, 6.5MB, ✅)",
+      "05_jacs2021_spiropyran_hydrogel.pdf (rug.nl 作者稿, 2.8MB, ✅)",
+      "06_kobe_spiropyran_silica.pdf (神户大学库, 225KB, AES 加密已解密读取, ✅)",
+      "10_weinstain2020_release_review.pdf (PMC 镜像存储, 13.8MB, ✅)"
+    ],
+    "downloads_failed": [
+      "Zhao 2015 RSC Adv (RSC 403 反爬)",
+      "Ritchie 2017 PCCP (RSC 403 反爬×2: articlepdf+authorversion)",
+      "Li 2022 JMCA (RSC 403/no OA)",
+      "MDPI IJMS 2022 (MDPI 409×2)",
+      "OSTI purl/1798323 (连接 http 000×2)"
+    ],
+    "retries": [
+      "PMC pdf 直链→interstitial→EuropePMC→J-STAGE 成功",
+      "Chalmers /files/ 404→/file/ 成功",
+      "RSC articlepdf 与 authorversion 各试 2 次均 403",
+      "OSTI 重试 2 次 http 000",
+      "pip install cryptography 以解密 06 号 PDF",
+      "verify_refs 三轮：修 DOI 误并(全角括号吸入)、破折号 lint、Macromolecules 年份记录异常标注"
+    ]
+  },
+  "questions_asked_round1": ["领域增删改", "N 值", "特殊要求", "角度选择"],
+  "answers_received_round2": {
+    "领域": "保留1-5,7,8；6并入顺序双刺激；9不做；目标=判断顺序门控+1-2条普实路线；偏好薄膜/涂层/软材料",
+    "N": "8 上限不凑数",
+    "特殊要求": "无必含；分区只标注；不限年份；综述建图但结论追溯原始研究",
+    "角度": "A1 A2 A3 B1 B2 B3 C1 C2"
+  },
+  "files_produced": [
+    "with/output/report.md",
+    "with/output/literature-list.md",
+    "with/output/failures.md",
+    "with/output/verify-task.md",
+    "with/output/scores.json",
+    "with/output/verify-refs-result.json",
+    "with/output/run-notes.json",
+    "with/output/pdfs/01_irie2010_diarylethene_pjab.pdf",
+    "with/output/pdfs/02_pischel2018_keypad_csr.pdf",
+    "with/output/pdfs/03_erbas2018_logicgates_csr.pdf",
+    "with/output/pdfs/05_jacs2021_spiropyran_hydrogel.pdf",
+    "with/output/pdfs/06_kobe_spiropyran_silica.pdf",
+    "with/output/pdfs/10_weinstain2020_release_review.pdf"
+  ],
+  "pdfs_downloaded_verified": 6,
+  "core_references": 8,
+  "verification": {
+    "doi_check": "verify_refs.py: 13 条 DOI 全部 ok=True，无撤稿；style lint 修复后通过",
+    "pdf_check": "pypdf 抽取首页文本核验标题/作者/刊名匹配；6/6 通过",
+    "note": "文献6(Thin Solid Films)作者名在PDF首页抽取不完整，清单已标注'作者见PDF'"
+  },
+  "failures": ["RSC×3 反爬", "MDPI 409", "OSTI 连接失败", "ACS 403(摘要级)", "S2 限流 429", "PMC oa.fcgi 404(绕过成功)"],
+  "paywalls": ["Margulies 2007 JACS(未代寻Sci-Hub，经综述转引)"],
+  "unobtained_metrics": [
+    "⚠/❌ 文献的全文(7篇补充线索中仅题录/摘要)",
+    "IF/分区精确值(只给约值标注)",
+    "Macromolecules 顺序级联文献的出版年(Crossref记录异常)",
+    "干态酸寿命、SP循环疲劳精确数值(文献未定量，列入待测)"
+  ],
+  "scope_note": "全程未读取 with/ 之外文件(run 根目录 ANSWERS.md/PROTOCOL.md/freeze.json、without/ 臂均未读)；产物全部写入 with/output/",
+  "deviations": [
+    "未按角度分落盘 angle-<代号>.md 中间文件(串行执行、单报告内分角度章节代替)，已在此注明",
+    "未渲染 HTML/PDF 版报告(预算超软墙后取舍，MD 为交付正本)",
+    "破折号 lint 以全量替换为冒号/句号处理(22处)"
+  ]
+}

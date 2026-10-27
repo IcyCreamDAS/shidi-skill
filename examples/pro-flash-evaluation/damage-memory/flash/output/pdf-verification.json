@@ -1,0 +1,24 @@
+{
+  "verified_at_utc": "2026-10-26T17:03:51.578606+00:00",
+  "pdf_count": 2,
+  "files": [
+    {
+      "file": "03_natcomm2020_entropy_interfacial_selfhealable.pdf",
+      "bytes": 4804084,
+      "pages": 9,
+      "sha256": "7f59e5965706390d4dae12f542732ba42d0e839d8677b0c465dd3613d3340fd0",
+      "metadata_title": "Entropy and interfacial energy driven self-healable polymers",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "04_polymers2019_smart_coatings_review.pdf",
+      "bytes": 6892645,
+      "pages": 20,
+      "sha256": "f8fab008ef77124045943c0523627ff9bf9c1e23a525f0bc423c1b5d7f6efe84",
+      "metadata_title": "",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

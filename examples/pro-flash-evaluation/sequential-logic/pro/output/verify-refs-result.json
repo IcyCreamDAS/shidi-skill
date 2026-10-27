@@ -1,0 +1,112 @@
+{
+  "verified_dois": {
+    "10.1002/adma.201604792": {
+      "ok": true,
+      "title": "Humidity‐ and Photo‐Induced Mechanical Actuation of Cross‐Linked Liquid Crystal Polymers",
+      "year": 2016,
+      "journal": "Advanced Materials",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1016/j.tsf.2007.04.120": {
+      "ok": true,
+      "title": "Thermal stability of merocyanine form in spiropyran/silica composite film",
+      "year": 2008,
+      "journal": "Thin Solid Films",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1021/acs.chemrev.0c00663": {
+      "ok": true,
+      "title": "Visible-to-NIR-Light Activated Release: From Small\nMolecules to Nanomaterials",
+      "year": 2020,
+      "journal": "Chemical Reviews",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1021/acs.macromol.6c01668": {
+      "ok": true,
+      "title": "Sequence-Dependent Mesophase Cascades in Dual-Responsive Polymeric Micelles",
+      "year": 2026,
+      "journal": "Macromolecules",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1021/acsapm.1c01380": {
+      "ok": true,
+      "title": "Chitosan/Polyvinyl Alcohol-Based Direction-Controlled Photo-Humidity Dual Responsive Membrane",
+      "year": 2021,
+      "journal": "ACS Applied Polymer Materials",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1021/ja065317z": {
+      "ok": true,
+      "title": "A Molecular Keypad Lock:  A Photochemical Device Capable of Authorizing Password Entries",
+      "year": 2006,
+      "journal": "Journal of the American Chemical Society",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1021/jacs.1c08778": {
+      "ok": true,
+      "title": "Spiropyran Photoisomerization Dynamics in Multiresponsive Hydrogels",
+      "year": 2021,
+      "journal": "Journal of the American Chemical Society",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1039/C5RA14421C": {
+      "ok": true,
+      "title": "UV-controlled shape memory hydrogels triggered by photoacid generator",
+      "year": 2015,
+      "journal": "RSC Advances",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1039/C7CP02818K": {
+      "ok": true,
+      "title": "Photochrome-doped organic films for photonic keypad locks and multi-state fluorescence",
+      "year": 2017,
+      "journal": "Physical Chemistry Chemical Physics",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1039/C7CS00287D": {
+      "ok": true,
+      "title": "Molecules for security measures: from keypad locks to advanced communication protocols",
+      "year": 2018,
+      "journal": "Chemical Society Reviews",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1039/C7CS00491E": {
+      "ok": true,
+      "title": "Molecular logic gates: the past, present and future",
+      "year": 2018,
+      "journal": "Chemical Society Reviews",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.1039/D2TA07339K": {
+      "ok": true,
+      "title": "Dual-responsive jumping actuators by light and humidity",
+      "year": 2022,
+      "journal": "Journal of Materials Chemistry A",
+      "retracted": false,
+      "registry": "crossref"
+    },
+    "10.2183/pjab.86.472": {
+      "ok": true,
+      "title": "Photochromism of diarylethene molecules and crystals",
+      "year": 2010,
+      "journal": "Proceedings of the Japan Academy, Series B",
+      "retracted": false,
+      "registry": "crossref"
+    }
+  },
+  "style": {
+    "ok": true,
+    "issues": []
+  }
+}

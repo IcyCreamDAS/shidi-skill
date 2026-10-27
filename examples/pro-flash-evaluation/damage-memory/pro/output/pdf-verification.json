@@ -1,0 +1,33 @@
+{
+  "verified_at_utc": "2026-10-26T17:03:51.557866+00:00",
+  "pdf_count": 3,
+  "files": [
+    {
+      "file": "chen2021_chemsci_rev_mechanochemical_tools.pdf",
+      "bytes": 13837766,
+      "pages": 42,
+      "sha256": "6acf0db439806e0293097f5f05ee212cb1d1518c9a307bc52443a0007d52daef",
+      "metadata_title": "",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "craig2011_jmaterchem_mechanochemistry_review.pdf",
+      "bytes": 459834,
+      "pages": 9,
+      "sha256": "4801b1e1c4b17d6c4340ed8cabfafba64d63fd78d7902535048a3de0599e22aa",
+      "metadata_title": "c0jm02636k 1655..1663",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "pan2021_angew_load_strengthening_cascade.pdf",
+      "bytes": 1019532,
+      "pages": 7,
+      "sha256": "851bf6da88ee5c1de57dc2b284c005890010efa74dcaab0ce8a9f7753fd46c22",
+      "metadata_title": "((Title))",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

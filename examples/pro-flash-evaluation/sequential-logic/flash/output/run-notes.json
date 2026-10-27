@@ -1,0 +1,68 @@
+{
+  "run": "6e03d72-k28max-01/with",
+  "date": "2026-10-26",
+  "started_at": "2026-10-26T01:38+08:00",
+  "ended_at": "2026-10-26T01:47+08:00",
+  "interrupted": false,
+  "paused_for_user_questions": false,
+  "questions_asked": [],
+  "task_type": "文献调研",
+  "budget": {
+    "search_queries": { "used": 8, "limit": 24 },
+    "page_actions": { "used_approx": 10, "limit": 40 },
+    "core_references": { "listed": 9, "limit": 8 },
+    "pdfs_downloaded_verified": 3
+  },
+  "queries": [
+    "molecular keypad lock order-dependent chemical sequential logic light then ion fluorescence",
+    "dual stimulus AND gate light AND humidity responsive polymer sequential activation",
+    "photoacid generator acid-catalyzed hydrolysis moisture sequential degradation polymer light then water trigger",
+    "spiropyran merocyanine humidity protonation sequential UV water responsive hydrogel actuator",
+    "dual cure adhesive UV light first then moisture cure alkoxysilane sequential curing mechanism",
+    "molecular keypad lock light water two inputs order-dependent photoswitch fluorescence password",
+    "photocaged catalyst base released by light then water moisture activated polymerization sequential control",
+    "anti-counterfeiting photochromic hydrochromic dual response ink UV then water reveal sequential"
+  ],
+  "page_actions_log": [
+    "OpenAlex API 反查 4 篇文献 DOI/OA 状态（ja203456h, advs.202302875, ja065317z, j.matt.2021.01.016）",
+    "NCBI OA 服务 oa.fcgi 查询 PMC3144677/PMC6218103：404",
+    "curl 直连下载 6 次（PMC×2 返回 HTML 占位页、Wiley 403、Cell 403、MDPI 首次 403、rug.nl 成功、nankai.edu.cn 成功）",
+    "fetch_pdfs.py 批下 6 个 DOI：0 成功 6 失败（付费墙 1 + 403/无OA 5）",
+    "pypdf 核验 3 个 PDF 首页标题/作者/DOI 与声称文献匹配"
+  ],
+  "retries": [
+    "PMC PDF 直链 → Europe PMC ?pdf=render → fetch_pdfs.py，三轮均失败（HTML 占位页）",
+    "Wiley pdfdirect 两种 UA/Referer：均 403",
+    "MDPI www 域 403 → mdpi-res.com 资源域：成功"
+  ],
+  "files": {
+    "report": "output/shidi_顺序门控化学逻辑材料_20261026.md",
+    "reference_list": "output/文献清单.md",
+    "failure_list": "output/失败清单.md",
+    "dois_txt": "output/dois.txt",
+    "pdfs": [
+      "output/pdfs/04_spiropyran-hydrogel-dynamics_JACS2021.pdf",
+      "output/pdfs/05_keypad-lock-base-light_ChemEurJ2009.pdf",
+      "output/pdfs/06_tri-cure-silicon-coatings_MDPI2022.pdf"
+    ]
+  },
+  "pdf_verification": {
+    "method": "pypdf 抽取首页文本比对标题/作者/期刊/DOI + 正文关键词命中",
+    "04": "match: 'Spiropyran Photoisomerization Dynamics in Multiresponsive Hydrogels', JACS, DOI 10.1021/jacs.1c08778",
+    "05": "match: 'A Double Plug-Socket System Capable of Molecular Keypad Locks through Controllable Photooxidation', Chem. Eur. J., DOI 10.1002/chem.200901206",
+    "06": "match: 'Hybrid Tri-Cure Organo-Silicon Coatings for Monument Preservation', Coatings, DOI 10.3390/coatings12081098"
+  },
+  "failed_fulltext": [
+    {"ref": "Margulies 2007 JACS 10.1021/ja065317z", "reason": "paywall"},
+    {"ref": "Andreasson 2011 JACS 10.1021/ja203456h (PMC3144677)", "reason": "anti-bot/HTML redirect page, no OA pdf"},
+    {"ref": "Das 2018 JPC Lett 10.1021/acs.jpclett.8b02567 (PMC6218103)", "reason": "anti-bot/HTML redirect page, no OA pdf"},
+    {"ref": "Sun Adv Sci 10.1002/advs.202302875", "reason": "403 anti-bot (Wiley)"},
+    {"ref": "Li Matter 2021 10.1016/j.matt.2021.01.016", "reason": "403 anti-bot (Cell)"},
+    {"ref": "Ju J Mater Chem C 2020 10.1039/C9TC06522A", "reason": "no OA pdf location indexed"}
+  ],
+  "notes": [
+    "报告中每条引用均出自本次实际检索/下载；未读全文的条目只使用摘要/检索片段级事实并标注 ⚠",
+    "顺序逻辑硬判据（反序无效）贯穿报告，普通双重响应与顺序门控严格区分",
+    "score_papers.py 脚本复核受 12 分钟墙钟限制未跑，七维分为人工核定整数，已在文献清单注明"
+  ]
+}

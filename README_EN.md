@@ -38,6 +38,8 @@
   <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
+**Real Pro / Flash / without comparisons:** [two interdisciplinary prompts, six runs, and three-arm radar charts](examples/pro-flash-evaluation/README.md) — including positive, null, and speed differences rather than a universal winner.
+
 ---
 
 ## ✨ What's New
@@ -170,7 +172,17 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 Then just say:
 
 ```text
-shidi, research the literature on XX — 20 papers
+师弟，帮我详细调研一下 XXX              # Pro
+师弟，请你用 pro 模式给我调研一下 XXX   # Pro
+师弟，帮我快速调研一下 XXX              # Flash
+师弟，请你用 flash 模式给我调研一下 XXX # Flash
+```
+
+**One download includes the complete Pro and Flash modes.** If the request does not specify “详细”, “快速”, “pro”, or “flash”, it defaults to **Pro**: structured searching, interactive clarification, and deep deliverables. Flash minimizes confirmation and starts quickly. Modes change the workflow, not the model; neither is universally better.
+
+Other examples:
+
+```text
 shidi, design an experiment for XX
 shidi, plot this data
 shidi, read this paper in depth for me
@@ -180,7 +192,7 @@ Just "shidi" works too — it confirms the task type before starting. Compatible
 
 > [!IMPORTANT]
 > ### An executor, not a genie
-> `harness + model = agent` — shidi owns the workflow, the model sets the ceiling. And it never decides for you: angle selection, parameters, trade-offs all bounce back to you. It takes the grunt work; the ideas and judgment stay yours.
+> `harness + model = agent` — shidi owns the workflow, the model sets the ceiling. Pro returns angle selection and parameter confirmation to you; Flash proposes defaults and reduces formal confirmation. It takes the grunt work; the ideas and judgment stay yours.
 
 ## 🤖 Persona
 

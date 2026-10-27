@@ -1,0 +1,49 @@
+{
+  "run": "shidi-damage-memory-runs/pro-b28",
+  "phase": "completed",
+  "started_at": "2026-10-27T00:51:46+08:00",
+  "ended_at": "2026-10-27T01:09:00+08:00",
+  "task_type": "文献调研",
+  "user_request_original": "能不能让一层涂层像打过疫苗一样，第一次划伤后留下记忆，下次受伤时修复得更快？",
+  "parameters_locked": {
+    "fields": "重点 ②③④⑥⑧（动态共价/损伤记忆/力化学/定量表征/感知联动）；①只作对照；⑤⑦并入自适应/免疫启发；偏好透明薄膜/涂层/软材料小样",
+    "count": "N≤8 上限非凑数，优先精读关键文献",
+    "special": "无必含；IF/分区只标注；不限年份；公开下载已授权；必须有首次vs二次损伤时序对照与证据分级"
+  },
+  "questions_asked": ["步骤1三参数（领域/数量/特殊要求）已在上一轮一次性问完，本轮收到回答"],
+  "search_queries": 10,
+  "page_actions": 4,
+  "search_query_log": [
+    "\"damage memory\" self-healing polymer coating second damage heals faster",
+    "mechanochemistry damage-triggered latent catalyst mechanophore repeated damage accelerated healing",
+    "\"vaccination-inspired\" OR \"materials vaccination\" OR \"vaccine-like\" self-healing material",
+    "self-strengthening polymer mechanophore damage-induced crosslinking mechanochemical latent catalyst",
+    "\"repeated damage\" OR \"multiple damage events\" \"faster healing\" polymer study",
+    "\"damage memory\" material retains record previous damage mechanophore persistent radical",
+    "mechanoradical self-healing polymer radical recombination ultrasound accelerated healing",
+    "latent catalyst mechanochemical force activation ruthenium metathesis mechanophore",
+    "\"Polymer mechanochemistry: from single molecule to bulk material\" chemical memory",
+    "（另含 PMC/MDPI/PNAS/EuropePMC 页面抓取 4 次）"
+  ],
+  "downloads": [
+    {"file": "pdfs/chen2021_chemsci_rev_mechanochemical_tools.pdf", "source": "https://pure.tue.nl/ws/portalfiles/portal/183032541/d0cs00940g.pdf", "status": "ok_verified", "note": "CC BY；pypdf 核验首页题名/作者/DOI 与 DOI 10.1039/d0cs00940g 匹配"},
+    {"file": "pdfs/pan2021_angew_load_strengthening_cascade.pdf", "source": "https://livrepository.liverpool.ac.uk/3165671/1/manuscript202010043.pdf", "status": "ok_verified", "note": "接受稿；pypdf 核验题名/作者匹配（Angew Chem Int Ed 2021, DOI 10.1002/anie.202010043）"},
+    {"file": "pdfs/craig2011_jmaterchem_mechanochemistry_review.pdf", "source": "http://jupiter.chem.uoa.gr/thanost/papers/papers7/JMaterChem_21(2011)1655.pdf", "status": "ok_verified", "note": "pypdf 核验题名/作者/DOI 10.1039/c0jm02636k 匹配"},
+    {"file": "pdfs/wang2025_molecules_autonomic_selfhealing_fulltext.xml", "source": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11821010/fullTextXML", "status": "ok_verified", "note": "Molecules 2025, 30(2):469 全文 XML（MDPI 反爬，走 EuropePMC OA 通道）"}
+  ],
+  "pdf_attempts_failed": 7,
+  "failures": ["见 output/失败清单.md"],
+  "deliverables": {
+    "report": "output/损伤记忆涂层调研报告.md",
+    "references": "output/参考文献清单.md",
+    "pdfs": "output/pdfs/ (4 个全文文件，3 PDF + 1 XML)",
+    "failure_list": "output/失败清单.md",
+    "cross_validation_taskbook": "output/交叉验证任务书.md"
+  },
+  "core_findings": {
+    "direct_evidence_time_series": "未检到（同一材料第1/2次损伤愈合速率对照且第二次更快）",
+    "nearest_mechanisms": ["力激活潜伏催化剂的活性种持久存在 [6][7]", "机械自由基 chemical memory [1][9][10]", "力致自强化/交联 [2][5][8]"],
+    "recommended_routes": ["B: 机械自由基记忆软膜（先证伪）", "A: 潜伏催化剂+单体胶囊（二期）"]
+  },
+  "budget_check": "搜索 10/24，页面动作 ~8/40，核心文献 8 篇（全文 4 + 摘要 4），未超预算；软墙钟约 17 分钟略超 12 分钟软墙"
+}

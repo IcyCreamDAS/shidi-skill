@@ -1,0 +1,57 @@
+{
+  "run_dir": "shidi-damage-memory-runs/flash-6e",
+  "task_file": "task.md",
+  "start_time": "2026-10-27T00:51:43+08:00",
+  "end_time": "2026-10-27T00:55:00+08:00",
+  "interrupted": false,
+  "questions_asked": [],
+  "user_paused_for_questions": false,
+  "budget": {
+    "soft_wall_clock_min": 12,
+    "actual_minutes": 3.3,
+    "max_search_queries": 24,
+    "search_queries_used": 5,
+    "max_page_actions": 40,
+    "page_actions_used": 0,
+    "max_core_references": 8,
+    "core_references": 8
+  },
+  "queries": [
+    {"type": "WebSearch", "q": "\"damage memory\" self-healing polymer coating repeated damage faster healing"},
+    {"type": "WebSearch", "q": "self-healing coating \"vaccine\" OR \"immunization\" effect damage healing faster second time"},
+    {"type": "WebSearch", "q": "self-healing material \"damage memory\" autonomous repair prior damage site"},
+    {"type": "WebSearch", "q": "\"self-healing\" polymer \"memory\" previous damage site faster re-healing cycles epoxy intrinsic"},
+    {"type": "WebSearch", "q": "self-healing polymer repeated healing cycles efficiency increases intrinsic dynamic covalent \"second healing\" faster"},
+    {"type": "OpenAlexAPI", "q": "search=damage memory self-healing polymer (x2 variants) + self-healing coating repeated damage healing efficiency cycles"}
+  ],
+  "page_actions": [],
+  "pdf_downloads": {
+    "attempted_sources": [
+      "mdpi.com/1420-3049/26/9/2468/pdf (x2 variants)",
+      "mdpi.com/2073-4360/11/9/1519/pdf",
+      "mdpi-res.com (polymers-11-01519)",
+      "onlinelibrary.wiley.com/doi/pdfdirect/10.1002/advs.202002131 (x2)",
+      "nature.com/articles/s41467-020-14911-y.pdf",
+      "pmc.ncbi.nlm.nih.gov/articles/PMC8122913/pdf/...",
+      "europepmc.org/articles/PMC8122913?pdf=render",
+      "europepmc.org/articles/PMC7610274?pdf=render"
+    ],
+    "succeeded": [
+      "pdfs/03_natcomm2020_entropy_interfacial_selfhealable.pdf (4804084 bytes, %PDF verified)",
+      "pdfs/04_polymers2019_smart_coatings_review.pdf (6892645 bytes, %PDF verified)"
+    ],
+    "failed_count": 7,
+    "failed_detail_file": "failures.md"
+  },
+  "full_text_reading": "none — 2 downloaded PDFs file-verified only, not page-read; 6 refs abstract-level; report states this explicitly",
+  "deliverables": [
+    "output/shidi_damage-memory-selfhealing-coating_20261027.md",
+    "output/references.md",
+    "output/failures.md",
+    "output/pdfs/03_natcomm2020_entropy_interfacial_selfhealable.pdf",
+    "output/pdfs/04_polymers2019_smart_coatings_review.pdf",
+    "output/run-notes.json",
+    "output/_oa1.json / _oa2.json / _oa3.json (raw OpenAlex evidence)"
+  ],
+  "main_finding": "No direct quantitative evidence found in this run for a true 'vaccine effect' (first damage leaves memory making second healing faster) in self-healing coatings; closest routes: shape-memory-assisted self-healing (SMASH), damage-reporting mechanophore coatings (memory without healing acceleration), intrinsic dynamic-bond systems (repeatable healing, efficiency flat-to-declining). Microcapsule systems are a counterexample (agent depletion)."
+}

@@ -1,0 +1,51 @@
+{
+  "verified_at_utc": "2026-10-25T17:00:23.935148+00:00",
+  "pdf_count": 5,
+  "files": [
+    {
+      "file": "01_keypad_locks_review_semanticscholar.pdf",
+      "bytes": 4449227,
+      "pages": 15,
+      "sha256": "c6c413cbe721f6dcfa89e942a710e4ad8510e82336256002c67250ca0a2aaf7a",
+      "metadata_title": "Molecules for security measures: From keypad locks to advanced communication protocols",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "03_tio2_history_JSAP.pdf",
+      "bytes": 2134202,
+      "pages": 17,
+      "sha256": "bd79e8c1ed137857a7b71d0b8b5f5e257d187c8888bd7e9522eda7e916e9e75d",
+      "metadata_title": "JSAPI_Vol14",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "04_photolatent_bases_radtech2006.pdf",
+      "bytes": 262864,
+      "pages": 15,
+      "sha256": "17898550194d56beed9cd33f7a7955bb80d30947dbdff860ae583428f2b6d9fa",
+      "metadata_title": "Photolatent bases: new catalysts for UV-curing of coatings",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "05_spiropyran_hydrogel_review_frontiers2022.pdf",
+      "bytes": 1606745,
+      "pages": 9,
+      "sha256": "ef519545485a5289a2c8cd9ac1571a839d8c12e943473e9524f83c429398a779",
+      "metadata_title": "fbioe-2022-1075670 1..9",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "07_uv_nanosponge_scierep2015.pdf",
+      "bytes": 6620393,
+      "pages": 12,
+      "sha256": "3d8a30d48b16ab7bcf7309c3357a1e0eae8416b30bd3c8cf2976858ca5fe32fc",
+      "metadata_title": "UV-responsive nano-sponge for oil absorption and desorption",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

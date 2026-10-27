@@ -1,0 +1,60 @@
+{
+  "verified_at_utc": "2026-10-26T17:03:51.638575+00:00",
+  "pdf_count": 6,
+  "files": [
+    {
+      "file": "almaadeed2019_selfrepairing_composites.pdf",
+      "bytes": 1929839,
+      "pages": 17,
+      "sha256": "b05499e288632c546b934e048bd04c745b1a93f80a2c5e86094859dec01fb299",
+      "metadata_title": "",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "cremaldi2018_bioinspired.pdf",
+      "bytes": 5517678,
+      "pages": 29,
+      "sha256": "942156438ef07d18a93d53b0e651180a6bb0e2becbed7ab7f25862c7ad927587",
+      "metadata_title": "Bioinspired self-healing materials: lessons from nature",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "lutz2016_multiple_action_coating.pdf",
+      "bytes": 3909996,
+      "pages": 12,
+      "sha256": "5f7e09bcce291be716ae994d6ae7e36ef17706fe93f6b5ac27fa02a05191be8f",
+      "metadata_title": "A Multiple-Action Self-Healing Coating",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "matsuda2025_rapid_selfstrengthening_dn.pdf",
+      "bytes": 1574107,
+      "pages": 19,
+      "sha256": "516d0edbf2a285ff9453c466c878234606df068b231caa99349dbe3d1471c826",
+      "metadata_title": "Rapid self-strengthening in double network hydrogels triggered by bond scission",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "stauch2021_mechanophore_linkers.pdf",
+      "bytes": 766648,
+      "pages": 6,
+      "sha256": "c9dd6999aaddc6e5eb26cb4c483623fd255f015c8095b61b940e9411d8622d69",
+      "metadata_title": "The activation efficiency of mechanophores can be modulated by adjacent polymer composition",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "wang2025_harnessing_sacrificial_bonds.pdf",
+      "bytes": 4068841,
+      "pages": 2,
+      "sha256": "85eff0159bc0b6a260c744194130e7e374f25aab0a53450d42c5986c0379879f",
+      "metadata_title": "Harnessing sacrificial bond kinetics for hydrogel self-strengthening",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

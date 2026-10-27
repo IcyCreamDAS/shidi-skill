@@ -1,0 +1,19 @@
+{
+  "status": "completed",
+  "skill_commit": null,
+  "agent_id": "agent-15",
+  "required_model": "kimi-code/kimi-for-coding",
+  "required_reasoning_effort": "max",
+  "model": "kimi-code/kimi-for-coding",
+  "reasoning_effort": "max",
+  "prepared_at_utc": "2026-10-25T16:23:05.007231+00:00",
+  "prompt_sha256": "bebb2ebbbf97421f9e61e2be174e97ce4c49473a6302c2c6cf7a9d0166e0e579",
+  "task_sha256": "f5dafa1a039bcb49b9be322ce7e16be29ee165061e82b6a63b5d28c5ed6a180e",
+  "context_sha256": "2ee4bcd1c0b938f5c3b2cd2b82a27151a8ca1647efb0e90bbc9cb002ff059321",
+  "tokens": {"inputOther": 77159, "output": 21431, "inputCacheRead": 1836032, "inputCacheCreation": 0},
+  "wall_time_seconds_by_turn": [585.335],
+  "wall_time_seconds_total": 585.335,
+  "coordinator_question_rounds": 0,
+  "cost": null,
+  "cost_status": "unverifiable-no-per-run-charge-field"
+}

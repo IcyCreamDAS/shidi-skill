@@ -1,0 +1,33 @@
+{
+  "verified_at_utc": "2026-10-25T17:50:29.071650+00:00",
+  "pdf_count": 3,
+  "files": [
+    {
+      "file": "04_spiropyran-hydrogel-dynamics_JACS2021.pdf",
+      "bytes": 2776120,
+      "pages": 10,
+      "sha256": "332cd8ccd0607e963fb6860c55150d6fcbef05b1e626298f3cf14b129e17df04",
+      "metadata_title": "",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "05_keypad-lock-base-light_ChemEurJ2009.pdf",
+      "bytes": 407491,
+      "pages": 8,
+      "sha256": "928c557e6a9f0d19791a090afa34a3e2d234b2e9a6e7ea35235fb825dbe6e080",
+      "metadata_title": "A Double Plug-Socket System Capable of Molecular Keypad Locks through Controllable Photooxidation",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    },
+    {
+      "file": "06_tri-cure-silicon-coatings_MDPI2022.pdf",
+      "bytes": 4641826,
+      "pages": 27,
+      "sha256": "0d989b67f2363c1f80646a69e2dbb3d5d32c9c1e5bf9a73198b734c1f6fd0418",
+      "metadata_title": "Hybrid Tri-Cure Organo-Silicon Coatings for Monument Preservation",
+      "opened": true,
+      "first_page_title_matched_by_coordinator": true
+    }
+  ]
+}

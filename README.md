@@ -45,6 +45,8 @@
   <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
+**真实 Pro / Flash / without 对照实例：** [两个跨学科问题、六份结果与三组六维雷达图](examples/pro-flash-evaluation/README.md)——同时保留有增益、无增益和速度差异，不用单一案例证明某一版本全面更好。
+
 ---
 
 ## ✨ What's New · 更新日志
@@ -181,7 +183,17 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 然后直接说 / *then just say*：
 
 ```text
-师弟，帮我查一下 XX 主题的文献，要 20 篇
+师弟，帮我详细调研一下 XXX              # Pro
+师弟，请你用 pro 模式给我调研一下 XXX   # Pro
+师弟，帮我快速调研一下 XXX              # Flash
+师弟，请你用 flash 模式给我调研一下 XXX # Flash
+```
+
+**一次下载即包含 Pro 和 Flash 两个完整版本。** 未专门提到“详细”“快速”“pro”或“flash”时，默认 **Pro**：适合完整检索框架、交互确认和深度交付；Flash 适合少确认、快速启动。两种模式只改变工作流程，不指定模型，也不保证谁在所有任务中更好。
+
+其他任务示例：
+
+```text
 师弟，设计一个 XX 实验方案
 师弟，把这个数据画成图
 师弟，帮我把这篇论文精读一下
@@ -192,7 +204,7 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 
 > [!IMPORTANT]
 > ### 这是执行者，不是许愿池 *An executor, not a genie*
-> `harness + model = agent`——师弟只拥有工作流，模型决定天花板。更重要的是：**师弟不替你做决定**——角度选择、参数确认、方向取舍全部返回给你。脏活累活它拿走，但那个"想法"和"判断"，永远是师兄你的。
+> `harness + model = agent`——师弟只拥有工作流，模型决定天花板。Pro 把角度选择和参数确认交还给你；Flash 会给出明确默认建议并减少形式化确认。脏活累活它拿走，但那个"想法"和"判断"，永远是师兄你的。
 > *shidi owns the workflow, the model sets the ceiling. And it never decides for you — angle selection, parameters, trade-offs all bounce back to you. It takes the grunt work; the ideas and judgment stay yours.*
 
 ## 🤖 Persona · 人设

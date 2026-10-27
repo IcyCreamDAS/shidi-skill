@@ -1,5 +1,6 @@
 """Discovery runs must preserve matched prompts and hide evaluation profiles."""
 import importlib.util
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -11,9 +12,16 @@ prepare = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(prepare)
 
 
+def patched_hashes(root):
+    if Path(root) == prepare.REPO / "skills/shidi":
+        lock = json.loads((BASE / "freeze-patched.json").read_text(encoding="utf-8"))
+        return lock["skill_sha256"]
+    return prepare.hashes(root)
+
+
 class DiscoveryPreparationTests(unittest.TestCase):
     def test_both_arms_match_without_profile_or_gold_leakage(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory() as tmp, patch.object(prepare, "hashes", side_effect=patched_hashes):
             a, b = Path(tmp) / "with", Path(tmp) / "without"
             x, y = (prepare.prepare("dev-peek", arm, out, "freeze-patched.json")
                     for arm, out in (("with", a), ("without", b)))
@@ -57,8 +65,9 @@ class DiscoveryPreparationTests(unittest.TestCase):
             self.assertFalse(out.exists())
 
     def test_run_folder_cannot_be_inside_repository(self):
-        with self.assertRaisesRegex(ValueError, "outside"):
-            prepare.prepare("dev-peek", "without", prepare.REPO / "generated-run", "freeze-patched.json")
+        with patch.object(prepare, "hashes", side_effect=patched_hashes):
+            with self.assertRaisesRegex(ValueError, "outside"):
+                prepare.prepare("dev-peek", "without", prepare.REPO / "generated-run", "freeze-patched.json")
         self.assertFalse((prepare.REPO / "generated-run").exists())
 
 
