@@ -1,5 +1,7 @@
 # Pro / Flash / without：两组跨领域探索实例
 
+**当前主展示：** [ChatGPT 六维独立复评与新雷达图](independent-review/README.md)。下文保留 Kimi 原评分和工作流记录，作为历史材料。
+
 两个科研兴趣起点，六份真实运行结果。Pro 固定为 `b28eb4e`，Flash 固定为 `6e03d72`，without 不加载 Skill；执行模型统一为 K2.8 Preview + max。各组从独立会话开始，按共同任务要求探索，实际问答与投入保留在记录中。
 
 [技术文章](../../GITHUB_SHARE.md)解释如何从论文中的相似机制，找到原问题尚缺的证据。

@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "evaluator": "ChatGPT, direct content review in this conversation, 2026-10-27",
+  "assessment_type": "retrospective, nonblind, single reviewer; existing outputs, no new model runs",
+  "weights": {
+    "Q": 15,
+    "M": 25,
+    "E": 20,
+    "F": 20,
+    "S": 10,
+    "A": 10
+  },
+  "scale": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "rubric_sha256": "14a88a36296cae215d722e1e6ac0b9f4bed205d625b004ff6b614996d7975f86",
+  "rows": [
+    {
+      "case": "sequential-logic",
+      "condition": "pro",
+      "grades": {
+        "Q": 4,
+        "M": 3,
+        "E": 3,
+        "F": 3,
+        "S": 3,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 15.0,
+        "M": 18.75,
+        "E": 15.0,
+        "F": 15.0,
+        "S": 7.5,
+        "A": 7.5
+      },
+      "total": 78.75,
+      "source_report": "../sequential-logic/pro/output/report.md",
+      "source_sha256": "2e247fb08dc9f7adc56cc853a4b54c0003c433d6cff17fec781acbc70d9287dc"
+    },
+    {
+      "case": "sequential-logic",
+      "condition": "flash",
+      "grades": {
+        "Q": 4,
+        "M": 1,
+        "E": 3,
+        "F": 2,
+        "S": 3,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 15.0,
+        "M": 6.25,
+        "E": 15.0,
+        "F": 10.0,
+        "S": 7.5,
+        "A": 7.5
+      },
+      "total": 61.25,
+      "source_report": "../sequential-logic/flash/output/shidi_顺序门控化学逻辑材料_20261026.md",
+      "source_sha256": "e7a63ff1f6760be287c90356cc34ecd0c3f1f74340b16d37ae4c6fe3e2d0b05b"
+    },
+    {
+      "case": "sequential-logic",
+      "condition": "without",
+      "grades": {
+        "Q": 3,
+        "M": 1,
+        "E": 2,
+        "F": 2,
+        "S": 2,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 11.25,
+        "M": 6.25,
+        "E": 10.0,
+        "F": 10.0,
+        "S": 5.0,
+        "A": 7.5
+      },
+      "total": 50.0,
+      "source_report": "../sequential-logic/without/output/先光照后遇湿_化学顺序门控报告.md",
+      "source_sha256": "3ee3b7726df249f1d073dff4651641a898b232575b6ab3158144a2988398bdd7"
+    },
+    {
+      "case": "damage-memory",
+      "condition": "pro",
+      "grades": {
+        "Q": 4,
+        "M": 3,
+        "E": 2,
+        "F": 2,
+        "S": 3,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 15.0,
+        "M": 18.75,
+        "E": 10.0,
+        "F": 10.0,
+        "S": 7.5,
+        "A": 7.5
+      },
+      "total": 68.75,
+      "source_report": "../damage-memory/pro/output/损伤记忆涂层调研报告.md",
+      "source_sha256": "37465cd0a7485d435533d6ebcb11b86660004b67f574b7f2ae4f72864287d56d"
+    },
+    {
+      "case": "damage-memory",
+      "condition": "flash",
+      "grades": {
+        "Q": 4,
+        "M": 2,
+        "E": 3,
+        "F": 2,
+        "S": 3,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 15.0,
+        "M": 12.5,
+        "E": 15.0,
+        "F": 10.0,
+        "S": 7.5,
+        "A": 7.5
+      },
+      "total": 67.5,
+      "source_report": "../damage-memory/flash/output/shidi_damage-memory-selfhealing-coating_20261027.md",
+      "source_sha256": "293b6baecfb6c72a11ef6037d0d326050d49fd29e7d10df9addde04d3012eaa7"
+    },
+    {
+      "case": "damage-memory",
+      "condition": "without",
+      "grades": {
+        "Q": 3,
+        "M": 1,
+        "E": 2,
+        "F": 1,
+        "S": 3,
+        "A": 3
+      },
+      "weighted_scores": {
+        "Q": 11.25,
+        "M": 6.25,
+        "E": 10.0,
+        "F": 5.0,
+        "S": 7.5,
+        "A": 7.5
+      },
+      "total": 47.5,
+      "source_report": "../damage-memory/without/output/report.md",
+      "source_sha256": "41536eb76c574b5b3f3317d5fd26125125c977ea26350d03b99e23b0ed9b44f5"
+    }
+  ]
+}

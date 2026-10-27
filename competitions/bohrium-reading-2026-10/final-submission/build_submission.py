@@ -127,7 +127,10 @@ def make_selections(source):
     add("report.md", "A/B方法、主要增益、用量与边界", chars=4200)
     for case_id, config in CASES.items():
         add(f"materials/{case_id}/task.md", case_id + "一句话原始输入", chars=500)
-        add(f"evaluation/{case_id}/final-scores.md", case_id + "三大评分与增益", chars=1500)
+        score_path = f"evaluation/independent-review/{'sequential-logic' if case_id == 'A' else 'damage-memory'}-scores.md"
+        if not (source / score_path).is_file():
+            score_path = f"evaluation/{case_id}/final-scores.md"
+        add(score_path, case_id + "六维内容评分与对照", chars=1500)
         add(f"evaluation/{case_id}/usage.md", case_id + "实际用量与PDF", chars=1800)
         for condition in ("pro", "without"):
             rid = f"{case_id}-{condition}"
@@ -173,6 +176,7 @@ def build(resources, output):
                      "evaluation.json", "computed-scores.json"):
             common.copy_file(case_final / name, source / "evaluation" / case_id / name)
         common.copy_file(config["run_root"] / config["result"], source / "evaluation" / case_id / "RESULTS.md")
+    common.copy_tree(EXAMPLES / "independent-review", source / "evaluation/independent-review")
     common.write_json(source / "manifest.json", make_manifest(resources))
     common.write_json(output / "selections.json", make_selections(source))
     original = output / "original-submission.zip"
