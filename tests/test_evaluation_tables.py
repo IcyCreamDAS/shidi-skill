@@ -48,6 +48,23 @@ class EvaluationTableTests(unittest.TestCase):
         self.assertEqual(data["axes"]["flash"]["workflow"]["综合与失效边界"], 87.5)
         self.assertEqual(data["totals"]["pro"], {"depth": 92, "workflow": 91.25, "aggregate": 90})
 
+    def test_current_aggregate_uses_direct_review_and_readme_shows_four_tables_three_charts_per_case(self):
+        expected = {"sequential-logic": [77.25, 61.0, 49.75], "damage-memory": [71.0, 68.25, 51.25]}
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            for case, values in expected.items():
+                current = tables.build_case(case, out)
+                self.assertEqual([current["totals"][a]["aggregate"] for a in tables.ARMS], values)
+                historical = tables.read_json(out / case / "historical-computed-scores.json")
+                self.assertEqual(historical, tables.compute(tables.read_json(ROOT / case / "evaluation.json")))
+            tables.build_readme(out)
+            readme = (out / "README.md").read_text(encoding="utf-8")
+            self.assertEqual(readme.count("\n|---"), 8)
+            self.assertEqual(readme.count("!["), 6)
+            for case in tables.CASES:
+                for name in ("chatgpt", "kimi", "aggregate"):
+                    self.assertIn(f"]({case}/{name}-six-dimensions.png)", readme)
+
 
 if __name__ == "__main__":
     unittest.main()

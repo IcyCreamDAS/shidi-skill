@@ -1,4 +1,4 @@
-﻿arm,chatgpt_content_review
-pro,78.75
-flash,61.25
-without,50.0
+﻿arm,chatgpt_content_review,kimi_workflow,aggregate_derived
+pro,78.75,88.75,77.25
+flash,61.25,80.0,61.0
+without,50.0,67.5,49.75

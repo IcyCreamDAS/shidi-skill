@@ -1,10 +1,10 @@
-# ChatGPT 直接复评：当前主评分
+# 最终评分：两位评分者与派生汇总
 
-| 条件 | ChatGPT 六维内容复评 |
-|---|---:|
-| pro | 68.75 |
-| flash | 67.50 |
-| without | 47.50 |
+| 条件 | ChatGPT 直接复评 /100 | Kimi 工作流 /100 | 汇总（公式计算）/100 |
+|---|---:|---:|---:|
+| pro | 68.75 | 91.25 | 71.00 |
+| flash | 67.50 | 76.25 | 68.25 |
+| without | 47.50 | 81.25 | 51.25 |
 
-来源：[真实分项、评分者与报告哈希](../independent-review/scores.json)。各维0–4档，权重15/25/20/20/10/10；2026-10-27事后非盲复评，每条件一次运行。不是官方成绩。
-历史Kimi评分及派生综合分保留在evaluation.json、computed-scores.json与RESULTS.md中，不能标为ChatGPT直接评分，也不与本表混合。
+ChatGPT分数来自[真实复评](../independent-review/scores.json)，Kimi工作流分来自evaluation.json。均为既有输出的事后评价，每条件一次运行；不是平台成绩。
+汇总沿用原公式，以真实ChatGPT分项替换早期Kimi科研深度分：Q/M/F/S保持ChatGPT加权分；E=(ChatGPT证据分+Kimi证据两项合计×20/25)÷2；A=(ChatGPT透明分+Kimi自主分)÷2；最后六项相加。汇总不是第三位评分者，也不是两个总分的平均值。旧数值另存historical-computed-scores.json。

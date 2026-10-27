@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Copy canonical ChatGPT charts and render explicitly historical Kimi charts."""
+"""Copy direct ChatGPT charts; plot original Kimi and current derived scores."""
 import argparse
 import shutil
 from pathlib import Path
@@ -8,20 +8,21 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib import font_manager
 import numpy as np
-from build_tables import BASE, CASES, ARMS, compute, read_json
+from build_tables import BASE, CASES, ARMS, current_scores
 
 TITLES = {"sequential-logic": "顺序化学逻辑", "damage-memory": "涂层损伤记忆"}
-SYSTEMS = {"workflow": ("kimi", "历史工作流评分 · Kimi"),
-           "aggregate": ("aggregate", "历史派生综合分 · Kimi输入")}
+SYSTEMS = {"workflow": ("kimi", "Kimi 工作流评分"),
+           "aggregate": ("aggregate", "汇总评分 · 公式计算")}
 ENGLISH = {"问题保真": "Question fidelity", "机制与因果": "Mechanism",
            "原始证据": "Source evidence", "证伪与对照": "Falsification",
-           "综合路线": "Research route", "透明与自主": "Transparency",
+           "路线与下一步": "Research route", "透明与可审计": "Transparency",
            "探索覆盖": "Exploration", "证据可靠与分层": "Evidence",
            "PDF 交付": "PDF delivery", "主题判据": "Topic criteria",
            "综合与失效边界": "Synthesis / limits", "交互与自主": "Autonomy"}
-COLORS = {"pro": "#0072B2", "flash": "#009E73", "without": "#E69F00"}
+COLORS = {"pro": "#0072B2", "flash": "#009E73", "without": "#D98200"}
 NAMES = {"pro": "Pro", "flash": "Flash", "without": "without Skill"}
 MARKERS = {"pro": "o", "flash": "^", "without": "s"}
+STYLES = {"pro": "-", "flash": "--", "without": ":"}
 
 
 def render(output_root, font=None):
@@ -38,7 +39,7 @@ def render(output_root, font=None):
     plt.rcParams.update({"axes.unicode_minus": False, "font.size": 11,
                          "svg.hashsalt": "shidi-evaluation-v1", "legend.frameon": False})
     for case in CASES:
-        content = compute(read_json(BASE / case / "evaluation.json"))
+        content = current_scores(case)[2]
         destination = output_root / case
         destination.mkdir(parents=True, exist_ok=True)
         for suffix in ("png", "svg"):
@@ -54,27 +55,36 @@ def render(output_root, font=None):
                 values = list(content["axes"][arm][system].values())
                 series = values + values[:1]
                 ax.plot(closed, series, color=COLORS[arm], linewidth=2, marker=MARKERS[arm],
-                        markersize=5, label=NAMES[arm])
+                        markersize=5, linestyle=STYLES[arm],
+                        label=f"{NAMES[arm]}  {content['totals'][arm][system]:.2f}")
                 ax.fill(closed, series, color=COLORS[arm], alpha=.045)
             ax.set_theta_offset(np.pi / 2)
             ax.set_theta_direction(-1)
             ax.set_xticks(angles, labels if chinese else [ENGLISH[x] for x in labels])
-            ax.tick_params(axis="x", pad=16)
+            ax.tick_params(axis="x", pad=16, labelsize=12)
             ax.set_ylim(0, 100)
             ax.set_yticks([25, 50, 75, 100])
             ax.set_yticklabels(["25", "50", "75", "100"], fontsize=8, color="#666666")
             ax.set_rlabel_position(15)
             ax.grid(color="#888888", alpha=.25, linewidth=.6)
             ax.spines["polar"].set_color("#aaaaaa")
-            heading = TITLES[case] + "\n" + title if chinese else case + "\nHistorical " + system + " / Kimi review"
+            heading = TITLES[case] + "\n" + title if chinese else case + "\n" + system + " scores"
             fig.suptitle(heading, y=.96, fontsize=15, linespacing=1.6)
-            fig.legend(*ax.get_legend_handles_labels(), loc="lower center", bbox_to_anchor=(.5, .10), ncol=3)
-            note = "历史Kimi评分及派生值；当前ChatGPT直接复评见独立复评目录" if chinese else "Historical Kimi ratings; current ChatGPT review is in independent-review"
-            fig.text(.5, .045, note, ha="center", fontsize=9, color="#555555")
+            legend = fig.legend(*ax.get_legend_handles_labels(), loc="lower center", bbox_to_anchor=(.5, .10), ncol=3, fontsize=11)
+            note = ("原始Kimi九项评分归为六轴；各轴为组内得分率（%）" if system == "workflow" else
+                    "真实ChatGPT分项 + Kimi证据/自主项；各轴为得分率（%）\n按既有公式派生，非第三位评分者；总分见图例") if chinese else (
+                    "Original Kimi ratings: nine criteria grouped into six axes (%)" if system == "workflow" else
+                    "Direct ChatGPT + Kimi evidence/autonomy; derived, not a third review (%)")
+            foot = fig.text(.5, .045, note, ha="center", fontsize=9, color="#555555")
+            fig.canvas.draw()
+            renderer = fig.canvas.get_renderer()
+            for artist in [fig._suptitle, legend, foot, *ax.get_xticklabels()]:
+                box = artist.get_window_extent(renderer)
+                assert box.x0 >= 0 and box.y0 >= 0 and box.x1 <= fig.bbox.width and box.y1 <= fig.bbox.height, "clipped chart text"
             for suffix in ("png", "svg"):
                 target = destination / f"{filename}-six-dimensions.{suffix}"
                 fig.savefig(target, dpi=220,
-                            facecolor="white", metadata={"Date": None} if suffix == "svg" else None)
+                            facecolor="white", bbox_inches=None, metadata={"Date": None} if suffix == "svg" else None)
                 if suffix == "svg":
                     target.write_text("\n".join(line.rstrip() for line in target.read_text(encoding="utf-8").splitlines()) + "\n",
                                       encoding="utf-8", newline="\n")

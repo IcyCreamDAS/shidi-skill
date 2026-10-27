@@ -61,14 +61,22 @@ class SubmissionPackagingTests(unittest.TestCase):
                     builder.build(resources, root / "output")
             self.assertFalse((root / "output").exists())
 
+    def symlink_or_skip(self, link, target, target_is_directory=False):
+        try:
+            link.symlink_to(target, target_is_directory=target_is_directory)
+        except OSError as error:
+            if getattr(error, "winerror", None) != 1314:
+                raise
+            self.skipTest("Creating symbolic links requires additional Windows privilege")
+
     def test_source_paths_cannot_escape_through_traversal_or_links(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             source = root / "source"
             source.mkdir()
             (root / "outside").write_bytes(b"private")
-            (source / "link").symlink_to(root / "outside")
-            (source / "directory-link").symlink_to(root, target_is_directory=True)
+            self.symlink_or_skip(source / "link", root / "outside")
+            self.symlink_or_skip(source / "directory-link", root, target_is_directory=True)
             for name in ("../outside", "/outside", "C:/outside", "a\\b", "a//b",
                          "./outside", "link", "directory-link/outside"):
                 with self.subTest(path=name), self.assertRaises(ValueError):
@@ -102,7 +110,7 @@ class SubmissionPackagingTests(unittest.TestCase):
                 builder.deterministic_zip(source, root / "empty.zip")
             (source / "empty").unlink()
             (root / "target").write_bytes(b"outside")
-            (source / "link").symlink_to(root / "target")
+            self.symlink_or_skip(source / "link", root / "target")
             with self.assertRaisesRegex(ValueError, "Symlinks"):
                 builder.deterministic_zip(source, root / "link.zip")
 
