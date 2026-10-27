@@ -34,7 +34,7 @@ class FinalSubmissionTests(unittest.TestCase):
             "B": [92, 91.25, 90.0, 70, 81.25, 71.5],
         }
         for case_id, case in (("A", "sequential-logic"), ("B", "damage-memory")):
-            data = json.loads((builder.EXAMPLES / case / "computed-scores.json").read_text(encoding="utf-8"))
+            data = json.loads((builder.EXAMPLES / case / "historical-computed-scores.json").read_text(encoding="utf-8"))
             self.assertEqual(data["status"], "historical_kimi_ratings_not_current_chatgpt_review")
             for arm, scores in (("pro", expected[case_id][:3]), ("without", expected[case_id][3:])):
                 self.assertEqual([data["totals"][arm][key] for key in ("depth", "workflow", "aggregate")], scores)

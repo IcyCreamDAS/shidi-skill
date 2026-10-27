@@ -1,32 +1,36 @@
 {
-  "evaluator": "Kimi Code coordinator",
-  "status": "historical_kimi_ratings_not_current_chatgpt_review",
+  "evaluator": {
+    "depth": "ChatGPT, direct content review in this conversation, 2026-10-27",
+    "workflow": "Kimi Code coordinator",
+    "aggregate": "calculated; not an independent reviewer"
+  },
+  "status": "direct_chatgpt_original_kimi_and_derived_aggregate",
   "totals": {
     "pro": {
-      "depth": 92,
+      "depth": 68.75,
       "workflow": 91.25,
-      "aggregate": 90.0
+      "aggregate": 71.0
     },
     "flash": {
-      "depth": 75,
+      "depth": 67.5,
       "workflow": 76.25,
-      "aggregate": 77.0
+      "aggregate": 68.25
     },
     "without": {
-      "depth": 70,
+      "depth": 47.5,
       "workflow": 81.25,
-      "aggregate": 71.5
+      "aggregate": 51.25
     }
   },
   "axes": {
     "pro": {
       "depth": {
         "问题保真": 100.0,
-        "机制与因果": 88.0,
-        "原始证据": 85.0,
-        "证伪与对照": 100.0,
-        "综合路线": 90.0,
-        "透明与自主": 90.0
+        "机制与因果": 75.0,
+        "原始证据": 50.0,
+        "证伪与对照": 50.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 75.0
       },
       "workflow": {
         "探索覆盖": 100.0,
@@ -38,21 +42,21 @@
       },
       "aggregate": {
         "问题保真": 100.0,
-        "机制与因果": 88.0,
-        "原始证据": 85.0,
-        "证伪与对照": 100.0,
-        "综合路线": 90.0,
-        "透明与自主": 70.0
+        "机制与因果": 75.0,
+        "原始证据": 67.5,
+        "证伪与对照": 50.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 62.5
       }
     },
     "flash": {
       "depth": {
-        "问题保真": 93.33333333333333,
-        "机制与因果": 72.0,
-        "原始证据": 60.0,
-        "证伪与对照": 75.0,
-        "综合路线": 80.0,
-        "透明与自主": 80.0
+        "问题保真": 100.0,
+        "机制与因果": 50.0,
+        "原始证据": 75.0,
+        "证伪与对照": 50.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 75.0
       },
       "workflow": {
         "探索覆盖": 75.0,
@@ -63,22 +67,22 @@
         "交互与自主": 100.0
       },
       "aggregate": {
-        "问题保真": 93.33333333333333,
-        "机制与因果": 72.0,
-        "原始证据": 65.0,
-        "证伪与对照": 75.0,
-        "综合路线": 80.0,
-        "透明与自主": 90.0
+        "问题保真": 100.0,
+        "机制与因果": 50.0,
+        "原始证据": 72.5,
+        "证伪与对照": 50.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 87.5
       }
     },
     "without": {
       "depth": {
-        "问题保真": 73.33333333333333,
-        "机制与因果": 64.0,
-        "原始证据": 75.0,
-        "证伪与对照": 65.0,
-        "综合路线": 80.0,
-        "透明与自主": 70.0
+        "问题保真": 75.0,
+        "机制与因果": 25.0,
+        "原始证据": 50.0,
+        "证伪与对照": 25.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 75.0
       },
       "workflow": {
         "探索覆盖": 100.0,
@@ -89,19 +93,30 @@
         "交互与自主": 100.0
       },
       "aggregate": {
-        "问题保真": 73.33333333333333,
-        "机制与因果": 64.0,
-        "原始证据": 75.0,
-        "证伪与对照": 65.0,
-        "综合路线": 80.0,
-        "透明与自主": 85.0
+        "问题保真": 75.0,
+        "机制与因果": 25.0,
+        "原始证据": 62.5,
+        "证伪与对照": 25.0,
+        "路线与下一步": 75.0,
+        "透明与可审计": 87.5
       }
     }
   },
+  "current_chatgpt_source": "../independent-review/scores.json",
   "current_chatgpt_totals": {
     "pro": 68.75,
     "flash": 67.5,
     "without": 47.5
   },
-  "current_chatgpt_source": "../independent-review/scores.json"
+  "aggregate_rule": {
+    "unchanged": [
+      "Q",
+      "M",
+      "F",
+      "S"
+    ],
+    "E": "(ChatGPT_E + Kimi_evidence_points * 20 / 25) / 2",
+    "A": "(ChatGPT_A + Kimi_autonomy_points) / 2",
+    "total": "sum of six weighted points; not the mean of reviewer totals"
+  }
 }

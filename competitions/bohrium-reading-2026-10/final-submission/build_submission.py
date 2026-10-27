@@ -173,7 +173,7 @@ def build(resources, output):
                      "chatgpt-six-dimensions.png", "chatgpt-six-dimensions.svg",
                      "kimi-six-dimensions.png", "kimi-six-dimensions.svg",
                      "aggregate-six-dimensions.png", "aggregate-six-dimensions.svg",
-                     "evaluation.json", "computed-scores.json"):
+                     "evaluation.json", "computed-scores.json", "historical-computed-scores.json"):
             common.copy_file(case_final / name, source / "evaluation" / case_id / name)
         common.copy_file(config["run_root"] / config["result"], source / "evaluation" / case_id / "RESULTS.md")
     common.copy_tree(EXAMPLES / "independent-review", source / "evaluation/independent-review")
