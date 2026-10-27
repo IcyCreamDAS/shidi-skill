@@ -52,6 +52,27 @@ check(
     "package.json declares dsh.bundle.patch",
 )
 
+# -- 1b. DSH compatibility range ------------------------------------------
+# DSH reads every peer range on @deepseek-ai/dsh or @deepseek-ai/dsh-* as a
+# requirement on the *runtime* version (those packages are version-locked to
+# it), not as a requirement on that npm package. An upper bound therefore
+# rejects every later DSH release and makes the bundle uninstallable - the
+# 0.3.0 "<0.2.0" cap did exactly that on dsh 0.2.x (issue #2). Keep it open.
+peers = pkg.get("peerDependencies") if isinstance(pkg.get("peerDependencies"), dict) else {}
+dsh_peers = {
+    name: rng
+    for name, rng in peers.items()
+    if name == "@deepseek-ai/dsh" or name.startswith("@deepseek-ai/dsh-")
+}
+check(bool(dsh_peers), "package.json declares a DSH requirement", "no @deepseek-ai/dsh* peerDependency")
+for name, rng in dsh_peers.items():
+    check(isinstance(rng, str) and rng.strip() != "", f"{name} peer range is a non-empty string")
+    check(
+        isinstance(rng, str) and "<" not in rng,
+        f"{name} peer range has no upper bound",
+        f"{rng!r} caps supported DSH versions; DSH checks this range against the runtime version",
+    )
+
 # -- 2. version badges stay in sync ---------------------------------------
 for readme in ("README.md", "README_EN.md"):
     try:

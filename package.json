@@ -20,7 +20,7 @@
     }
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-skill-filesystem": ">=0.1.0-rc.6 <0.2.0"
+    "@deepseek-ai/dsh-skill-filesystem": ">=0.1.0-rc.6"
   },
   "engines": {
     "node": "^22.19.0 || >=24"
