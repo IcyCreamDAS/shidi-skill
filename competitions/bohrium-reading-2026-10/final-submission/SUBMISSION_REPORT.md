@@ -31,5 +31,5 @@ A的Pro/Flash/without核验PDF数为6/3/5，Agent墙钟1659.432/503.256/585.335�
 - `cases/`、`materials/`：原始任务、共同背景与检查口径。
 - `runs/`：A/B的Pro/without原始输出、原件、核验及脱敏可见轨迹。
 - `evaluation/independent-review/`：当前主展示的六维评分、量表与新雷达图。
-- `evaluation/A/`、`evaluation/B/`：此前Kimi分项、工作流、用量与历史图表。
+- `evaluation/A/`、`evaluation/B/`：每轮ChatGPT评分、Kimi评分、最终评分与用量四张表，以及ChatGPT、Kimi、汇总三类六维图；历史计算数据另存。
 - 配套平台export轨迹带case_id/run_id，随提交单独提供。
