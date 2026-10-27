@@ -1,5 +1,7 @@
 # 涂层“疫苗式损伤记忆”：第四轮三组评测结果
 
+> 历史Kimi协调者评阅与当时决策记录，不是当前ChatGPT直接复评。当前主评分为68.75 / 67.50 / 47.50，见[独立复评](../independent-review/damage-memory-scores.md)。下文保留历史分值和原始判断，不事后改写为ChatGPT评分。
+
 日期：2026-10-27。三组均为 K2.8 Preview + max、同一 task/CONTEXT 和第一轮软预算。Pro=b28eb4e，Flash=6e03d72，without 无 Skill。本轮只提供通用交付要求，没有向执行代理预写题目专属科学检查项。
 
 ## 结论

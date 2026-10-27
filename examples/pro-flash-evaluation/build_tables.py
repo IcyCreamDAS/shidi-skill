@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild both cases' tables from bundled scores and original run metadata."""
+"""Publish direct ChatGPT review tables; retain explicitly historical Kimi data."""
 import argparse
 import csv
 import json
@@ -8,6 +8,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 CASES = ("sequential-logic", "damage-memory")
 ARMS = ("pro", "flash", "without")
+REVIEW_LABELS = dict(Q="问题保真", M="机制与因果", E="原始证据", F="证伪与对照", S="路线与下一步", A="透明与可审计")
 DEPTH_LABELS = {
     "question": "问题保真", "mechanism": "机制与因果", "evidence": "原始证据",
     "falsification": "证伪与对照", "synthesis": "综合路线", "autonomy": "透明与自主",
@@ -39,7 +40,8 @@ def compute(content):
     topic_ids = ("topic_1", "topic_2") if "topic_1" in workflow else ("damage_memory", "second_acceleration")
     groups = (("exploration",), ("evidence_reliability", "evidence_separation"),
               ("pdf_delivery",), topic_ids, ("synthesis", "distinction_failure"), ("autonomy",))
-    result = {"evaluator": content["provenance"]["evaluator"], "totals": {}, "axes": {}}
+    result = {"evaluator": content["provenance"]["evaluator"],
+              "status": "historical_kimi_ratings_not_current_chatgpt_review", "totals": {}, "axes": {}}
     for arm in ARMS:
         depth = content["depth"]["arms"][arm]
         if set(depth) != set(weights):
@@ -73,10 +75,10 @@ def write_csv(path, fields, rows):
         writer.writerows(rows)
 
 
-def rubric_table(path, title, rows, labels):
+def rubric_table(path, title, rows, labels, note):
     text = ["# " + title, "", "| 维度 | 权重 | Pro | Flash | without |", "|---|---:|---:|---:|---:|"]
     text += [f"| {labels[r['dimension']]} | {r['weight']} | {r['pro']} | {r['flash']} | {r['without']} |" for r in rows]
-    text += ["", "评分由 Kimi 按此量表完成；逐项原始分值见 evaluation.json。总分由脚本加总。", ""]
+    text += ["", note, ""]
     path.write_text("\n".join(text), encoding="utf-8")
 
 
@@ -86,24 +88,35 @@ def build_case(case, output_root):
     target.mkdir(parents=True, exist_ok=True)
     content = read_json(source / "evaluation.json")
     computed = compute(content)
-    weights = content["depth"]["weights"]
+    review = read_json(BASE / "independent-review/scores.json")
+    weights = review["weights"]
+    ratings = {r["condition"]: r for r in review["rows"] if r["case"] == case}
+    assert set(ratings) == set(ARMS) and sum(weights.values()) == 100
+    assert review["evaluator"].startswith("ChatGPT")
+    for row in ratings.values():
+        assert all(type(v) is int and 0 <= v <= 4 for v in row["grades"].values())
+        assert row["weighted_scores"] == {k: weights[k] * row["grades"][k] / 4 for k in weights}
+        assert sum(row["weighted_scores"].values()) == row["total"]
+    computed["current_chatgpt_totals"] = {a: ratings[a]["total"] for a in ARMS}
+    computed["current_chatgpt_source"] = "../independent-review/scores.json"
     depth_rows = [{"dimension": k, "weight": weight,
-                   **{a: content["depth"]["arms"][a][k] for a in ARMS}} for k, weight in weights.items()]
+                   **{a: ratings[a]["weighted_scores"][k] for a in ARMS}} for k, weight in weights.items()]
     workflow_rows = [{"dimension": r["id"], "weight": r["weight"], **{a: r[a] for a in ARMS}}
                      for r in content["workflow"]["nine_dimensions"]]
     fields = ["dimension", "weight", *ARMS]
-    # Historical filenames remain valid; display names identify the actual evaluator.
+    # Keep existing ChatGPT URLs, now backed by the direct review instead of Kimi ratings.
     write_csv(target / "chatgpt-rubric.csv", fields, depth_rows)
     write_csv(target / "kimi-rubric.csv", fields, workflow_rows)
-    rubric_table(target / "chatgpt-rubric.md", "科研深度评分细则（Kimi 复评）", depth_rows, DEPTH_LABELS)
-    rubric_table(target / "kimi-rubric.md", "工作流评分细则（Kimi）", workflow_rows, WORKFLOW_LABELS)
-    totals = [{"arm": a, **computed["totals"][a]} for a in ARMS]
-    write_csv(target / "final-scores.csv", ["arm", "depth", "workflow", "aggregate"], totals)
-    text = ["# 两套量表与综合展示", "", "| 条件 | 科研深度评分 | 工作流评分 | 综合展示 |", "|---|---:|---:|---:|"]
-    text += [f"| {r['arm']} | {r['depth']} | {r['workflow']} | {r['aggregate']} |" for r in totals]
-    text += ["", "两套评分均由 Kimi 完成。六维深度量表源于与 ChatGPT 的讨论，评分执行者为 Kimi。",
-             "综合展示为派生值：仅证据、透明与自主两轴取深度分与对应工作流归一化分的均值，其余四轴沿用深度分。它不是第三次独立评阅。",
-             "工作流图使用探索、证据、PDF、主题判据、综合与边界、交互六轴；深度图与综合图使用深度六轴。各图以本身轴名解释。", ""]
+    rubric_table(target / "chatgpt-rubric.md", "ChatGPT 直接复评：六维加权分项", depth_rows, REVIEW_LABELS,
+                 "ChatGPT于2026-10-27直接复评既有输出；事后、非盲、单人内容评价。表中为权重×0–4档÷4后的分项得分。原档位、总分与报告哈希见[独立复评数据](../independent-review/scores.json)。")
+    rubric_table(target / "kimi-rubric.md", "历史工作流评分细则（Kimi）", workflow_rows, WORKFLOW_LABELS,
+                 "本表是Kimi历史评分，不是当前ChatGPT直接复评。原分值见evaluation.json；当前主评分见final-scores.md。")
+    totals = [{"arm": a, "chatgpt_content_review": ratings[a]["total"]} for a in ARMS]
+    write_csv(target / "final-scores.csv", ["arm", "chatgpt_content_review"], totals)
+    text = ["# ChatGPT 直接复评：当前主评分", "", "| 条件 | ChatGPT 六维内容复评 |", "|---|---:|"]
+    text += [f"| {r['arm']} | {r['chatgpt_content_review']:.2f} |" for r in totals]
+    text += ["", "来源：[真实分项、评分者与报告哈希](../independent-review/scores.json)。各维0–4档，权重15/25/20/20/10/10；2026-10-27事后非盲复评，每条件一次运行。不是官方成绩。",
+             "历史Kimi评分及派生综合分保留在evaluation.json、computed-scores.json与RESULTS.md中，不能标为ChatGPT直接评分，也不与本表混合。", ""]
     (target / "final-scores.md").write_text("\n".join(text), encoding="utf-8")
     usages = []
     for arm in ARMS:
@@ -131,7 +144,8 @@ def main():
     args = parser.parse_args()
     for case in CASES:
         result = build_case(case, args.out)
-        print(case, json.dumps(result["totals"], ensure_ascii=False))
+        print(case, json.dumps({"ChatGPT_direct_review": result["current_chatgpt_totals"],
+                                "historical_Kimi": result["totals"]}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

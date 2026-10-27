@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Render six charts from bundled original ratings; no author-machine paths."""
+"""Copy canonical ChatGPT charts and render explicitly historical Kimi charts."""
 import argparse
+import shutil
 from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
@@ -10,9 +11,8 @@ import numpy as np
 from build_tables import BASE, CASES, ARMS, compute, read_json
 
 TITLES = {"sequential-logic": "顺序化学逻辑", "damage-memory": "涂层损伤记忆"}
-SYSTEMS = {"depth": ("chatgpt", "科研深度评分 · Kimi 复评"),
-           "workflow": ("kimi", "工作流评分 · Kimi"),
-           "aggregate": ("aggregate", "综合展示 · 派生值")}
+SYSTEMS = {"workflow": ("kimi", "历史工作流评分 · Kimi"),
+           "aggregate": ("aggregate", "历史派生综合分 · Kimi输入")}
 ENGLISH = {"问题保真": "Question fidelity", "机制与因果": "Mechanism",
            "原始证据": "Source evidence", "证伪与对照": "Falsification",
            "综合路线": "Research route", "透明与自主": "Transparency",
@@ -41,6 +41,9 @@ def render(output_root, font=None):
         content = compute(read_json(BASE / case / "evaluation.json"))
         destination = output_root / case
         destination.mkdir(parents=True, exist_ok=True)
+        for suffix in ("png", "svg"):
+            shutil.copyfile(BASE / "independent-review" / f"{case}-radar.{suffix}",
+                            destination / f"chatgpt-six-dimensions.{suffix}")
         for system, (filename, title) in SYSTEMS.items():
             labels = list(content["axes"]["pro"][system])
             angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False).tolist()
@@ -63,14 +66,18 @@ def render(output_root, font=None):
             ax.set_rlabel_position(15)
             ax.grid(color="#888888", alpha=.25, linewidth=.6)
             ax.spines["polar"].set_color("#aaaaaa")
-            heading = TITLES[case] + "\n" + title if chinese else case + "\n" + system + " / Kimi review"
+            heading = TITLES[case] + "\n" + title if chinese else case + "\nHistorical " + system + " / Kimi review"
             fig.suptitle(heading, y=.96, fontsize=15, linespacing=1.6)
             fig.legend(*ax.get_legend_handles_labels(), loc="lower center", bbox_to_anchor=(.5, .10), ncol=3)
-            note = "同一 K2.8 Preview + max · 每组一次运行 · 两套量表均由 Kimi 评分" if chinese else "Same K2.8 Preview + max; one run per arm; both rubrics scored by Kimi"
+            note = "历史Kimi评分及派生值；当前ChatGPT直接复评见独立复评目录" if chinese else "Historical Kimi ratings; current ChatGPT review is in independent-review"
             fig.text(.5, .045, note, ha="center", fontsize=9, color="#555555")
             for suffix in ("png", "svg"):
-                fig.savefig(destination / f"{filename}-six-dimensions.{suffix}", dpi=220,
+                target = destination / f"{filename}-six-dimensions.{suffix}"
+                fig.savefig(target, dpi=220,
                             facecolor="white", metadata={"Date": None} if suffix == "svg" else None)
+                if suffix == "svg":
+                    target.write_text("\n".join(line.rstrip() for line in target.read_text(encoding="utf-8").splitlines()) + "\n",
+                                      encoding="utf-8", newline="\n")
             plt.close(fig)
             print(f"{case}/{filename}-six-dimensions.png + .svg")
 

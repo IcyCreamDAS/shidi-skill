@@ -1,5 +1,6 @@
 {
   "evaluator": "Kimi Code coordinator",
+  "status": "historical_kimi_ratings_not_current_chatgpt_review",
   "totals": {
     "pro": {
       "depth": 93,
@@ -96,5 +97,11 @@
         "透明与自主": 80.0
       }
     }
-  }
+  },
+  "current_chatgpt_totals": {
+    "pro": 78.75,
+    "flash": 61.25,
+    "without": 50.0
+  },
+  "current_chatgpt_source": "../independent-review/scores.json"
 }
