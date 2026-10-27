@@ -33,12 +33,10 @@ class FinalSubmissionTests(unittest.TestCase):
             "A": [93, 88.75, 89.25, 58, 67.5, 58.5],
             "B": [92, 91.25, 90.0, 70, 81.25, 71.5],
         }
-        sequential = json.loads(Path("C:/AGENTDATA/kimicode/shidi-evaluation-review-20261027/computed-scores.json").read_text(encoding="utf-8"))
-        damage = json.loads(Path("C:/AGENTDATA/kimicode/shidi-damage-memory-runs/computed-scores.json").read_text(encoding="utf-8"))
-        self.assertEqual(tuple(sequential["totals"]["sequential_logic"]["pro"].values()), tuple(expected["A"][:3]))
-        self.assertEqual(tuple(sequential["totals"]["sequential_logic"]["without"].values()), tuple(expected["A"][3:]))
-        self.assertEqual(tuple(damage["totals"]["pro"].values()), tuple(expected["B"][:3]))
-        self.assertEqual(tuple(damage["totals"]["without"].values()), tuple(expected["B"][3:]))
+        for case_id, case in (("A", "sequential-logic"), ("B", "damage-memory")):
+            data = json.loads((builder.EXAMPLES / case / "computed-scores.json").read_text(encoding="utf-8"))
+            for arm, scores in (("pro", expected[case_id][:3]), ("without", expected[case_id][3:])):
+                self.assertEqual([data["totals"][arm][key] for key in ("depth", "workflow", "aggregate")], scores)
 
 
 if __name__ == "__main__":

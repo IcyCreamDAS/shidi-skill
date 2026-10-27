@@ -10,11 +10,13 @@
 
 中文 | [English](./README_EN.md)
 
+**从一句兴趣起点出发，发现跨领域证据链的缺口，再形成自己的研究问题。** Shidi 组织检索、原文获取、候选比较与验证方案，交付可继续追问的文件。
+
 > **师兄说想法，师弟跑断腿。** — *You bring the ideas, shidi does the legwork.*
 >
-> shidi 不是填模板的自动化——它是一条跑在 AI IDE 里的完整科研工作流：把脑海中的想法丢给它（文献调研 / 实验方案 / 作图 / 精读 / 数据整理），它在你的机器上跑完脏活累活，交付**真实可用的文件**，数据留在本地，不锁任何平台或模型。
+> shidi 不是填模板的自动化——它是一条跑在 AI IDE 里的完整科研工作流：把脑海中的想法丢给它（文献调研 / 实验方案 / 作图 / 精读 / 数据整理），它在你的机器上跑完脏活累活，交付**真实可用的文件**，产物保存在你的工作目录，不锁任何平台或模型。
 >
-> *shidi is a complete research workflow living inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Your data stays local. No platform or model lock-in.*
+> *shidi is a complete research workflow living inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Deliverables are saved in your working directory. No platform or model lock-in.*
 
 > **它不是放养型的。** 师弟是一个你一边忙别的、一边顺手使唤的 skill：喊一嗓子"师弟，帮我……"，它该问就问、该跑就跑，跑完把文件递到你手上。
 >
@@ -45,15 +47,15 @@
   <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
-**真实 Pro / Flash / without 对照实例：** [两个跨学科问题、六份结果与三组六维雷达图](examples/pro-flash-evaluation/README.md)——同时保留有增益、无增益和速度差异，不用单一案例证明某一版本全面更好。
+**真实 Pro / Flash / without 对照实例：** [两个跨学科问题、六份结果与三组六维雷达图](examples/pro-flash-evaluation/README.md)——展示如何识别逆序风险、区分损伤自增强与修复加速，并形成实验问题。
 
 ---
 
 ## ✨ What's New · 更新日志
 
-- **开发中：指定论文阅读** — 提供论文后直接进入[条件提取与证据核验](skills/shidi/references/focused-reading.md)，检查配方基准、模拟/实测区别、指标定义及正文与表格冲突；材料不足时说明边界。参赛准备与真实试跑状态见 [Bohrium 阅读案例](competitions/bohrium-reading-2026-10/README.md)。
-- **参赛草稿打包** — 根据固定哈希的官方资源，保存原始输出并生成证据索引。[草稿已通过结构校验](competitions/bohrium-reading-2026-10/packaging/README.md)，完整会话记录仍缺，尚未提交或取得赛事成绩。
-- **新对照任务** — [多论文涂层证据判断](competitions/bohrium-reading-2026-10/transfer-v1/README.md)先保持Skill不变，使用三篇新的公开研究验证跨论文适用性判断；预先冻结24项检查及命令记录方式，不预设一定有增益。
+- **2026-10-27：Pro / Flash 双模式** — 一次安装包含两套完整流程；默认 Pro，“快速调研 / flash 模式”选择 Flash。当前公开安装分支为 `feature/shidi-pro-flash`。
+- **两个真实探索案例** — [顺序化学逻辑与涂层损伤记忆](examples/pro-flash-evaluation/README.md)，各含 Pro / Flash / without 输出、两套评分细则、用量及图表；[技术文章](GITHUB_SHARE.md)介绍证据链拆解方法。
+- **参赛材料** — [最终 A/B 案例说明](competitions/bohrium-reading-2026-10/final-submission/SUBMISSION_README.md)整理两组 Pro/without 对照。此前的指定论文阅读试跑与打包记录保留在 [历史准备目录](competitions/bohrium-reading-2026-10/README.md)。
 - **2026-10** — 🛡 **发布版自检闭环**：GitHub Actions CI + `validate.py`（版本/链接/脚本编译/必需文件）+ `tests/` 离线单测 · 补上 `verify_refs.py` 引用核验（DOI 解析/撤稿检测/文风 lint）· 修 `render_report.py` 超时 bug 并支持跨平台浏览器探测 · `fetch_pdfs.py` 去掉硬编码邮箱、加指数退避
 - **2026-10** — 🔬 **确定性评分 + 数据 schema + AI4S 示例升级**：`score_papers.py` 七维评分（封顶/一票否决/排序由脚本算，v2 权重下调期刊与人脉）· 文献→配方/性能抽取 schema（测试标准/条件/n/误差/三类标签）· 示例升级（质量分数闭合、ARD 长度尺度、ECI 采集函数、1-2 基准配方校准对比、Pareto 前沿、文献先验边界接口）
 - **2026-08** — 📥 **PDF 批量下载**（OpenAlex/Unpaywall 自动定位 OA 直链，失败分类报告，不静默跳过）· *batch PDF download with honest failure reports*
@@ -176,7 +178,8 @@ flowchart TD
 ## 🚀 Quick Start · 快速开始
 
 ```bash
-git clone https://github.com/IcyCreamDAS/shidi-skill.git
+git clone --branch feature/shidi-pro-flash --single-branch https://github.com/IcyCreamDAS/shidi-skill.git
+mkdir -p ~/.claude/skills
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
@@ -189,7 +192,7 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 师弟，请你用 flash 模式给我调研一下 XXX # Flash
 ```
 
-**一次下载即包含 Pro 和 Flash 两个完整版本。** 未专门提到“详细”“快速”“pro”或“flash”时，默认 **Pro**：适合完整检索框架、交互确认和深度交付；Flash 适合少确认、快速启动。两种模式只改变工作流程，不指定模型，也不保证谁在所有任务中更好。
+**一次下载即包含 Pro 和 Flash 两个完整版本。** 未专门提到“详细”“快速”“pro”或“flash”时，默认 **Pro**：适合完整检索框架、交互确认和深度交付；Flash 适合少确认、快速启动。两种模式改变工作流程，可以使用宿主支持的模型。
 
 其他任务示例：
 

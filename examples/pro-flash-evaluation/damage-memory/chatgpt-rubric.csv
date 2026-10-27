@@ -1,7 +1,7 @@
 ﻿dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
-dimension,weight,pro,flash,without
+question,15,15,14,11
+mechanism,25,22,18,16
+evidence,20,17,12,15
+falsification,20,20,15,13
+synthesis,10,9,8,8
+autonomy,10,9,8,7

@@ -11,7 +11,9 @@
 
 [中文](./README.md) | English
 
-> shidi (*"junior lab mate"* in Chinese) is a complete research workflow that lives inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Your data stays local. No platform or model lock-in.
+**Start with an interest, identify gaps in cross-field evidence, and form a testable research question.** Shidi organizes search, source retrieval, candidate comparison and validation plans into reusable files.
+
+> shidi (*"junior lab mate"* in Chinese) is a complete research workflow that lives inside your AI IDE — not a prompt template. Hand it an idea (literature research / experiment design / figures / paper reading / data chores), and it returns **real deliverable files**. Deliverables are saved in your working directory. No platform or model lock-in.
 >
 > It's not fire-and-forget, either — shidi is meant to be bossed around while you do something else. Say "shidi, help me with …", and it asks when it must, runs the rest, and hands you the files.
 
@@ -38,15 +40,15 @@
   <img src="assets/demo-verify.png" alt="Cross-verification brief structure" width="560"/>
 </p>
 
-**Real Pro / Flash / without comparisons:** [two interdisciplinary prompts, six runs, and three-arm radar charts](examples/pro-flash-evaluation/README.md) — including positive, null, and speed differences rather than a universal winner.
+**Real Pro / Flash / without comparisons:** [two interdisciplinary prompts, six runs, and three-arm radar charts](examples/pro-flash-evaluation/README.md) — showing reverse-order checks, evidence separation and testable research questions.
 
 ---
 
 ## ✨ What's New
 
-- **In development: supplied-paper reading** — Route supplied papers directly to [condition extraction and evidence checking](skills/shidi/references/focused-reading.md). Preserve composition bases, separate simulations from measurements, check metric definitions and text/table conflicts, and state input limitations. See the [Bohrium reading preparation](competitions/bohrium-reading-2026-10/README.md) for actual pilot status.
-- **Competition draft packaging** — Verify pinned official resources, preserve original outputs, and build a source evidence index. The [draft passed the official structural check](competitions/bohrium-reading-2026-10/packaging/README.md); full conversation records are still missing. No entry has been submitted or scored.
-- **New paired task** — [Cross-paper coating evidence](competitions/bohrium-reading-2026-10/transfer-v1/README.md) keeps the Skill unchanged and uses three new public studies, 24 predeclared checks, and matched command logging. Benefits remain an empirical question.
+- **2026-10-27: Pro / Flash modes** — One installation includes both workflows. Pro is the default; request “quick research” or “flash mode” for Flash. Install from the public `feature/shidi-pro-flash` branch.
+- **Two real discovery cases** — [Chemical sequence logic and damage-memory coatings](examples/pro-flash-evaluation/README.md), each with Pro / Flash / without outputs, scoring details, usage and charts. The [technical article](GITHUB_SHARE.md) explains the evidence-chain workflow.
+- **Competition materials** — The [final A/B case notes](competitions/bohrium-reading-2026-10/final-submission/SUBMISSION_README.md) cover the two Pro/without comparisons. Earlier paper-reading pilots remain in the [preparation history](competitions/bohrium-reading-2026-10/README.md).
 - **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
 - **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
@@ -165,7 +167,8 @@ flowchart TD
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/IcyCreamDAS/shidi-skill.git
+git clone --branch feature/shidi-pro-flash --single-branch https://github.com/IcyCreamDAS/shidi-skill.git
+mkdir -p ~/.claude/skills
 cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ```
 
@@ -178,7 +181,7 @@ Then just say:
 师弟，请你用 flash 模式给我调研一下 XXX # Flash
 ```
 
-**One download includes the complete Pro and Flash modes.** If the request does not specify “详细”, “快速”, “pro”, or “flash”, it defaults to **Pro**: structured searching, interactive clarification, and deep deliverables. Flash minimizes confirmation and starts quickly. Modes change the workflow, not the model; neither is universally better.
+**One download includes the complete Pro and Flash modes.** If the request does not specify “详细”, “快速”, “pro”, or “flash”, it defaults to **Pro**: structured searching, interactive clarification, and deep deliverables. Flash minimizes confirmation and starts quickly. Modes change the workflow and use the models supported by the host.
 
 Other examples:
 

@@ -1,29 +1,45 @@
-# Shidi Pro：从一句话科研灵感到可验证问题
+# Shidi Pro：从一句科研灵感到可验证问题
 
 ## 使用场景
 
-Shidi 面向尚不会拆解研究问题的用户：把不成熟的一句话灵感转成有原文依据、边界清楚的候选路线和最小证伪实验。官方 A/B 对照均使用同一个 Pro（`b28eb4e`）版本；Flash（`6e03d72`）只作附加版本比较，不用于官方 Pro/without 配对。
+Shidi 面向只有兴趣起点、尚未形成系统研究问题的用户，组织跨领域检索与原文核验，交付候选比较、证据分级及验证方案。本包的 A/B 案例均以 Pro `b28eb4e` 与 without 配对；Flash `6e03d72` 的结果另作流程比较。
 
 ## 安装与调用
 
-仓库：`IcyCreamDAS/shidi-skill`。一次下载包含 Pro 和 Flash 两个完整模式。默认 Pro；“快速调研”或“flash 模式”选择 Flash。模式文件分别位于 `modes/pro/` 与 `modes/flash/`。官方包中的 `skill/` 为 Pro 版本。
+Pro/Flash 当前位于公开的 `feature/shidi-pro-flash` 分支。一次安装包含两种完整模式，默认 Pro；“快速调研”或“flash 模式”选择 Flash。本包 `skill/` 为实验时冻结的 Pro 文件。
 
-## 运行环境与预算
+```bash
+git clone --branch feature/shidi-pro-flash --single-branch https://github.com/IcyCreamDAS/shidi-skill.git
+mkdir -p ~/.claude/skills
+cp -r shidi-skill/skills/shidi ~/.claude/skills/
+```
 
-两组均为 Kimi Code Desktop 独立 coder 子代理，`kimi-code/kimi-for-coding`（K2.8 Preview）+ 默认 max，profile.bind 已核对。禁止读取父会话、其他运行和宿主用户记忆。第一轮使用 12 分钟、24 查询、40 页面动作、最多 8 篇核心文献的软预算；第四轮沿用相同设置。
+## 案例与结果
 
-## 证据与结果
+- A 顺序逻辑：Pro 识别水已存在时后续生成酸仍可能反应的逆序风险，提出状态保持与反向路径验证。
+- B 损伤记忆：Pro 区分损伤自增强与第二次修复加速，比较潜伏活性种和机械自由基路线，形成双循环动力学实验问题。
 
-A（顺序逻辑）：ChatGPT 权重续评 Pro 93、without 58；Kimi Pro 88.75、without 67.50。B（损伤记忆）：续评 Pro 92、without 70；Kimi Pro 91.25、without 81.25。主要参考体系下两轮均显示增益，核心是 Pro 能发现逆序证据和“自增强不等于第二次加速”的证据链缺口。
+科研深度内部评分：A 的 Pro/without 为 93/58，B 为 92/70。两套量表均由 Kimi 执行；科研深度量表源于与 ChatGPT 的讨论，工作流评分单列，综合展示按公式派生。分项、来源与用量见 `evaluation/`。
 
-内部续评不是官方成绩，也不表示所有任务都更好。公共提示词、主代理代答、失败和实际投入均保留。完整分项见 `evaluation/` 的 4 表 3 图。
+## 执行与记录
 
-## 人工参与与轨迹
+执行模型统一为 Kimi Code 的 K2.8 Preview + max，各组从独立会话开始，使用同一初始问题、共同任务要求及工具预算。预算为每组 12 分钟软墙、24 查询、40 页面动作、最多 8 篇核心文献；实际问答、重试、用时与 token 均按日志保留。
 
-K3.1 Pro 主代理只负责冻结协议、统一用户代答和独立评阅，没有提供代表论文或预设科学结论。`trace-export.jsonl` 是从真实 wire 提取的可见用户/助手文本和工具事件，仅对本机用户名和绝对路径做确定性脱敏，不含宿主系统提示或隐藏推理。原始 wire 仅留作者本地。合并平台导出 `submission-trace.jsonl` 保留 case/run_id，供 `--trace-kind export`。
+协调代理负责协议、用户代答、整理与评阅；执行组未得到代表论文或评分答案。轨迹为真实 wire 中的可见文本与工具事件，去除宿主提示及隐藏推理，并脱敏本机路径和登录账号信息。
 
-## 原件与限制
+PDF 页数、字节与 SHA-256 见各组 `pdf-verification.json`。论文数据、Agent 提议和作者评阅分别保留；本案例没有新增作者实验实测数据。
 
-`pdf-verification.json` 记录 PDF 页数、字节和 SHA-256。报告数值是文献报道，不是作者新实验数据。公共科学检查项已经预先拆解了一部分研究问题，因此输出深度不能完全归因于 Skill。Pro 存在确认与超时，Flash 速度快但质量随任务变化。无逐次扣费字段，费用记无法核验。
+## 复现与包状态
 
-本包包含 A/B 两组真实对照，未选 C。未上传，没有 Attempt ID 或比赛成绩。官方结构检查不等于科学结论认可。
+公开实例的四类表格和三类图可使用随仓库提供的数据重建。重新构建完整 Skill 参赛包时，还需提供原始 PDF 运行档案，不能以核验清单代替文件：
+
+```bash
+python competitions/bohrium-reading-2026-10/final-submission/build_submission.py \
+  --resources /path/to/official/resources \
+  --runs-root /path/to/full-runs \
+  --out /path/to/new-output
+```
+
+完整运行目录布局为 `sequential-logic/{pro,without}/` 和 `damage-memory/{pro,without}/`，各组保留 `output/pdfs/`。`--out` 必须是尚不存在的目录。脚本先检查原件哈希，再打包和运行官方结构检查，不自动上传。
+
+本包对应所列两次案例运行，内部评分用于展示具体判断与交付，平台成绩以提交回执为准。

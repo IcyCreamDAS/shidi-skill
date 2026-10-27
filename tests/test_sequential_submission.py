@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 REPO = Path(__file__).resolve().parents[1]
-RUN = Path("C:/AGENTDATA/kimicode/shidi-sequential-logic-runs/b28eb4e-k28max-01")
+HELPERS = REPO / "competitions/bohrium-reading-2026-10/sequential-logic-v1"
 
 
 def load(name, path):
@@ -17,7 +17,7 @@ def load(name, path):
 
 
 builder = load("sequential_submission", REPO / "competitions/bohrium-reading-2026-10/sequential-logic-v1/build_submission.py")
-exporter = load("sequential_export", RUN / "export_visible.py")
+exporter = load("sequential_export", HELPERS / "export_visible.py")
 
 
 class SequentialSubmissionTests(unittest.TestCase):
@@ -63,6 +63,14 @@ class SequentialSubmissionTests(unittest.TestCase):
             self.assertEqual(row["start"], 3)
             selected = (source / "record.txt").read_text(encoding="utf-8")[row["start"]:row["end"]]
             self.assertLessEqual(len(selected.encode("utf-8")), 8192)
+
+    def test_auth_redirect_redaction_preserves_scientific_source_links(self):
+        original = {"result": {"text": 'Redirect: https://accounts.google.com/signin?continue=x&idnf=researcher%40example.com then blocked'},
+                    "source": "https://doi.org/10.1038/srep12908"}
+        redacted = exporter.redact_auth_urls(original)
+        self.assertNotIn("researcher", json.dumps(redacted))
+        self.assertEqual(redacted["source"], original["source"])
+        self.assertIn("then blocked", redacted["result"]["text"])
 
 
 if __name__ == "__main__":

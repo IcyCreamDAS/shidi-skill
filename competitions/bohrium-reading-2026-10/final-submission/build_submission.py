@@ -12,18 +12,19 @@ common = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(common)
 
 SKILL_VERSION = "git:b28eb4e"
+EXAMPLES = REPO / "examples/pro-flash-evaluation"
 CASES = {
     "A": {
-        "run_root": Path("C:/AGENTDATA/kimicode/shidi-sequential-logic-runs/b28eb4e-k28max-01"),
-        "pro": "with", "without": "without",
+        "run_root": EXAMPLES / "sequential-logic",
+        "pro": "pro", "without": "without",
         "report": "report.md", "references": "literature-list.md",
         "without_report": "先光照后遇湿_化学顺序门控报告.md",
         "without_references": "references_文献清单.md",
         "result": "RESULTS.md",
     },
     "B": {
-        "run_root": Path("C:/AGENTDATA/kimicode/shidi-damage-memory-runs"),
-        "pro": "pro-b28", "without": "without",
+        "run_root": EXAMPLES / "damage-memory",
+        "pro": "pro", "without": "without",
         "report": "损伤记忆涂层调研报告.md", "references": "参考文献清单.md",
         "without_report": "report.md", "without_references": "literature.md",
         "result": "RESULTS.md",
@@ -43,6 +44,21 @@ def references_for(config, condition):
     return config["references"] if condition == "pro" else config.get("without_references", config["references"])
 
 
+def validate_run_assets():
+    """The public examples contain metadata; official packaging needs original PDFs."""
+    for case_id, config in CASES.items():
+        for condition in ("pro", "without"):
+            root = config["run_root"] / config[condition]
+            verify = read_json(root / "output/pdf-verification.json")
+            for record in verify["files"]:
+                relative = common.safe_relative(record["file"])
+                pdf = root / "output/pdfs" / relative
+                if not pdf.is_file():
+                    raise ValueError(f"{case_id}/{condition}: original PDF missing: {relative}; use --runs-root with the full run archive")
+                if common.sha(pdf) != record["sha256"]:
+                    raise ValueError(f"{case_id}/{condition}: PDF hash mismatch: {relative}")
+
+
 def make_manifest(resources):
     m = common.read_json(resources / "templates/manifest-with-bonus.json")
     m["cases"] = [case for case in m["cases"] if case["id"] in CASES]
@@ -54,7 +70,7 @@ def make_manifest(resources):
         "tools": ["WebSearch", "FetchURL", "Bash", "Python", "pypdf"],
         "dependencies": ["Python 3", "pypdf", "matplotlib（仅评阅绘图）"],
         "budget": "每组12分钟软墙、24查询、40页面动作、8篇核心文献；软限非平台硬停止",
-        "human_steps": "主代理 K3.1 Pro 冻结协议、统一代答并独立评阅；未提供路线、论文或评分答案",
+        "human_steps": "主代理 K3.1 Pro 整理协议、统一代答并评阅；未提供路线、论文或评分答案",
         "isolation_limit": "独立目录和会话，禁止读取/利用宿主记忆；指令边界不是OS沙箱",
         "usage_unavailable_reason": "日志无逐次人民币扣费字段；cost=null，不填0或估价",
     }
@@ -91,7 +107,7 @@ def make_manifest(resources):
                 "human_steps": ([{"role": "coordinator-as-user", "record": f"runs/{rid}/visible_conversation.md",
                                   "scope": "按冻结立场回答；未给路线或论文"}] if condition == "pro" else []),
                 "result": state["status"],
-                "trace_scope": "完整可见文本与工具事件；本机用户名和绝对路径已脱敏；原始wire留作者本地",
+                "trace_scope": "完整可见文本与工具事件；本机路径与登录账号信息已脱敏；原始wire留作者本地",
                 "complete_conversation_available": True,
             })
     m["attempt_history"] = {"earlier_attempts": [], "raw_logs_available": True,
@@ -126,10 +142,11 @@ def make_selections(source):
 def build(resources, output):
     resources = resources.resolve()
     lock = common.verify_resources(resources)
+    validate_run_assets()
     output = common.reserve_output(output)
     source = output / "submission"
     source.mkdir()
-    common.copy_tree(CASES["A"]["run_root"] / "with/skill", source / "skill")
+    common.copy_tree(REPO / "skills/shidi/modes/pro", source / "skill")
     common.copy_tree(BASE / "cases", source / "cases")
     common.copy_file(BASE / "SUBMISSION_README.md", source / "README.md")
     common.copy_file(BASE / "SUBMISSION_REPORT.md", source / "report.md")
@@ -137,7 +154,7 @@ def build(resources, output):
     common.copy_file(REPO / "THIRD_PARTY_NOTICES.md", source / "THIRD_PARTY_NOTICES.md")
     common.copy_file(REPO / "competitions/bohrium-reading-2026-10/official-resources-lock.json",
                       source / "official-resources-lock.json")
-    final_root = Path("C:/AGENTDATA/kimicode/competition-final")
+    final_root = EXAMPLES
     for case_id, config in CASES.items():
         for name in ("task.md", "CONTEXT.md"):
             common.copy_file(config["run_root"] / config["pro"] / name, source / "materials" / case_id / name)
@@ -152,7 +169,8 @@ def build(resources, output):
                      "final-scores.md", "final-scores.csv", "usage.md", "usage.csv",
                      "chatgpt-six-dimensions.png", "chatgpt-six-dimensions.svg",
                      "kimi-six-dimensions.png", "kimi-six-dimensions.svg",
-                     "aggregate-six-dimensions.png", "aggregate-six-dimensions.svg"):
+                     "aggregate-six-dimensions.png", "aggregate-six-dimensions.svg",
+                     "evaluation.json", "computed-scores.json"):
             common.copy_file(case_final / name, source / "evaluation" / case_id / name)
         common.copy_file(config["run_root"] / config["result"], source / "evaluation" / case_id / "RESULTS.md")
     common.write_json(source / "manifest.json", make_manifest(resources))
@@ -177,7 +195,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--resources", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
+    parser.add_argument("--runs-root", type=Path, help="full archive root containing sequential-logic/{pro,without} and damage-memory/{pro,without}, including PDFs")
     args = parser.parse_args()
+    if args.runs_root:
+        CASES["A"]["run_root"] = args.runs_root / "sequential-logic"
+        CASES["B"]["run_root"] = args.runs_root / "damage-memory"
     try:
         print(json.dumps(build(args.resources, args.out), ensure_ascii=False, indent=2))
     except (ValueError, OSError, KeyError) as error:

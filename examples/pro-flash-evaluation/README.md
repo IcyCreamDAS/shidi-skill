@@ -1,56 +1,65 @@
-# Pro / Flash / without：两组真实评测实例
+# Pro / Flash / without：两组跨领域探索实例
 
-这里保留 **2 个跨学科一句话问题 × 3 个独立子代理 = 6 份真实结果**。Pro=`b28eb4e`，Flash=`6e03d72`，without 不加载 Skill。所有执行代理均为 K2.8 Preview + max；禁止读取或利用宿主用户记忆。
+两个科研兴趣起点，六份真实运行结果。Pro 固定为 `b28eb4e`，Flash 固定为 `6e03d72`，without 不加载 Skill；执行模型统一为 K2.8 Preview + max。各组从独立会话开始，按共同任务要求探索，实际问答与投入保留在记录中。
 
-这些实例展示的是**质量与自主性的权衡，而不是某一版本永远更好**。ChatGPT 权重续评是主要参考，Kimi 修正评分和三大汇总用于交叉检查；续评不是 ChatGPT 最终公开评分或官方成绩。
+[技术文章](../../GITHUB_SHARE.md)解释如何从论文中的相似机制，找到原问题尚缺的证据。
 
 ## 顺序化学逻辑
 
 > 能不能用一串选择性化学反应代替电子逻辑电路，让材料只有在“先光照、后遇湿”时才打开？
 
-![顺序逻辑三大汇总六维图](sequential-logic/aggregate-six-dimensions.png)
+Pro 识别了“水已在时后来生成的酸仍可能反应”的逆序风险，将问题推进到中间状态保持与反向路径验证。
 
-| 条件 | ChatGPT 权重续评 | Kimi 修正评分 | 三大汇总 | 核验 PDF | Agent 墙钟 |
+| 条件 | 科研深度评分 | 工作流评分 | 综合展示 | 核验 PDF | Agent 墙钟 |
 |---|---:|---:|---:|---:|---:|
 | [Pro](sequential-logic/pro/) | 93 | 88.75 | 89.25 | 6 | 1659.432 s |
 | [Flash](sequential-logic/flash/) | 73 | 80.00 | 73.00 | 3 | 503.256 s |
 | [without](sequential-logic/without/) | 58 | 67.50 | 58.50 | 5 | 585.335 s |
 
-Pro 识别了水下预浸后照光不能证明逆序关闭，守住关键科学关口；Flash 更快但把反序无效说得过满；without 将同一来源误作直接证据。
+![顺序逻辑科研深度](sequential-logic/chatgpt-six-dimensions.png)
 
-其他图表：[ChatGPT 续评](sequential-logic/chatgpt-six-dimensions.png) · [Kimi 修正](sequential-logic/kimi-six-dimensions.png)。表格：[ChatGPT 细则](sequential-logic/chatgpt-rubric.md) · [Kimi 细则](sequential-logic/kimi-rubric.md) · [最终评分](sequential-logic/final-scores.md) · [用量](sequential-logic/usage.md)。
+[工作流图](sequential-logic/kimi-six-dimensions.png) · [综合展示图](sequential-logic/aggregate-six-dimensions.png) · [深度分项](sequential-logic/chatgpt-rubric.md) · [工作流分项](sequential-logic/kimi-rubric.md) · [总分](sequential-logic/final-scores.md) · [用量](sequential-logic/usage.md)
 
-## 涂层“疫苗式损伤记忆”
+## 涂层损伤记忆
 
 > 能不能让一层涂层像打过疫苗一样，第一次划伤后留下记忆，下次受伤时修复得更快？
 
-![损伤记忆三大汇总六维图](damage-memory/aggregate-six-dimensions.png)
+Pro 区分损伤自增强与第二次修复加速，比较潜伏活性种、机械自由基两条路线，并将状态保持与双循环修复动力学作为验证问题。
 
-| 条件 | ChatGPT 权重续评 | Kimi 修正评分 | 三大汇总 | 核验 PDF | Agent 墙钟 |
+| 条件 | 科研深度评分 | 工作流评分 | 综合展示 | 核验 PDF | Agent 墙钟 |
 |---|---:|---:|---:|---:|---:|
 | [Pro](damage-memory/pro/) | 92 | 91.25 | 90.00 | 3 + 1 XML | 316.917 s |
 | [Flash](damage-memory/flash/) | 75 | 76.25 | 77.00 | 2 | 205.852 s |
 | [without](damage-memory/without/) | 70 | 81.25 | 71.50 | 6 | 324.277 s |
 
-Pro 明确“自增强不等于第二次修复加速”，并形成双循环证伪实验；Flash 的全文阅读较少；without 的中心表述存在矛盾。三组均未找到完整的二次加速时序对照证据。
+![损伤记忆科研深度](damage-memory/chatgpt-six-dimensions.png)
 
-其他图表：[ChatGPT 续评](damage-memory/chatgpt-six-dimensions.png) · [Kimi 修正](damage-memory/kimi-six-dimensions.png)。表格：[ChatGPT 细则](damage-memory/chatgpt-rubric.md) · [Kimi 细则](damage-memory/kimi-rubric.md) · [最终评分](damage-memory/final-scores.md) · [用量](damage-memory/usage.md)。
+[工作流图](damage-memory/kimi-six-dimensions.png) · [综合展示图](damage-memory/aggregate-six-dimensions.png) · [深度分项](damage-memory/chatgpt-rubric.md) · [工作流分项](damage-memory/kimi-rubric.md) · [总分](damage-memory/final-scores.md) · [用量](damage-memory/usage.md)
 
-## 实例内容
+## 评分与图表
 
-每个组别目录均包含：
+两套内部评分均由 Kimi 完成。六维科研深度量表源于与 ChatGPT 的讨论，实际分数由 Kimi 复评给出。综合展示按公开公式计算，并非另一次独立评阅。每案例每条件运行一次。
 
-- `task.md`、`CONTEXT.md` 和 `run.json`：输入、模型、版本、用量和耗时；
-- `visible_conversation.md`：可见用户问答；
-- `trace-export.jsonl`：脱敏的可见文本与工具事件，不含宿主系统提示或隐藏推理；
-- `output/`：最终报告、文献清单、失败记录、运行说明和 PDF 验证；
-- 每案例的 4 个表（Markdown+CSV）和 3 张六维图（PNG+SVG）。
+每个案例的 `evaluation.json` 保存原始分项与来源；`computed-scores.json` 保存派生总分和图轴。深度六轴是问题、机制、证据、证伪、路线、透明与自主。工作流图由九项指标归并成探索、证据、PDF、主题判据、综合与边界、交互六轴，按图上的实际轴名解释。
 
-[make_radar.py](make_radar.py) 与 [make_figures.py](make_figures.py) 可复现绘图；[build_tables.py](build_tables.py) 生成表格。各案例 `RESULTS.md` 保留完整证据边界。
+保留历史文件名 `chatgpt-rubric.*` / `chatgpt-six-dimensions.*` 以兼容既有链接；显示名称与评分执行者以本页及表内说明为准。
 
-## 脱敏与原件边界
+## 离线复现表格与图表
 
-- 公开前扫描用户名、绝对路径、宿主记忆、账号/设备码、凭据和签名 URL；原始 wire 不进入仓库。
-- 本实例不直接收录 PDF 二进制原件：公开获取不自动等于允许再分发，许可需逐项确认。文献清单保留 DOI/来源链接，`pdf-verification.json` 保留页数、字节和 SHA-256，便于复核。
-- 时间/token 为平台日志数据；费用没有逐次扣费字段，统一记无法核验。实验预测阈值不是实测结果。
-- 两轮 Pro 均显示增益，但单主题单次运行不能证明所有任务都有同等效果；公共提示词也已预先拆解部分研究问题。
+从仓库根目录执行：
+
+```bash
+python examples/pro-flash-evaluation/build_tables.py
+python -m pip install matplotlib numpy
+python examples/pro-flash-evaluation/make_figures.py
+```
+
+原始数据随仓库提供，无需作者电脑上的目录。表格脚本只使用 Python 标准库。制图脚本优先使用系统中文字体，否则使用英文轴名；也可加 `--font /path/to/CJK-font.otf` 指定字体。`make_radar.py` 是同一绘图入口的兼容名称。两脚本均支持 `--out /path/to/output`，可将复现产物输出到独立目录。
+
+## 文件索引
+
+每个组别目录保留 `task.md`、`CONTEXT.md`、`PROMPT.md`、`run.json`、`visible_conversation.md`、`trace-export.jsonl` 和 `output/`。轨迹包含可见文本与工具事件，登录跳转中的账号信息及本机路径做脱敏；不含宿主系统提示或隐藏推理。
+
+每个案例另含四类表格（深度分项、工作流分项、总分、用量；Markdown + CSV）及三类图（PNG + SVG）。`RESULTS.md` 为原始协调评阅记录。
+
+本目录提供文献 DOI、来源、PDF 核验信息与 SHA-256；不在本目录直接收录 PDF 二进制。金额无逐次扣费字段，保留 null。
