@@ -1,20 +1,29 @@
 {
-  "status": "ready-to-submit-locally-validated",
-  "ready_to_submit": true,
-  "archive_sha256": "9b33077defac00c1b508766b9ccca1427ae6e053ea8bb5cc400892a1dcf476a5",
-  "archive_bytes": 67315013,
+  "status": "intake_complete",
+  "archive": "skill-submission-reviewed.zip",
+  "archive_bytes": 67685162,
+  "archive_sha256": "a91517b0a03d595d547d62afb647a0a3ed6daefa55faa1a52a9d8fef44c16233",
+  "uploaded": false,
+  "attempt_id": null,
+  "score": null,
+  "original_scientific_output_files_unchanged": true,
+  "unchanged_output_file_count": 45,
+  "platform_trace": "skill-submission-trace-reviewed.jsonl",
+  "platform_trace_kind": "export",
+  "platform_trace_records": 422,
+  "platform_trace_sha256": "63335445b79878ab0ab8901b345602b084b505c6aca54dc042acab8657ab6e9f",
   "official_structure_check": {
     "status": "intake_complete",
     "missing": [],
     "optional_issues": {},
     "review_contract": {
       "version": "bounded-review-v1",
-      "core_bytes": 30056,
-      "selected_bytes": 78579,
+      "core_bytes": 30586,
+      "selected_bytes": 79673,
       "audit_bytes": 23350,
       "selection_count": 27,
-      "original_text_bytes": 1039752,
-      "source_file_count": 120,
+      "original_text_bytes": 1042965,
+      "source_file_count": 127,
       "audit_files": [
         {
           "path": "runs/A-pro/output/literature-list.md",
@@ -105,20 +114,10 @@
       "all_original_files_preserved": true,
       "full_archive_semantically_reviewed": false
     },
-    "files": 120
+    "files": 127
   },
-  "rules_version": "product-skill-rules-v2.5-read-minor-20261016-r2",
-  "limits": [
-    "单主题单次运行，增益不可外推",
-    "公共提示词指导是归因限制",
-    "费用无法核验"
-  ],
-  "submit_helper_run": false,
-  "uploaded": false,
-  "attempt_id": null,
-  "score": null,
-  "platform_trace": "submission-trace.jsonl",
-  "platform_trace_kind": "export",
-  "platform_trace_records": 422,
-  "platform_trace_sha256": "b99c5c42a11b8042adaafd3f2f0dcefa0cbf9f4c1753f4302da9038819db473f"
+  "note": "This is a reviewed local package, not a platform upload receipt.",
+  "archive_published_in_repository": false,
+  "trace_published_in_repository": false,
+  "location_note": "完整 Skill 包与配套平台 export 轨迹由作者单独保存，提交时使用。本目录保留状态索引与分享讨论稿。"
 }
