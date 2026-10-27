@@ -1,4 +1,4 @@
-project,sample,resin_grade,gf_wt_pct,coupling_agent_wt_pct,lubricant_wt_pct,resin_wt_pct,melt_temp_C,tensile_MPa,flexural_modulus_GPa,MFR_g_per_10min,data_source
+project,sample,matrix_grade,filler_wt_pct,additive_a_wt_pct,additive_b_wt_pct,matrix_wt_pct,melt_temp_C,tensile_MPa,flexural_modulus_GPa,MFR_g_per_10min,data_source
 P01,S01,A,10.0,0.75,0.37,88.88,373.1,117.46,4.805,40.11,synthetic
 P01,S02,A,11.6,0.6,0.1,87.7,352.2,117.5,4.833,34.42,synthetic
 P01,S03,B,13.2,0.26,0.42,86.12,348.0,112.45,4.123,32.91,synthetic

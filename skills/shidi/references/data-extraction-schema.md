@@ -13,10 +13,10 @@
 |:--|:--|:--|
 | `doi` | 来源 DOI，必填（便于回查） | 10.1016/j.polymer.2020.122456 |
 | `source_page` | 数据所在页码/表号 | p.7 Table 3 |
-| `material` | 材料体系 | PEEK / PAEK / CF-PEEK |
+| `material` | 材料体系（示例统一匿名） | example-system |
 | `formulation_id` | 文献内配方编号（没有就填 1,2,3） | F3 |
-| `component` | 组分名（树脂/玻纤/偶联剂/润滑剂…） | glass fibre |
-| `role` | 组分角色 | matrix / reinforcement / coupling / lubricant / filler |
+| `component` | 组分角色名（matrix / filler / additive_a / additive_b…） | filler |
+| `role` | 组分角色（与 component 对应） | matrix / filler / additive_a / additive_b |
 | `wt_pct` | 质量分数（%）；只在原文明确或换算依据齐全时填写，未知为 not-reported | 30 |
 | `property` | 性能名（统一命名） | tensile strength |
 | `value` | 数值 | 182.5 |
