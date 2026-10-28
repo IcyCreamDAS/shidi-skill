@@ -43,8 +43,8 @@
 ## ✨ What's New
 
 - **In development: supplied-paper reading** — Route supplied papers directly to [condition extraction and evidence checking](skills/shidi/references/focused-reading.md). Preserve composition bases, separate simulations from measurements, check metric definitions and text/table conflicts, and state input limitations. See the [Bohrium reading preparation](competitions/bohrium-reading-2026-10/README.md) for actual pilot status.
-- **Competition draft packaging** — Verify pinned official resources, preserve original outputs, and build a source evidence index. The [draft passed the official structural check](competitions/bohrium-reading-2026-10/packaging/README.md); full conversation records are still missing. No entry has been submitted or scored.
-- **New paired task** — [Cross-paper coating evidence](competitions/bohrium-reading-2026-10/transfer-v1/README.md) keeps the Skill unchanged and uses three new public studies, 24 predeclared checks, and matched command logging. Benefits remain an empirical question.
+- **Competition draft packaging** — Verify pinned official resources, preserve original outputs, and build a source evidence index. The [draft passed the official structural check](competitions/bohrium-reading-2026-10/README.md); full conversation records are still missing. No entry has been submitted or scored.
+- **New paired task** — [Cross-paper coating evidence](competitions/bohrium-reading-2026-10/README.md) keeps the Skill unchanged and uses three new public studies, 24 predeclared checks, and matched command logging. Benefits remain an empirical question.
 - **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
 - **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)
 - **2026-08** — 📥 Batch PDF download (OpenAlex/Unpaywall OA lookup; failures classified and reported, never silently skipped)
@@ -117,7 +117,7 @@ Every job ends in **real files** — not chat text.
 - **ARD feature relevance** — per-feature GP length scales (smaller = more influential; at the upper bound = the data cannot identify a dependence)
 - **Constrained search with ECI** — `ECI = EI × P(MFR ≥ 28)` instead of a hard feasibility cutoff, plus a feasibility-only shortlist
 - **Multi-objective Pareto front** — tensile strength vs MFR posterior means
-- **Mass-fraction closure** — glass fibre + coupling agent + lubricant + resin = 100 wt%; candidates keep `resin ≥ 40 wt%`
+- **Mass-fraction closure** — filler + additive A + additive B + matrix = 100 wt%; candidates keep `matrix ≥ 40 wt%`
 - **Literature-prior interface** — `priors_template.csv` feeds survey bounds into the search space (bounds only, no prior mean)
 - **Separated evidence labels** — `measured` / `predicted` / `exploratory`; only `measured` may be reported as a result
 - **Hard rule: an exploration screening range is NOT a statistical confidence interval**
@@ -128,7 +128,7 @@ pip install -r requirements.txt && python run_demo.py
 python run_demo.py --priors priors_template.csv   # constrain the search space with survey bounds
 ```
 
-**What it does not claim:** the data is synthetic, so it predicts no real PEEK/PAEK property; the GP scores do not transfer to any real formulation dataset; the shortlist is not proven better than an experienced engineer's DOE intuition; independent single-output GPs ignore output correlation (tensile ↔ flexural ≈ 0.9); 1–2 benchmark runs do not calibrate a batch offset (that needs a mixed-effects GP). Real industrial formulations stay under NDA — what is published here is the **method**, not data.
+**What it does not claim:** the data is synthetic, so it predicts no real material property; the GP scores do not transfer to any real formulation dataset; the shortlist is not proven better than an experienced engineer's DOE intuition; independent single-output GPs ignore output correlation (tensile ↔ flexural ≈ 0.9); 1–2 benchmark runs do not calibrate a batch offset (that needs a mixed-effects GP). Real industrial formulations stay under NDA — what is published here is the **method**, not data.
 
 ## 🧭 Flow
 
@@ -215,3 +215,6 @@ Design ideas borrowed from [nature-skills](https://github.com/Yuan1z0825/nature-
 ## 📄 License
 
 [MIT License](LICENSE) — free to use; just buy shidi a bubble tea 🧋
+
+
+[公开资源与历史范围 / Public resources and historical scope](PRIVACY.md)

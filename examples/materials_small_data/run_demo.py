@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small-data materials ML demo on a fully synthetic PAEK/PEEK-style dataset.
+"""Small-data materials ML demo on a fully synthetic role-based dataset.
 
 What it demonstrates
   1. grouped validation (leave-one-project-out) instead of a random split;
@@ -14,8 +14,8 @@ What it demonstrates
   6. explicit claim labels measured / predicted / exploratory.
 
 The synthetic recipes satisfy the mass-fraction closure constraint
-(glass fibre + coupling agent + lubricant + resin = 100 wt%), and candidate
-sampling keeps resin >= 40 wt%.
+(filler + additive_a + additive_b + matrix = 100 wt%), and candidate
+sampling keeps matrix >= 40 wt%.
 
 Usage
     python run_demo.py                       # full demo (seconds)
@@ -65,12 +65,12 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "outputs"
 TARGETS = ("tensile_MPa", "flexural_modulus_GPa", "MFR_g_per_10min")
 FEATURE_NAMES = (
-    "gf_wt_pct",
-    "coupling_agent_wt_pct",
-    "lubricant_wt_pct",
+    "filler_wt_pct",
+    "additive_a_wt_pct",
+    "additive_b_wt_pct",
     "melt_temp_C (centered / 20)",
-    "resin_grade == A",
-    "resin_grade == B",
+    "matrix_grade == A",
+    "matrix_grade == B",
 )
 MFR_CONSTRAINT = 28.0
 FEASIBILITY = 0.80
@@ -78,12 +78,12 @@ ANCHOR_COUNTS = (0, 1, 2)
 SEED = 20261021
 
 DEFAULT_BOUNDS = {
-    "gf_wt_pct": (10.0, 45.0),
-    "coupling_agent_wt_pct": (0.2, 1.2),
-    "lubricant_wt_pct": (0.1, 0.8),
+    "filler_wt_pct": (10.0, 45.0),
+    "additive_a_wt_pct": (0.2, 1.2),
+    "additive_b_wt_pct": (0.1, 0.8),
     "melt_temp_C": (345.0, 378.0),
 }
-RESIN_FLOOR = 40.0  # candidate recipes keep resin >= 40 wt%
+MATRIX_FLOOR = 40.0  # candidate recipes keep matrix >= 40 wt%
 
 CLAIM_LABELS = [
     ("measured", "a real observation from the dataset"),
@@ -95,11 +95,11 @@ CANDIDATE_FIELDS = [
     "rank",
     "claim_label",
     "feasible",
-    "resin_grade",
-    "gf_wt_pct",
-    "coupling_agent_wt_pct",
-    "lubricant_wt_pct",
-    "resin_wt_pct",
+    "matrix_grade",
+    "filler_wt_pct",
+    "additive_a_wt_pct",
+    "additive_b_wt_pct",
+    "matrix_wt_pct",
     "melt_temp_C",
     "tensile_pred_MPa",
     "tensile_sd_MPa",
@@ -115,11 +115,11 @@ PARETO_FIELDS = [
     "rank",
     "claim_label",
     "feasible",
-    "resin_grade",
-    "gf_wt_pct",
-    "coupling_agent_wt_pct",
-    "lubricant_wt_pct",
-    "resin_wt_pct",
+    "matrix_grade",
+    "filler_wt_pct",
+    "additive_a_wt_pct",
+    "additive_b_wt_pct",
+    "matrix_wt_pct",
     "melt_temp_C",
     "tensile_pred_MPa",
     "tensile_sd_MPa",
@@ -137,12 +137,12 @@ def load_rows(path=DATA_FILE):
 def features(rows):
     matrix = []
     for row in rows:
-        grade = row["resin_grade"]
+        grade = row["matrix_grade"]
         matrix.append(
             [
-                float(row["gf_wt_pct"]),
-                float(row["coupling_agent_wt_pct"]),
-                float(row["lubricant_wt_pct"]),
+                float(row["filler_wt_pct"]),
+                float(row["additive_a_wt_pct"]),
+                float(row["additive_b_wt_pct"]),
                 (float(row["melt_temp_C"]) - 360.0) / 20.0,
                 1.0 if grade == "A" else 0.0,
                 1.0 if grade == "B" else 0.0,
@@ -309,19 +309,19 @@ def candidate_pool(count, rng, bounds):
     limit = count * 20
     while len(pool) < count and attempts < limit:
         attempts += 1
-        gf = rng.uniform(*bounds["gf_wt_pct"])
-        coupling = rng.uniform(*bounds["coupling_agent_wt_pct"])
-        lubricant = rng.uniform(*bounds["lubricant_wt_pct"])
-        if gf + coupling + lubricant > 100.0 - RESIN_FLOOR:
+        filler = rng.uniform(*bounds["filler_wt_pct"])
+        additive_a = rng.uniform(*bounds["additive_a_wt_pct"])
+        additive_b = rng.uniform(*bounds["additive_b_wt_pct"])
+        if filler + additive_a + additive_b > 100.0 - MATRIX_FLOOR:
             continue
-        resin = 100.0 - gf - coupling - lubricant
+        matrix = 100.0 - filler - additive_a - additive_b
         pool.append(
             {
-                "resin_grade": grades[int(rng.integers(0, len(grades)))],
-                "gf_wt_pct": round(gf, 1),
-                "coupling_agent_wt_pct": round(coupling, 2),
-                "lubricant_wt_pct": round(lubricant, 2),
-                "resin_wt_pct": round(resin, 2),
+                "matrix_grade": grades[int(rng.integers(0, len(grades)))],
+                "filler_wt_pct": round(filler, 1),
+                "additive_a_wt_pct": round(additive_a, 2),
+                "additive_b_wt_pct": round(additive_b, 2),
+                "matrix_wt_pct": round(matrix, 2),
                 "melt_temp_C": round(rng.uniform(*bounds["melt_temp_C"]), 1),
             }
         )
@@ -434,15 +434,15 @@ def pareto_candidates(rows, pool, top_k=6):
 
 def simulate_experiment(candidate, rng):
     """Synthetic oracle: the known ground-truth generator plus measurement noise."""
-    gf = float(candidate["gf_wt_pct"])
-    coupling = float(candidate["coupling_agent_wt_pct"])
-    lubricant = float(candidate["lubricant_wt_pct"])
+    filler = float(candidate["filler_wt_pct"])
+    additive_a = float(candidate["additive_a_wt_pct"])
+    additive_b = float(candidate["additive_b_wt_pct"])
     melt = float(candidate["melt_temp_C"])
-    grade = candidate["resin_grade"]
+    grade = candidate["matrix_grade"]
     return {
-        "tensile_MPa": round(max(5.0, true_tensile(gf, coupling, melt, grade) + float(rng.normal(0.0, 2.2))), 2),
-        "flexural_modulus_GPa": round(max(0.5, true_modulus(gf, coupling, grade) + float(rng.normal(0.0, 0.14))), 3),
-        "MFR_g_per_10min": round(max(0.5, true_mfr(gf, lubricant, melt, grade) + float(rng.normal(0.0, 1.4))), 2),
+        "tensile_MPa": round(max(5.0, true_tensile(filler, additive_a, melt, grade) + float(rng.normal(0.0, 2.2))), 2),
+        "flexural_modulus_GPa": round(max(0.5, true_modulus(filler, additive_a, grade) + float(rng.normal(0.0, 0.14))), 3),
+        "MFR_g_per_10min": round(max(0.5, true_mfr(filler, additive_b, melt, grade) + float(rng.normal(0.0, 1.4))), 2),
     }
 
 
@@ -457,8 +457,8 @@ def active_learning(rows, rounds, pool_size, rng, bounds):
         observed = simulate_experiment(candidate, rng)
         record = {
             key: candidate[key]
-            for key in ("resin_grade", "gf_wt_pct", "coupling_agent_wt_pct",
-                        "lubricant_wt_pct", "resin_wt_pct", "melt_temp_C")
+            for key in ("matrix_grade", "filler_wt_pct", "additive_a_wt_pct",
+                        "additive_b_wt_pct", "matrix_wt_pct", "melt_temp_C")
         }
         record.update(observed)
         record.update({"project": "P03", "sample": f"AL{round_no:02d}", "data_source": "simulated"})
@@ -466,8 +466,8 @@ def active_learning(rows, rounds, pool_size, rng, bounds):
         history.append(
             {
                 "round": round_no,
-                "resin_grade": candidate["resin_grade"],
-                "gf_wt_pct": candidate["gf_wt_pct"],
+                "matrix_grade": candidate["matrix_grade"],
+                "filler_wt_pct": candidate["filler_wt_pct"],
                 "pred_tensile_MPa": candidate["tensile_pred_MPa"],
                 "pred_sd_MPa": candidate["tensile_sd_MPa"],
                 "observed_tensile_MPa": observed["tensile_MPa"],
@@ -510,10 +510,10 @@ def build_report(rows, metrics, calibration, recommendation, pareto, history,
     add("")
     add(f"- rows: {len(rows)}; projects: {len({row['project'] for row in rows})}; "
         f"targets: {', '.join(TARGETS)}")
-    add("- mass fractions close to 100 wt% per row (glass fibre + coupling agent +")
-    add("  lubricant + resin); the generator asserts this before any modelling")
-    add("- inputs: glass-fibre load, coupling agent, lubricant, melt temperature, resin grade")
-    add("- candidates keep resin >= 40 wt% (no physically impossible recipes)")
+    add("- mass fractions close to 100 wt% per row (filler + additive_a +")
+    add("  additive_b + matrix); the generator asserts this before any modelling")
+    add("- inputs: filler load, additive_a, additive_b, melt temperature, matrix grade")
+    add("- candidates keep matrix >= 40 wt% (no physically impossible recipes)")
     add("")
     add("## Search space")
     add("")
@@ -612,24 +612,24 @@ def build_report(rows, metrics, calibration, recommendation, pareto, history,
     add("constraint stay visible (with their P(MFR ok) flag) instead of being silently cut;")
     add("the second table serves the strict processability requirement.")
     add("")
-    add("| rank | resin | GF wt% | coupling wt% | lubricant wt% | resin wt% | tensile pred MPa | sd | screening range | MFR pred | P(MFR ok) | ECI |")
+    add("| rank | matrix | filler wt% | additive_a wt% | additive_b wt% | matrix wt% | tensile pred MPa | sd | screening range | MFR pred | P(MFR ok) | ECI |")
     add("|---|---|---|---|---|---|---|---|---|---|---|---|")
     for item in recommendation["picked"]:
         add(
-            f"| {item['rank']} | {item['resin_grade']} | {item['gf_wt_pct']} | {item['coupling_agent_wt_pct']} | "
-            f"{item['lubricant_wt_pct']} | {item['resin_wt_pct']} | {item['tensile_pred_MPa']} | "
+            f"| {item['rank']} | {item['matrix_grade']} | {item['filler_wt_pct']} | {item['additive_a_wt_pct']} | "
+            f"{item['additive_b_wt_pct']} | {item['matrix_wt_pct']} | {item['tensile_pred_MPa']} | "
             f"{item['tensile_sd_MPa']} | [{item['tensile_screening_low']}, {item['tensile_screening_high']}] | "
             f"{item['mfr_pred_g_per_10min']} | {item['p_mfr_feasible']:.0%} | {item['eci']} |"
         )
     add("")
     add("ECI ranking restricted to candidates with P(MFR >= constraint) >= threshold:")
     add("")
-    add("| rank | resin | GF wt% | coupling wt% | lubricant wt% | resin wt% | tensile pred MPa | sd | MFR pred | P(MFR ok) | ECI |")
+    add("| rank | matrix | filler wt% | additive_a wt% | additive_b wt% | matrix wt% | tensile pred MPa | sd | MFR pred | P(MFR ok) | ECI |")
     add("|---|---|---|---|---|---|---|---|---|---|---|")
     for item in recommendation["picked_feasible"]:
         add(
-            f"| {item['rank']} | {item['resin_grade']} | {item['gf_wt_pct']} | {item['coupling_agent_wt_pct']} | "
-            f"{item['lubricant_wt_pct']} | {item['resin_wt_pct']} | {item['tensile_pred_MPa']} | "
+            f"| {item['rank']} | {item['matrix_grade']} | {item['filler_wt_pct']} | {item['additive_a_wt_pct']} | "
+            f"{item['additive_b_wt_pct']} | {item['matrix_wt_pct']} | {item['tensile_pred_MPa']} | "
             f"{item['tensile_sd_MPa']} | {item['mfr_pred_g_per_10min']} | {item['p_mfr_feasible']:.0%} | {item['eci']} |"
         )
     add("")
@@ -638,22 +638,22 @@ def build_report(rows, metrics, calibration, recommendation, pareto, history,
     add("")
     add("## Pareto front (tensile vs MFR, posterior means)")
     add("")
-    add("| rank | resin | GF wt% | coupling wt% | lubricant wt% | resin wt% | tensile pred MPa | MFR pred | P(MFR ok) |")
+    add("| rank | matrix | filler wt% | additive_a wt% | additive_b wt% | matrix wt% | tensile pred MPa | MFR pred | P(MFR ok) |")
     add("|---|---|---|---|---|---|---|---|---|")
     for item in pareto:
         add(
-            f"| {item['rank']} | {item['resin_grade']} | {item['gf_wt_pct']} | {item['coupling_agent_wt_pct']} | "
-            f"{item['lubricant_wt_pct']} | {item['resin_wt_pct']} | {item['tensile_pred_MPa']} | "
+            f"| {item['rank']} | {item['matrix_grade']} | {item['filler_wt_pct']} | {item['additive_a_wt_pct']} | "
+            f"{item['additive_b_wt_pct']} | {item['matrix_wt_pct']} | {item['tensile_pred_MPa']} | "
             f"{item['mfr_pred_g_per_10min']} | {item['p_mfr_feasible']:.0%} |"
         )
     add("")
     add("## Simulated closed loop (propose -> synthetic oracle -> refit)")
     add("")
-    add("| round | resin | GF wt% | tensile pred | sd | tensile observed | MFR observed |")
+    add("| round | matrix | filler wt% | tensile pred | sd | tensile observed | MFR observed |")
     add("|---|---|---|---|---|---|---|")
     for item in history:
         add(
-            f"| {item['round']} | {item['resin_grade']} | {item['gf_wt_pct']} | {item['pred_tensile_MPa']} | "
+            f"| {item['round']} | {item['matrix_grade']} | {item['filler_wt_pct']} | {item['pred_tensile_MPa']} | "
             f"{item['pred_sd_MPa']} | {item['observed_tensile_MPa']} | {item['observed_mfr']} |"
         )
     add("")
@@ -681,7 +681,7 @@ def build_report(rows, metrics, calibration, recommendation, pareto, history,
     add("")
     add("## What this example does NOT claim")
     add("")
-    add("- It does not demonstrate real PEEK/PAEK property prediction: the data is synthetic")
+    add("- It does not demonstrate property prediction for any real material: the data is synthetic")
     add("  and the surfaces are simple by construction.")
     add("- The GP scores do not transfer to any real formulation dataset.")
     add("- Independent single-output GPs ignore output correlations; a multi-task GP or")
@@ -763,14 +763,14 @@ def main() -> None:
     print("ECI top-3 (all candidates):")
     for item in recommendation["picked"][:3]:
         print(
-            f"  #{item['rank']} resin {item['resin_grade']} GF {item['gf_wt_pct']} wt% "
+            f"  #{item['rank']} matrix {item['matrix_grade']} filler {item['filler_wt_pct']} wt% "
             f"-> tensile {item['tensile_pred_MPa']} +/- {item['tensile_sd_MPa']} MPa, "
             f"P(MFR ok)={item['p_mfr_feasible']:.0%}, ECI={item['eci']}"
         )
     print("feasible top-3 (P(MFR ok) >= threshold):")
     for item in recommendation["picked_feasible"][:3]:
         print(
-            f"  #{item['rank']} resin {item['resin_grade']} GF {item['gf_wt_pct']} wt% "
+            f"  #{item['rank']} matrix {item['matrix_grade']} filler {item['filler_wt_pct']} wt% "
             f"-> tensile {item['tensile_pred_MPa']} +/- {item['tensile_sd_MPa']} MPa, "
             f"P(MFR ok)={item['p_mfr_feasible']:.0%}, ECI={item['eci']}"
         )

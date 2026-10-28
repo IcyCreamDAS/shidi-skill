@@ -50,8 +50,8 @@
 ## ✨ What's New · 更新日志
 
 - **开发中：指定论文阅读** — 提供论文后直接进入[条件提取与证据核验](skills/shidi/references/focused-reading.md)，检查配方基准、模拟/实测区别、指标定义及正文与表格冲突；材料不足时说明边界。参赛准备与真实试跑状态见 [Bohrium 阅读案例](competitions/bohrium-reading-2026-10/README.md)。
-- **参赛草稿打包** — 根据固定哈希的官方资源，保存原始输出并生成证据索引。[草稿已通过结构校验](competitions/bohrium-reading-2026-10/packaging/README.md)，完整会话记录仍缺，尚未提交或取得赛事成绩。
-- **新对照任务** — [多论文涂层证据判断](competitions/bohrium-reading-2026-10/transfer-v1/README.md)先保持Skill不变，使用三篇新的公开研究验证跨论文适用性判断；预先冻结24项检查及命令记录方式，不预设一定有增益。
+- **参赛草稿打包** — 根据固定哈希的官方资源，保存原始输出并生成证据索引。[草稿已通过结构校验](competitions/bohrium-reading-2026-10/README.md)，完整会话记录仍缺，尚未提交或取得赛事成绩。
+- **新对照任务** — [多论文涂层证据判断](competitions/bohrium-reading-2026-10/README.md)先保持Skill不变，使用三篇新的公开研究验证跨论文适用性判断；预先冻结24项检查及命令记录方式，不预设一定有增益。
 - **2026-10** — 🛡 **发布版自检闭环**：GitHub Actions CI + `validate.py`（版本/链接/脚本编译/必需文件）+ `tests/` 离线单测 · 补上 `verify_refs.py` 引用核验（DOI 解析/撤稿检测/文风 lint）· 修 `render_report.py` 超时 bug 并支持跨平台浏览器探测 · `fetch_pdfs.py` 去掉硬编码邮箱、加指数退避
 - **2026-10** — 🔬 **确定性评分 + 数据 schema + AI4S 示例升级**：`score_papers.py` 七维评分（封顶/一票否决/排序由脚本算，v2 权重下调期刊与人脉）· 文献→配方/性能抽取 schema（测试标准/条件/n/误差/三类标签）· 示例升级（质量分数闭合、ARD 长度尺度、ECI 采集函数、1-2 基准配方校准对比、Pareto 前沿、文献先验边界接口）
 - **2026-08** — 📥 **PDF 批量下载**（OpenAlex/Unpaywall 自动定位 OA 直链，失败分类报告，不静默跳过）· *batch PDF download with honest failure reports*
@@ -128,7 +128,7 @@
 - **ARD 特征相关性**——每个特征的 GP 长度尺度（越小越关键；停在上界 = 数据识别不了）
 - **约束候选用 ECI**——`ECI = EI × P(MFR ≥ 28)`，不做硬阈值截断；另给"仅可行域"排行榜
 - **多目标 Pareto 前沿**——拉伸强度 vs MFR 后验均值的非支配集
-- **质量分数闭合**——玻纤 + 偶联剂 + 润滑剂 + 树脂 = 100 wt%，候选另加 `resin ≥ 40 wt%`
+- **质量分数闭合**——填料 + 添加剂 A + 添加剂 B + 基体 = 100 wt%，候选另加 `matrix ≥ 40 wt%`
 - **文献先验接口**——`priors_template.csv` 把文献边界喂给搜索空间（只约束边界，不注入先验均值）
 - **三类证据标签分开**——`measured` / `predicted` / `exploratory`，结论只允许用 `measured`
 - **硬规则：探索级筛选范围 ≠ 统计置信区间**
@@ -139,7 +139,7 @@ pip install -r requirements.txt && python run_demo.py
 python run_demo.py --priors priors_template.csv   # 用文献先验边界约束搜索空间
 ```
 
-**它不主张什么**：数据是合成的，不能预测真实 PEEK/PAEK 性能；GP 分数不能迁移到真实配方；候选不保证优于工程师的 DOE 直觉；独立单输出 GP 忽略输出相关（拉伸↔弯曲 ≈ 0.9）；1–2 个基准配方校不准批次偏移（正确解法是混合效应 GP）。真实企业配方受 NDA 约束不会进仓库——公开的是**方法**，不是数据。
+**它不主张什么**：数据是合成的，不能预测真实 material 性能；GP 分数不能迁移到真实配方；候选不保证优于工程师的 DOE 直觉；独立单输出 GP 忽略输出相关（拉伸↔弯曲 ≈ 0.9）；1–2 个基准配方校不准批次偏移（正确解法是混合效应 GP）。真实企业配方受 NDA 约束不会进仓库——公开的是**方法**，不是数据。
 
 ## 🧭 Flow · 流程图
 
@@ -230,3 +230,6 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ## 📄 License · 许可证
 
 [MIT License](LICENSE) — 随便用，记得请师弟喝奶茶 🧋 *Free to use — just buy shidi a bubble tea.*
+
+
+[公开资源与历史范围 / Public resources and historical scope](PRIVACY.md)
