@@ -3,7 +3,7 @@
 ### *You bring the ideas, shidi does the legwork.*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.1-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -44,6 +44,7 @@
 
 ## ✨ What's New
 
+- **2026-10-28: v0.4.1 file delivery fixes** — preserve the previous PDF until a fresh export succeeds, reject duplicate paper IDs, and keep separate PDF input paths with hash-checked caches. Pro/Flash helpers are updated together; historical competition snapshots stay frozen.
 - **2026-10-27: Pro / Flash modes** — One installation includes both workflows. Pro is the default; request “quick research” or “flash mode” for Flash. Released to the default `main` branch through a pull request.
 - **2026-10** — 🛡 **Release self-check loop**: GitHub Actions CI + `validate.py` (version, links, script compilation, required files) + offline `tests/` · published `verify_refs.py` (DOI resolution, retraction detection, style lint) · fixed the `render_report.py` timeout bug and added cross-platform browser discovery · `fetch_pdfs.py` no longer hardcodes an email and now backs off on 429/5xx
 - **2026-10** — 🔬 **Deterministic scoring + data schema + AI4S demo upgrade**: `score_papers.py` seven-dim scoring (caps, veto and ranking computed by script; v2 lowers journal/network weight) · literature → formulation/property extraction schema (test standard, conditions, n, error, three claim labels) · demo upgrade (mass closure, ARD length scales, ECI acquisition, 1-2 benchmark-run calibration, Pareto front, literature-prior bounds)

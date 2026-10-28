@@ -19,6 +19,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 # 平台默认安装路径(便携版/非标准安装请用 SHIDI_BROWSER 指定)
@@ -99,20 +100,27 @@ def md_to_html(md_text: str) -> str:
 def html_to_pdf(browser: str, html_path: Path, pdf_path: Path) -> bool:
     # Edge 是 Windows 程序:必须传绝对 Windows 路径,相对路径/Git Bash 的
     # /tmp 风格路径解析会失败
-    cmd = [
-        browser, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
-        "--print-to-pdf=" + str(pdf_path.resolve()),
-        html_path.resolve().as_uri(),
-    ]
     try:
-        result = subprocess.run(cmd, capture_output=True, timeout=90)
+        # Keep the previous report until this invocation produces a valid replacement.
+        with tempfile.TemporaryDirectory(prefix=".shidi-render-", dir=pdf_path.resolve().parent) as folder:
+            fresh = Path(folder) / pdf_path.name
+            cmd = [
+                browser, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+                "--print-to-pdf=" + str(fresh),
+                html_path.resolve().as_uri(),
+            ]
+            result = subprocess.run(cmd, capture_output=True, timeout=90)
+            if result.returncode == 0 and fresh.is_file() and fresh.stat().st_size > 1000:
+                with fresh.open("rb") as handle:
+                    valid = handle.read(5) == b"%PDF-"
+                if valid:
+                    fresh.replace(pdf_path)
+                    return True
+            print(f"! PDF 生成失败(浏览器输出: {result.stderr.decode(errors='ignore')[:200]})", file=sys.stderr)
+            return False
     except (subprocess.TimeoutExpired, OSError) as exc:
         print(f"! PDF 生成失败: {exc}", file=sys.stderr)
         return False
-    if pdf_path.exists() and pdf_path.stat().st_size > 1000:
-        return True
-    print(f"! PDF 生成失败(浏览器输出: {result.stderr.decode(errors='ignore')[:200]})", file=sys.stderr)
-    return False
 
 
 def main() -> int:
@@ -156,7 +164,8 @@ def main() -> int:
     pdf_path = out_dir / (md_path.stem + ".pdf")
     if html_to_pdf(browser, html_path, pdf_path):
         print(f"✓ PDF: {pdf_path}")
-    return 0
+        return 0
+    return 1
 
 
 if __name__ == "__main__":

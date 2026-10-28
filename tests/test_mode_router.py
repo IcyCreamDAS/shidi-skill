@@ -1,4 +1,4 @@
-"""Pro/Flash routing must default to Pro without changing frozen modes."""
+"""Pro/Flash routing and instruction texts stay stable across helper fixes."""
 import hashlib
 from pathlib import Path
 import unittest
@@ -22,7 +22,7 @@ class ModeRouterTests(unittest.TestCase):
         self.assertIn("“师弟，请你用 flash 模式给我调研一下 XXX”", text)
         self.assertIn("`modes/flash/SKILL.md`", text)
 
-    def test_frozen_mode_files_and_hashes(self):
+    def test_mode_instruction_hashes_and_bundle_files(self):
         for mode, expected in EXPECTED.items():
             root = REPO / "skills/shidi/modes" / mode
             files = [p for p in root.rglob("*") if p.is_file()]

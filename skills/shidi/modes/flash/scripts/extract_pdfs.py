@@ -8,6 +8,10 @@
     <name>.md         文本型 PDF 的干净 Markdown(阅读顺序/表格/标题已结构化)
     <name>.meta.json  分类:pdf_type + confidence + needs_vision + 统计
 
+目录输入保留相对子目录,防止同名 PDF 冲突。缓存按源文件 SHA-256 核对;
+旧缓存没有源哈希时会重新抽取,缺少 Markdown 时同样重建。
+共享输出目录由另一输入占用时拒绝覆盖;请另选 --out 或明确加 --force。
+
 路由规则(精读阶段据此选择读法):
     text_based  -> 抽取 Markdown,精读读 .md 而非 .pdf(省上下文、表格不乱)
     scanned/image_based -> 不抽取,needs_vision=true,走视觉路径(Read/GLM)
@@ -19,7 +23,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -71,6 +77,7 @@ def main() -> int:
 
     target = Path(args.target)
     pdfs = [target] if target.is_file() else sorted(target.rglob("*.pdf"))
+    source_root = target.parent if target.is_file() else target
     if not pdfs:
         print(f"未找到 PDF: {target}", file=sys.stderr)
         return 1
@@ -80,14 +87,30 @@ def main() -> int:
 
     stats = {"text": 0, "vision": 0, "mixed": 0, "skip": 0, "fail": 0}
     for pdf in pdfs:
-        meta_path = out_dir / f"{pdf.stem}.meta.json"
-        if not args.force and meta_path.exists():
-            stats["skip"] += 1
-            print(f"  跳过(已存在): {pdf.name}")
-            continue
-
+        relative = pdf.relative_to(source_root)
+        meta_path = out_dir / relative.with_suffix(".meta.json")
+        md_path = out_dir / relative.with_suffix(".md")
         try:
             data = pdf.read_bytes()
+            digest = hashlib.sha256(data).hexdigest()
+            # Hash the location to distinguish inputs without recording a private absolute path.
+            source_identity = hashlib.sha256(os.path.normcase(str(pdf.resolve())).encode("utf-8")).hexdigest()
+            if not args.force and meta_path.is_file():
+                try:
+                    cached = json.loads(meta_path.read_text(encoding="utf-8"))
+                except json.JSONDecodeError:
+                    cached = {}
+                if (isinstance(cached, dict) and cached.get("source_path_sha256") not in (None, source_identity)
+                        and cached.get("source_sha256") != digest):
+                    raise ValueError("输出已属于另一份同名PDF; 请另选 --out 或明确加 --force 覆盖")
+                if (isinstance(cached, dict) and cached.get("source") == relative.as_posix()
+                        and cached.get("source_sha256") == digest
+                        and cached.get("source_path_sha256")
+                        and (cached.get("markdown_written") is False
+                             or (cached.get("markdown_written") is True and md_path.is_file()))):
+                    stats["skip"] += 1
+                    print(f"  跳过(源文件未变): {relative.as_posix()}")
+                    continue
             res = pi.process_pdf_bytes(data)  # PdfResult: pdf_type/confidence/markdown/pages_needing_ocr/...
             ptype = str(res.pdf_type or "").lower()
             kind = classify(res.pdf_type)
@@ -96,11 +119,15 @@ def main() -> int:
             needs_ocr_pages = list(res.pages_needing_ocr or [])
             needs_vision = kind != "text_based" or bool(needs_ocr_pages)
 
-            md_path = out_dir / f"{pdf.stem}.md"
+            md_path.parent.mkdir(parents=True, exist_ok=True)
             if markdown:
                 md_path.write_text(markdown, encoding="utf-8")
+            else:
+                md_path.unlink(missing_ok=True)
             meta = {
-                "source": pdf.name,
+                "source": relative.as_posix(),
+                "source_sha256": digest,
+                "source_path_sha256": source_identity,
                 "kind": kind,
                 "pdf_type": ptype,
                 "confidence": res.confidence,

@@ -1,6 +1,6 @@
 {
   "name": "shidi-dsh-plugin",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "AI-for-Science research workflow skill bundle for DeepSeek Harness: multi-angle literature review with per-angle files, anchored experiment design with a caveat list, figures, paper reading; cross-verification briefs.",
   "type": "module",
   "main": "index.mjs",
@@ -12,6 +12,7 @@
     "README.md",
     "README_EN.md",
     "LICENSE",
+    "PRIVACY.md",
     "THIRD_PARTY_NOTICES.md"
   ],
   "dsh": {

@@ -2,7 +2,7 @@
 ### *Your junior lab mate in an Agent Skill — ideas in, files out*
 
 [![License](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
+[![Version](https://img.shields.io/badge/version-0.4.1-blue)](https://github.com/IcyCreamDAS/shidi-skill/releases)
 [![GitHub stars](https://img.shields.io/github/stars/IcyCreamDAS/shidi-skill.svg?style=social)](https://github.com/IcyCreamDAS/shidi-skill/stargazers)
 [![Agent](https://img.shields.io/badge/agent-Claude%20Code%20%7C%20Codex%20%7C%20OpenClaw-111827)](README.md)
 [![Zero-Dep](https://img.shields.io/badge/dependencies-zero-ff69b4)](README.md)
@@ -51,6 +51,7 @@
 
 ## ✨ What's New · 更新日志
 
+- **2026-10-28：v0.4.1 文件交付修复** — PDF 导出成功并验证后才替换旧报告，失败返回非零；文献评分拒绝重复 ID；PDF 抽取保留子目录并核对源哈希，避免漏读或覆盖同名论文。Pro / Flash 同步修复，历史参赛实例保持原版本。
 - **2026-10-27：Pro / Flash 双模式** — 一次安装包含两套完整流程；默认 Pro，“快速调研 / flash 模式”选择 Flash。已通过 PR 发布到默认 `main` 分支。
 - **2026-10** — 🛡 **发布版自检闭环**：GitHub Actions CI + `validate.py`（版本/链接/脚本编译/必需文件）+ `tests/` 离线单测 · 补上 `verify_refs.py` 引用核验（DOI 解析/撤稿检测/文风 lint）· 修 `render_report.py` 超时 bug 并支持跨平台浏览器探测 · `fetch_pdfs.py` 去掉硬编码邮箱、加指数退避
 - **2026-10** — 🔬 **确定性评分 + 数据 schema + AI4S 示例升级**：`score_papers.py` 七维评分（封顶/一票否决/排序由脚本算，v2 权重下调期刊与人脉）· 文献→配方/性能抽取 schema（测试标准/条件/n/误差/三类标签）· 示例升级（质量分数闭合、ARD 长度尺度、ECI 采集函数、1-2 基准配方校准对比、Pareto 前沿、文献先验边界接口）
