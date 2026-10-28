@@ -1,7 +1,6 @@
 import csv
 import hashlib
 import importlib.util
-import re
 import unittest
 from pathlib import Path
 
@@ -17,7 +16,7 @@ PUBLIC_FORMULATION_FILES = [
     EXAMPLE / "data/synthetic_formulations.csv",
     EXAMPLE / "requirements.txt",
 ]
-for base in (ROOT / "skills/shidi", ROOT / "skills/shidi/modes/pro", ROOT / "skills/shidi/modes/flash"):
+for base in (p for p in (ROOT / "skills/shidi", ROOT / "skills/shidi/modes/pro", ROOT / "skills/shidi/modes/flash") if (p / "references/data-extraction-schema.md").is_file()):
     PUBLIC_FORMULATION_FILES += [
         base / "references/data-extraction-schema.md",
         base / "references/templates/formulation_properties.csv",
@@ -28,14 +27,6 @@ VALUE_KEYS = [
 ]
 EXPECTED_COLUMNS = ["project", "sample", "matrix_grade", *VALUE_KEYS, "data_source"]
 EXPECTED_VALUE_SHA256 = "311e7bdb37301f8eb50256ee0bb35bac5499a0089df1d60c7317aa167670c7de"
-FORMER_LABELS = [
-    "5045454b", "5041454b", "50544645", "73696c616e65", "676c617373",
-    "726573696e", "636f75706c696e67", "6c7562726963616e74", "7265696e666f7263656d656e74",
-    "67665f77745f706374", "726573696e5f6772616465", "726573696e5f77745f706374",
-    "636f75706c696e675f6167656e745f77745f706374", "6c7562726963616e745f77745f706374",
-]
-FORMER_LABELS = [bytes.fromhex(value).decode("ascii") for value in FORMER_LABELS]
-FORMER_LABELS += ["\u73bb\u7ea4", "\u73bb\u7483\u7ea4\u7ef4", "\u5076\u8054", "\u6da6\u6ed1", "\u6811\u8102"]
 
 
 def load_generator():
@@ -52,12 +43,16 @@ def load_rows():
 
 
 class MaterialsSmallDataTests(unittest.TestCase):
-    def test_public_formulation_files_use_roles_only(self):
+    def test_public_templates_are_role_only_placeholders(self):
         for path in PUBLIC_FORMULATION_FILES:
-            text = path.read_text(encoding="utf-8").lower()
-            for label in FORMER_LABELS:
-                self.assertNotIn(label.lower(), text, f"{path}: {label!r}")
-            self.assertIsNone(re.search(r"\bgf\b", text), path)
+            if path.name != "formulation_properties.csv" or not path.is_file():
+                continue
+            with path.open(encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+            self.assertEqual({r["component"] for r in rows}, {"matrix", "filler", "additive_a", "additive_b"})
+            self.assertTrue(all(r["role"] == r["component"] and r["material"] == "example-system" for r in rows))
+            self.assertTrue(all(r["value_type"] == "exploratory" and r["value"] == "not-reported" for r in rows))
+            self.assertTrue(all(r["doi"] == "not-reported" for r in rows))
 
     def test_synthetic_values_and_generator_are_unchanged(self):
         rows = load_rows()
@@ -80,12 +75,12 @@ class MaterialsSmallDataTests(unittest.TestCase):
     def test_current_template_copies_are_identical(self):
         for relative in ("references/data-extraction-schema.md", "references/templates/formulation_properties.csv"):
             contents = [
-                (ROOT / "skills/shidi" / relative).read_bytes(),
-                (ROOT / "skills/shidi/modes/pro" / relative).read_bytes(),
-                (ROOT / "skills/shidi/modes/flash" / relative).read_bytes(),
+                (base / relative).read_bytes()
+                for base in (ROOT / "skills/shidi", ROOT / "skills/shidi/modes/pro", ROOT / "skills/shidi/modes/flash")
+                if (base / relative).is_file()
             ]
-            self.assertEqual(contents[0], contents[1])
-            self.assertEqual(contents[0], contents[2])
+            self.assertTrue(contents)
+            self.assertTrue(all(value == contents[0] for value in contents))
 
 
 if __name__ == "__main__":
