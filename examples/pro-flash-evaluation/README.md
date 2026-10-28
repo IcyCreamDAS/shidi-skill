@@ -187,3 +187,6 @@ python examples/pro-flash-evaluation/make_figures.py
 build_tables.py使用标准库，核对ChatGPT档位、分数和源报告哈希，并同时生成四表与本README；make_figures.py复制真实ChatGPT原图，按相同数据重绘Kimi及汇总图。可用--out指定导出目录、--font指定中文字体。
 
 [独立复评量表及重绘方法](independent-review/README.md) · [顺序逻辑原始Kimi评阅](sequential-logic/RESULTS.md) · [损伤记忆原始Kimi评阅](damage-memory/RESULTS.md)
+
+
+公开资源说明：本目录的SKILL.md和执行脚本保留冻结字节；两份配方参考资源已更新为通用角色占位，不再是历史冻结字节。原始报告、用量和评分未改写；当前轨迹若有来源片段省略，会明确标记并附原文哈希，完整原件保留在历史提交。未重新运行。详见仓库根目录PRIVACY.md。
