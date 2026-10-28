@@ -125,6 +125,11 @@ def score_all(data, schema: str = DEFAULT_SCHEMA, strict: bool = False) -> dict:
         raise ValueError(f"schema {schema} 权重之和不是 100: {sum(weights.values())}")
 
     papers = [score_paper(item, weights, strict) for item in _papers(data)]
+    seen = set()
+    for paper in papers:
+        if paper["id"] in seen:
+            raise ValueError(f"重复文献 id: {paper['id']}; 请先去重后重试")
+        seen.add(paper["id"])
     ranked = sorted((p for p in papers if not p["vetoed"]), key=lambda p: (-p["total"], p["id"]))
     for index, paper in enumerate(ranked, start=1):
         paper["rank"] = index
@@ -145,8 +150,7 @@ def format_markdown(result: dict) -> str:
     dims = list(result["weights"])
     header = ["rank", "id", *dims, "total", "note"]
     lines = ["| " + " | ".join(header) + " |", "|" + "|".join(["---"] * len(header)) + "|"]
-    by_id = {paper["id"]: paper for paper in result["papers"]}
-    ordered = [by_id[pid] for pid in result["ranking"]]
+    ordered = sorted((paper for paper in result["papers"] if not paper["vetoed"]), key=lambda paper: paper["rank"])
     ordered += [paper for paper in result["papers"] if paper["vetoed"]]
     for paper in ordered:
         note = "vetoed (topic < 10)" if paper["vetoed"] else ""

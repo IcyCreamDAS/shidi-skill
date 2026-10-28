@@ -7,3 +7,5 @@
 顺序逻辑和损伤记忆实例的原始报告、运行用量与评分保持不变。完整原始对话和轨迹保留在历史提交；当前公开轨迹中，与材料身份隐藏范围冲突的来源原文片段使用明确的省略标记及原文哈希，不替换成虚构材料或伪造工具结果。其公开 Skill 副本仅更新两份配方参考资源为通用角色占位；SKILL.md 和执行脚本保留冻结字节。这两份参考资源不再是历史运行时的原始字节，未据此声称重新执行或重新评分。
 
 Privacy scope: current branch snapshots only. Historical commits, submitted archives and receipts remain intact. Public formulation resources use generic roles and illustrative placeholders; research outputs and scores are not rewritten.
+
+发布版辅助脚本自 v0.4.1 修复 PDF 渲染、文献评分和文件抽取中的交付错误。上述冻结字节说明针对历史实例副本及参赛固定提交；当前发布版脚本可以更新。历史运行没有使用这些修复重新执行，原始结果、评分和已提交压缩包不随发布版补丁修改。
