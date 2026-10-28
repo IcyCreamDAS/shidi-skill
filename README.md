@@ -245,3 +245,6 @@ cp -r shidi-skill/skills/shidi ~/.claude/skills/
 ## 📄 License · 许可证
 
 [MIT License](LICENSE) — 随便用，记得请师弟喝奶茶 🧋 *Free to use — just buy shidi a bubble tea.*
+
+
+[公开资源与历史范围 / Public resources and historical scope](PRIVACY.md)

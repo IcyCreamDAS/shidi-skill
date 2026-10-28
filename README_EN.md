@@ -230,3 +230,6 @@ Design ideas borrowed from [nature-skills](https://github.com/Yuan1z0825/nature-
 ## 📄 License
 
 [MIT License](LICENSE) — free to use; just buy shidi a bubble tea 🧋
+
+
+[公开资源与历史范围 / Public resources and historical scope](PRIVACY.md)
